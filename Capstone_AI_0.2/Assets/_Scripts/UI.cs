@@ -8,6 +8,8 @@ public class UI : MonoBehaviour
 	public GameObject P_Option;
 	public GameObject P_Menu;
 
+	public GameObject B_Pause;
+
 	public void Active_Option()
 	{
 		P_Option.SetActive(true);
@@ -26,6 +28,16 @@ public class UI : MonoBehaviour
 	public void Close_Menu()
 	{
 		P_Menu.SetActive(false);
+	}
+
+	public void Active_Pause()
+	{
+		B_Pause.SetActive(true);
+	}
+
+	public void Close_Pause()
+	{
+		B_Pause.SetActive(false);
 	}
 
 	public void CS_Title()
