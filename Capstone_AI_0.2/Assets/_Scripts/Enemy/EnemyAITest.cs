@@ -12,12 +12,11 @@ public class EnemyAITest : LivingEntity
 
     public float damage = 20f; // 공격력
     public float attackDelay = 1f; // 공격 딜레이
+    private float attackRange = 1.5f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
     public Transform tr; // 자기 게임오브젝트의 트랜스폼
-
-    private float attackRange = 2f; // 공격 사거리
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -69,6 +68,9 @@ public class EnemyAITest : LivingEntity
         {
             // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
             dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+
+            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+            this.transform.LookAt(targetPosition);
         }
     }
 
@@ -126,7 +128,7 @@ public class EnemyAITest : LivingEntity
             canMove = false;
 
             // 추적 대상 바라보기
-            this.transform.LookAt(targetEntity.transform);
+            //this.transform.LookAt(targetEntity.transform);
 
             // 최근 공격 시점에서 attackDelay 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
