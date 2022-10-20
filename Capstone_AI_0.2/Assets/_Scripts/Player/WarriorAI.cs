@@ -90,44 +90,24 @@ public class WarriorAI: LivingEntity
                 canMove = false;
 
                 // 반지름 30f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
 
-                GameObject target;
-                target = colliders[0].gameObject;
+                // 모든 콜라이더를 순회하면서 살아 있는 LivingEntity 찾기  
                 for (int i = 0; i < colliders.Length; i++)
                 {
-                    if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
+                    // 콜라이더로부터 LivingEntity 컴포넌트 가져오기
+                    LivingEntity livingEntity = colliders[i].GetComponent<LivingEntity>();
+
+                    // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아 있다면
+                    if (livingEntity != null && !livingEntity.Dead)
                     {
-                        target = colliders[i].gameObject;
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        targetEntity = livingEntity;
+
+                        // for문 루프 즉시 정지
+                        break;
                     }
                 }
-                targetEntity = target.GetComponent<LivingEntity>();
-
-                // 모든 콜라이더를 순회하면서 살아 있는 LivingEntity 찾기
-                /*                for (int i = 0; i < colliders.Length; i++)
-                                {
-                                    // 콜라이더로부터 LivingEntity 컴포넌트 가져오기
-                                    LivingEntity livingEntity = colliders[i].GetComponent<LivingEntity>();
-
-                                    // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아 있다면
-                                    if (livingEntity != null && !livingEntity.Dead)
-                                    {
-                                        // 추적 대상을 해당 LivingEntity로 설정
-                                        targetEntity = livingEntity;
-
-                                        // for문 루프 즉시 정지
-                                        break;
-                                    }
-                                }*/
-
-                for (int i = 0; i < colliders.Length; i++)
-                {
-                    if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
-                    {
-                        target = colliders[i].gameObject;
-                    }
-                }
-                
             }
 
             // 0.25초 주기로 처리 반복
