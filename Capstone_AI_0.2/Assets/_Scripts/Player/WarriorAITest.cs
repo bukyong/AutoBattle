@@ -14,9 +14,9 @@ public class WarriorAITest: LivingEntity
     private Animator playerAnimator; // 플레이어 애니메이션
     private GameObject goHpBar; // 체력 바
 
-    public float damage = 0f; // 공격력
-    public float attackDelay = 2f; // 공격 딜레이
-    private float attackRange = 1.5f; // 공격 사거리
+    public float damage = 20f; // 공격력
+    public float attackDelay = 3f; // 공격 딜레이
+    private float attackRange = 2f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
@@ -74,13 +74,15 @@ public class WarriorAITest: LivingEntity
         if (hasTarget)
         {
             playerAnimator.SetBool("CanMove", canMove);
+
             playerAnimator.SetBool("CanAttack", canAttack);
+
 
             // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
             dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
             // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-             Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
             this.transform.LookAt(targetPosition);
         }
 
@@ -106,7 +108,7 @@ public class WarriorAITest: LivingEntity
                 canMove = false;
 
                 // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
 
                 // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
                 // 검출이 안되면 return
@@ -134,7 +136,7 @@ public class WarriorAITest: LivingEntity
     }
 
     // 적과 플레이어 사이의 거리 측정, 거리에 따라 공격 실행
-    public virtual void Attack()
+    public void Attack()
     {
         // 자신이 사망X, 최근 공격 시점에서 공격 딜레이 이상 시간이 지났고,
         // 플레이어와의 거리가 공격 사거리안에 있다면 공격 가능
@@ -144,15 +146,11 @@ public class WarriorAITest: LivingEntity
             canMove = false;
             pathFinder.isStopped = true;
 
-            // 추적 대상 바라보기
-            // 애니메이션의 블링크 현상 원인
-            // Update 문으로 이동 (임시 해결)
-            //this.transform.LookAt(targetEntity.transform);
-
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
                 canAttack = true;
+                Debug.Log("공격 실행");
                 OnDamageEvent();
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우

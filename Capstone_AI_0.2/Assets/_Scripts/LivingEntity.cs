@@ -31,6 +31,7 @@ public class LivingEntity : MonoBehaviour
     {
         // 데미지만큼 체력 감소
         Health -= damage;
+        Debug.Log(Health);
 
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
         if (Health <= 0 && !Dead)
