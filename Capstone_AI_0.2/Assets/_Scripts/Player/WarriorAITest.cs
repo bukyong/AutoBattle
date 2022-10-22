@@ -12,10 +12,10 @@ public class WarriorAITest: LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
-    private GameObject goHpBar; // 체력 바
+    private GameObject pgoHpBar; // 체력 바
 
     public float damage = 20f; // 공격력
-    public float attackDelay = 3f; // 공격 딜레이
+    public float attackDelay = 2f; // 공격 딜레이
     private float attackRange = 2f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
@@ -39,8 +39,8 @@ public class WarriorAITest: LivingEntity
     }
 
     // 애니메이션 실행 조건을 위한 변수
-    public bool canMove;
-    public bool canAttack;
+    public bool isMove;
+    public bool isAttack;
 
     private void Awake()
     {
@@ -66,18 +66,16 @@ public class WarriorAITest: LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-        goHpBar = GameObject.Find("Canvas/Slider");
+        pgoHpBar = GameObject.Find("Canvas/Slider");
     }
 
     void Update()
     {
+        playerAnimator.SetBool("CanMove", isMove);
+        playerAnimator.SetBool("CanAttack", isAttack);
+
         if (hasTarget)
         {
-            playerAnimator.SetBool("CanMove", canMove);
-
-            playerAnimator.SetBool("CanAttack", canAttack);
-
-
             // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
             dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
@@ -87,7 +85,7 @@ public class WarriorAITest: LivingEntity
         }
 
         // 오브젝트위에 체력 바가 따라다님
-        goHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -104,8 +102,8 @@ public class WarriorAITest: LivingEntity
             {
                 // 추적 대상이 없을 경우, AI 이동 정지
                 pathFinder.isStopped = true;
-                canAttack = false;
-                canMove = false;
+                isAttack = false;
+                isMove = false;
 
                 // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -143,20 +141,20 @@ public class WarriorAITest: LivingEntity
         if (!Dead && dist < attackRange)
         {
             // 공격 반경 안에 있으면 움직임을 멈춤
-            canMove = false;
+            isMove = false;
             pathFinder.isStopped = true;
 
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
-                canAttack = true;
+                isAttack = true;
                 Debug.Log("공격 실행");
                 OnDamageEvent();
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
             else
             {
-                canAttack = false;
+                isAttack = false;
             }
         }
         // 공격 사거리 밖에 있을 경우 추적하기
@@ -164,8 +162,8 @@ public class WarriorAITest: LivingEntity
         {
             // 추적 대상이 존재하고 추적 대상이 공격 사거리 밖에 있을 경우,
             // 경로를 갱신하고 AI 이동을 계속 진행
-            canMove = true;
-            canAttack = false;
+            isMove = true;
+            isAttack = false;
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
@@ -179,11 +177,11 @@ public class WarriorAITest: LivingEntity
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
-        // 공격 처리
-        attackTarget.OnDamage(damage);
-
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("공격!");
+
+        // 공격 처리
+        attackTarget.OnDamage(damage);
 
         // 최근 공격 시간 갱신
         lastAttackTime = Time.time;
@@ -218,5 +216,10 @@ public class WarriorAITest: LivingEntity
 
         // 사망 애니메이션 재생
         // playerAnimator.SetTrigger("Die");
+
+        // 게임오브젝트 비활성화
+        //Debug.Log("전사 사망...");
+        //gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 }
