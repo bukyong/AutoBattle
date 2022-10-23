@@ -9,10 +9,12 @@ public class MagicianAI : LivingEntity
 
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
+    private Animator playerAnimator; // 플레이어 애니메이션
+    private GameObject pgoHpBar; // 체력 바
 
     public float damage = 40f; // 공격력
     public float attackDelay = 3f; // 공격 딜레이
-    private float attackRange = 12f; // 공격 사거리
+    private float attackRange = 10f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
@@ -39,14 +41,15 @@ public class MagicianAI : LivingEntity
         }
     }
 
-    // 애니메이션 실행 조건을 위한 변수 (현재 테스트용으로 사용)
-    public bool canMove;
-    public bool canAttack;
+    // 애니메이션 실행 조건을 위한 변수
+    public bool isMove;
+    public bool isAttack;
 
     private void Awake()
     {
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
@@ -66,15 +69,26 @@ public class MagicianAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
+        pgoHpBar = GameObject.Find("Canvas/Slider");
     }
 
     void Update()
     {
+        playerAnimator.SetBool("isMove", isMove);
+        playerAnimator.SetBool("isAttack", isAttack);
+
         if (hasTarget)
         {
             // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
             dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+
+            // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+            this.transform.LookAt(targetPosition);
         }
+
+        // 오브젝트위에 체력 바가 따라다님
+        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -91,27 +105,29 @@ public class MagicianAI : LivingEntity
             {
                 // 추적 대상이 없을 경우, AI 이동 정지
                 pathFinder.isStopped = true;
-                canAttack = false;
-                canMove = false;
+                isAttack = false;
+                isMove = false;
 
-                // 반지름 30f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+                // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
 
-                // 모든 콜라이더를 순회하면서 살아 있는 LivingEntity 찾기
-                for (int i = 0; i < colliders.Length; i++)
+                // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
+                // 검출이 안되면 return
+                if (colliders.Length > 0)
                 {
-                    // 콜라이더로부터 LivingEntity 컴포넌트 가져오기
-                    LivingEntity livingEntity = colliders[i].GetComponent<LivingEntity>();
+                    GameObject target;
+                    target = colliders[0].gameObject;
 
-                    // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아 있다면
-                    if (livingEntity != null && !livingEntity.Dead)
+                    for (int i = 0; i < colliders.Length; i++)
                     {
-                        // 추적 대상을 해당 LivingEntity로 설정
-                        targetEntity = livingEntity;
-
-                        // for문 루프 즉시 정지
-                        break;
+                        if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
+                        {
+                            target = colliders[i].gameObject;
+                            //break;
+                        }
                     }
+
+                    targetEntity = target.GetComponent<LivingEntity>();
                 }
             }
 
@@ -128,23 +144,21 @@ public class MagicianAI : LivingEntity
         if (!Dead && dist <= attackRange)
         {
             // 공격 반경 안에 있으면 움직임을 멈춤
-            canMove = false;
+            isMove = false;
             pathFinder.isStopped = true;
-
-            // 추적 대상 바라보기
-            this.transform.LookAt(targetEntity.transform);
 
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
-                canAttack = true;
+                isAttack = true;
+                Debug.Log("마법사 공격 실행");
                 Fire();
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
             else
             {
-                canAttack = false;
+                isAttack = false;
             }
         }
         // 공격 사거리 밖에 있을 경우 추적하기
@@ -152,8 +166,8 @@ public class MagicianAI : LivingEntity
         {
             // 추적 대상이 존재하고 추적 대상이 공격 반경 밖에 있을 경우,
             // 경로를 갱신하고 AI 이동을 계속 진행
-            canMove = true;
-            canAttack = false;
+            isMove = true;
+            isAttack = false;
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
@@ -176,6 +190,9 @@ public class MagicianAI : LivingEntity
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
+        // 공격이 되는지 확인하기 위한 디버그 출력
+        Debug.Log("마법사 공격!");
+
         // 공격 처리
         attackTarget.OnDamage(damage);
     }
@@ -185,6 +202,9 @@ public class MagicianAI : LivingEntity
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         base.OnDamage(damage);
+
+        // 피격 애니메이션 재생
+        // playerAnimator.SetTrigger("Hit");
     }
 
     // 사망 처리
@@ -203,5 +223,13 @@ public class MagicianAI : LivingEntity
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
         pathFinder.enabled = false;
+
+        // 사망 애니메이션 재생
+        // playerAnimator.SetTrigger("Die");
+
+        // 게임오브젝트 비활성화
+        //Debug.Log("마법사 사망...");
+        //gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 }

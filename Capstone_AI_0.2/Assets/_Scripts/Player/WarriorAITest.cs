@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
-public class WarriorAITest: LivingEntity
+public class WarriorAITest : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상의 레이어
 
@@ -71,8 +69,8 @@ public class WarriorAITest: LivingEntity
 
     void Update()
     {
-        playerAnimator.SetBool("CanMove", isMove);
-        playerAnimator.SetBool("CanAttack", isAttack);
+        playerAnimator.SetBool("isMove", isMove);
+        playerAnimator.SetBool("isAttack", isAttack);
 
         if (hasTarget)
         {
@@ -106,7 +104,7 @@ public class WarriorAITest: LivingEntity
                 isMove = false;
 
                 // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
 
                 // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
                 // 검출이 안되면 return
@@ -120,7 +118,7 @@ public class WarriorAITest: LivingEntity
                         if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
                         {
                             target = colliders[i].gameObject;
-                            break;
+                            //break;
                         }
                     }
 
@@ -134,7 +132,7 @@ public class WarriorAITest: LivingEntity
     }
 
     // 적과 플레이어 사이의 거리 측정, 거리에 따라 공격 실행
-    public void Attack()
+    public virtual void Attack()
     {
         // 자신이 사망X, 최근 공격 시점에서 공격 딜레이 이상 시간이 지났고,
         // 플레이어와의 거리가 공격 사거리안에 있다면 공격 가능
@@ -148,7 +146,7 @@ public class WarriorAITest: LivingEntity
             if (lastAttackTime + attackDelay <= Time.time)
             {
                 isAttack = true;
-                Debug.Log("공격 실행");
+                Debug.Log("전사 공격 실행");
                 OnDamageEvent();
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우

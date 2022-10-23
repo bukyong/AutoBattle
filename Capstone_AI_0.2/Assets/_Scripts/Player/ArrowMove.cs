@@ -19,7 +19,7 @@ public class ArrowMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sphCollider = GetComponent<SphereCollider>();
         // 수정 필요
-        ArcherAI archerAI = GameObject.Find("P_Archer").GetComponent<ArcherAI>();
+        ArcherAI archerAI = GameObject.FindWithTag("Archer").GetComponent<ArcherAI>();
         damage = archerAI.damage;
 
         Destroy(gameObject, 5);

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Target
   - Enemy
+  - Warrior
+  - Archer
+  - Magician
   layers:
   - Default
   - TransparentFX

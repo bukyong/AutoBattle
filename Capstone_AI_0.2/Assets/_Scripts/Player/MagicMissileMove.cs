@@ -19,7 +19,7 @@ public class MagicMissileMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sphCollider = GetComponent<SphereCollider>();
         // 수정 필요
-        MagicianAI magicianAI = GameObject.Find("P_Magician").GetComponent<MagicianAI>();
+        MagicianAI magicianAI = GameObject.FindWithTag("Magician").GetComponent<MagicianAI>();
         damage = magicianAI.damage;
 
         Destroy(gameObject, 5);
