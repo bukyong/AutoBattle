@@ -146,8 +146,6 @@ public class WarriorAI: LivingEntity
             if (lastAttackTime + attackDelay <= Time.time)
             {
                 isAttack = true;
-                Debug.Log("전사 공격 실행");
-                OnDamageEvent();
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
             else
@@ -176,6 +174,7 @@ public class WarriorAI: LivingEntity
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         // 공격이 되는지 확인하기 위한 디버그 출력
+        Debug.Log("전사 공격 실행");
         Debug.Log("공격!");
 
         // 공격 처리
