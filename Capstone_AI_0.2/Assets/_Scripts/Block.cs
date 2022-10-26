@@ -17,8 +17,6 @@ public class Block : MonoBehaviour
 	{
 		pos = new Vector3(x, 0, z);
 		PlacedObject = null;
-
-
 	}
 
 	public void setGO(GameObject go)
@@ -34,6 +32,11 @@ public class Block : MonoBehaviour
 	public void removeGO()
 	{
 		PlacedObject = null;
+	}
+
+	public void setPos(float x, float z)
+	{
+		pos = new Vector3(x, 0, z);
 	}
 
 	public Vector3 getPos()

@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
 		var GO_MAP = GameObject.Instantiate(map, Vector3.zero, Quaternion.identity);
-		GameObject.Instantiate(block, Vector3.zero, Quaternion.identity).transform.parent = GO_MAP.transform;
+
+		GO_MAP.GetComponent<Map>().initBlock(10);
+		GO_MAP.GetComponent<Map>().initBlockPosition();
+		GO_MAP.GetComponent<Map>().SpawnBlock();
 	}
 }
