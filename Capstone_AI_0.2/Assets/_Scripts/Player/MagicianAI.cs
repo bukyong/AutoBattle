@@ -225,10 +225,14 @@ public class MagicianAI : LivingEntity
         pathFinder.enabled = false;
 
         // 사망 애니메이션 재생
-        // playerAnimator.SetTrigger("Die");
+        playerAnimator.SetTrigger("Die");
+    }
+
+    public void OnDie()
+    {
+        Debug.Log("마법사 사망...");
 
         // 게임오브젝트 비활성화
-        Debug.Log("마법사 사망...");
         gameObject.SetActive(false);
         //Destroy(gameObject);
     }

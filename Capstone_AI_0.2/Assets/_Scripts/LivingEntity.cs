@@ -14,7 +14,7 @@ public class LivingEntity : MonoBehaviour
     public float Mana { get; protected set; } // 현재 마나
     public bool Dead { get; protected set; } // 사망 상태
 
-    //public event Action onDeath; // 사망 시 발동할 이벤트
+    //public event Action OnDeath; // 사망 시 발동할 이벤트
 
     // 생명체가 활성화될 떄 상태를 리셋
     protected virtual void OnEnable()
@@ -51,10 +51,7 @@ public class LivingEntity : MonoBehaviour
     public virtual void Die()
     {
         // onDeath 이벤트에 등록된 메서드가 있다면 실행
-        //if (onDeath != null)
-        //{
-        //    onDeath();
-        //}
+        //OnDeath?.Invoke();
 
         Dead = true;
     }
