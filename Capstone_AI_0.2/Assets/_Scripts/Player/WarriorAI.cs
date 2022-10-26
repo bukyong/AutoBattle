@@ -12,8 +12,8 @@ public class WarriorAI: LivingEntity
     private Animator playerAnimator; // 플레이어 애니메이션
     private GameObject pgoHpBar; // 체력 바
 
-    public float damage = 20f; // 공격력
-    public float attackDelay = 2f; // 공격 딜레이
+    public float damage = 10f; // 공격력
+    public float attackDelay = 1f; // 공격 딜레이
     private float attackRange = 2f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
@@ -83,7 +83,7 @@ public class WarriorAI: LivingEntity
         }
 
         // 오브젝트위에 체력 바가 따라다님
-        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        //pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -118,7 +118,7 @@ public class WarriorAI: LivingEntity
                         if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
                         {
                             target = colliders[i].gameObject;
-                            break;
+                            //break;
                         }
                     }
 
@@ -215,8 +215,8 @@ public class WarriorAI: LivingEntity
         // playerAnimator.SetTrigger("Die");
 
         // 게임오브젝트 비활성화
-        //Debug.Log("전사 사망...");
-        //gameObject.SetActive(false);
+        Debug.Log("전사 사망...");
+        gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 }

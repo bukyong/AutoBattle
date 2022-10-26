@@ -33,30 +33,26 @@ public class MagicMissileMove : MonoBehaviour
         {
             rb.velocity = transform.forward * speed; // 타겟팅 대상이 없을 때 매직미사일은 전방으로 날아감
         }
-
-        // 8번(플레이어), 9번(웨폰) 레이어의 충돌을 무시
-        // 투사체가 플레이어 유닛과 충돌할 시 투사체가 빙글빙글 도는 문제를 해결
-        Physics.IgnoreLayerCollision(8, 9);
     }
-
+    
     void Update()
     {
         OnSphereCollider();
     }
 
     // 매직미사일이 충돌했을 경우
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        // 화살이 적과 충돌했을 경우
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        // 매직미사일이 적과 충돌했을 경우
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
 
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-            LivingEntity attackTarget = collision.gameObject.GetComponent<LivingEntity>();
+            LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + collision.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
 
             Destroy(gameObject);
 
@@ -65,19 +61,20 @@ public class MagicMissileMove : MonoBehaviour
             Debug.Log("현재 데미지 : " + damage);
         }
         // 매직미사일이 장애물과 충돌했을 경우
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + collision.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
 
             Destroy(gameObject);
         }
+        
         else
         {
             sphCollider.enabled = false;
-            Debug.Log("충돌한 오브젝트의 레이어 : " + collision.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 

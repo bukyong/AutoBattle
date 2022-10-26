@@ -115,7 +115,7 @@ public class EnemyAITest : LivingEntity
                         if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
                         {
                             target = colliders[i].gameObject;
-                            break;
+                            //break;
                         }
                     }
 

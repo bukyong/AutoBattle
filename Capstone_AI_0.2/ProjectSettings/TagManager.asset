@@ -9,6 +9,8 @@ TagManager:
   - Warrior
   - Archer
   - Magician
+  - E_Archer
+  - E_Magician
   layers:
   - Default
   - TransparentFX

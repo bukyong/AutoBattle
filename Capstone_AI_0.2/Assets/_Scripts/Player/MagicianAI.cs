@@ -88,7 +88,7 @@ public class MagicianAI : LivingEntity
         }
 
         // 오브젝트위에 체력 바가 따라다님
-        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        //pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -152,7 +152,7 @@ public class MagicianAI : LivingEntity
             {
                 isAttack = true;
                 Debug.Log("마법사 공격 실행");
-                Fire();
+                //Fire();
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -228,8 +228,8 @@ public class MagicianAI : LivingEntity
         // playerAnimator.SetTrigger("Die");
 
         // 게임오브젝트 비활성화
-        //Debug.Log("마법사 사망...");
-        //gameObject.SetActive(false);
+        Debug.Log("마법사 사망...");
+        gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 }
