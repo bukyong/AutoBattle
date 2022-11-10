@@ -3,7 +3,9 @@ guid: 761fe9c0f2df30b4a9fa462ccdd9d410
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
+  - DamageText_Pos: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

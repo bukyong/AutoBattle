@@ -14,6 +14,9 @@ public class LivingEntity : MonoBehaviour
     public float Mana { get; protected set; } // 현재 마나
     public bool Dead { get; protected set; } // 사망 상태
 
+    public GameObject DamageText_GO;
+    //public Transform DamageText_Pos;
+
     //public event Action OnDeath; // 사망 시 발동할 이벤트
 
     // 생명체가 활성화될 떄 상태를 리셋
@@ -33,8 +36,12 @@ public class LivingEntity : MonoBehaviour
         Health -= damage;
         Debug.Log(Health);
 
-        // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
-        if (Health <= 0 && !Dead)
+        GameObject damageGO = Instantiate(DamageText_GO);
+        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        damageGO.GetComponent<DamageText>().damage = damage;
+
+		// 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
+		if (Health <= 0 && !Dead)
         {
             Die();
         }

@@ -7,6 +7,8 @@ public class Map : MonoBehaviour
 {
 	public List<Block> block_List;
 	public GameObject blockGO;
+	public int blockNum;
+
 	Vector3 center;
 	int unitCount;
 	float distance = 0.75f;
@@ -15,6 +17,11 @@ public class Map : MonoBehaviour
 	{
 		center = transform.position;
 		unitCount = 0;
+		blockNum = 10;
+
+		initBlock(blockNum);
+		initBlockPosition();
+		SpawnBlock();
 	}
 
 
@@ -39,11 +46,11 @@ public class Map : MonoBehaviour
 
 		if (OneLineBlockNum % 2 == 0)
 		{
-			startPos = new Vector3(-(OneLineBlockNum / 2 * distance) + (distance / 2), 0, -(OneLineBlockNum / 2 * distance) + (distance / 2));
+			startPos = new Vector3(center.x -(OneLineBlockNum / 2 * distance) + (distance / 2), 0, center.z -(OneLineBlockNum / 2 * distance) + (distance / 2));
 		}
 		else if (OneLineBlockNum % 2 == 1)
 		{
-			startPos = new Vector3(-(distance * Mathf.Floor(OneLineBlockNum/2)), 0, -(distance * Mathf.Floor(OneLineBlockNum / 2)));
+			startPos = new Vector3(center.x -(distance * Mathf.Floor(OneLineBlockNum/2)), 0, center.z -(distance * Mathf.Floor(OneLineBlockNum / 2)));
 		}
 		else
 		{

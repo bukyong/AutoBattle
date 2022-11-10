@@ -11,6 +11,7 @@ TagManager:
   - Magician
   - E_Archer
   - E_Magician
+  - Block
   layers:
   - Default
   - TransparentFX
