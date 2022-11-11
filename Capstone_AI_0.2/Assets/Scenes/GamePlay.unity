@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,11 +152,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 40
+  defense: 0
   attackDelay: 3
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 298550891}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
   magicMissile: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &3316344
@@ -350,8 +354,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 20
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &9924722
@@ -466,8 +474,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &15158770
@@ -740,11 +752,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 20
+  defense: 1
   attackDelay: 2
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 582616902}
   arrowPrefab: {fileID: 7408335190288422121, guid: 5a75c4de7722e2241993587a373d71fa, type: 3}
   Arrow: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &50250748
@@ -1737,8 +1753,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &201865282
@@ -2363,8 +2383,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &313111747
@@ -2522,11 +2546,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 20
+  defense: 1
   attackDelay: 2
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 85147136}
   arrowPrefab: {fileID: 7408335190288422121, guid: 3fa15d9a88afcff4ea0b4052e4f31992, type: 3}
   Arrow: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!54 &332306293
@@ -2886,8 +2914,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!54 &401452229
@@ -2957,11 +2989,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 40
+  defense: 0
   attackDelay: 3
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 1819576303}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: fdfec5da23a63b2459af03c785d4c761, type: 3}
   magicMissile: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &416670490
@@ -4255,11 +4291,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 20
+  defense: 1
   attackDelay: 2.5
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 296722910}
   arrowPrefab: {fileID: 7408335190288422121, guid: 3fa15d9a88afcff4ea0b4052e4f31992, type: 3}
   Arrow: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &573287975
@@ -4712,11 +4752,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 20
+  defense: 1
   attackDelay: 2
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 606793010}
   arrowPrefab: {fileID: 7408335190288422121, guid: 5a75c4de7722e2241993587a373d71fa, type: 3}
   Arrow: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &606793014
@@ -5394,8 +5438,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &689758829
@@ -11458,8 +11506,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
+  defense: 2
   attackDelay: 1
+  attackStack: 0
   tr: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &1765950838
@@ -13395,11 +13447,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 40
+  defense: 0
   attackDelay: 3
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 2095240023}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
   magicMissile: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!1 &2095240023
@@ -13944,11 +14000,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 40
+  defense: 0
   attackDelay: 3
+  attackStack: 0
   tr: {fileID: 0}
   firePoint: {fileID: 2144300436}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
   magicMissile: {fileID: 0}
+  pgoHpBar: {fileID: 0}
+  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &2144300440

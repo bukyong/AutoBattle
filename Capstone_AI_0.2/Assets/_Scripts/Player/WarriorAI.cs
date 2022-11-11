@@ -10,15 +10,20 @@ public class WarriorAI: LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
-    private GameObject pgoHpBar; // 체력 바
 
     public float damage = 10f; // 공격력
+    public float defense = 2f; // 방어력
     public float attackDelay = 1f; // 공격 딜레이
+    public int attackStack = 0; // 공격 스택, (임시, 마나로 대체할 수도 있음)
+
     private float attackRange = 2f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
     public Transform tr;
+
+    public GameObject pgoHpBar; // 체력 바
+    public GameObject hpBarPrefab; // 체력 바 프리팹 할당
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -48,13 +53,15 @@ public class WarriorAI: LivingEntity
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(float newHealth, float newDamage, float newSpeed)
+    public void Setup(float newHealth, float newDamage, float newDefense, float newSpeed)
     {
         // 체력 설정
         startingHealth = newHealth;
         Health = newHealth;
         // 공격력 설정
         damage = newDamage;
+        // 방어력 설정
+        defense = newDefense;
         // 네비메쉬 에이전트의 이동 속도 설정
         pathFinder.speed = newSpeed;
     }
@@ -64,7 +71,8 @@ public class WarriorAI: LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-        pgoHpBar = GameObject.Find("Canvas/Slider");
+        pgoHpBar = Instantiate(hpBarPrefab);
+        pgoHpBar.transform.SetParent(GameObject.Find("Canvas").transform);
     }
 
     void Update()
@@ -83,7 +91,7 @@ public class WarriorAI: LivingEntity
         }
 
         // 오브젝트위에 체력 바가 따라다님
-        //pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -145,6 +153,12 @@ public class WarriorAI: LivingEntity
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
+                if (attackStack == 10)
+                {
+                    WarriorSkillEvent();
+                    attackStack = 0;
+                    playerAnimator.SetInteger("Skill", attackStack);
+                }
                 isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -175,9 +189,9 @@ public class WarriorAI: LivingEntity
 
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("전사 공격 실행");
-        Debug.Log("공격!");
 
-        // 공격 처리
+        attackStack += 5;
+        playerAnimator.SetInteger("Skill", attackStack);
         attackTarget.OnDamage(damage);
 
         // 최근 공격 시간 갱신
@@ -188,10 +202,23 @@ public class WarriorAI: LivingEntity
     public override void OnDamage(float damage)
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
+        // 방어력 적용은 어떻게 할 것인가
         base.OnDamage(damage);
 
         // 피격 애니메이션 재생
         // playerAnimator.SetTrigger("Hit");
+    }
+
+    public void WarriorSkillEvent()
+    {
+        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+        Debug.Log("전사 스킬 사용!");
+
+        playerAnimator.SetInteger("Skill", attackStack);
+
+        // 스택 요구 조건에 충족하면 스킬이 나가도록 한다
+        //attackTarget.OnDamage(damage);
     }
 
     // 사망 처리
@@ -221,6 +248,7 @@ public class WarriorAI: LivingEntity
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
+        pgoHpBar.SetActive(false);
         //Destroy(gameObject);
     }
 }

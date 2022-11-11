@@ -10,10 +10,12 @@ public class MagicianAI : LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
-    private GameObject pgoHpBar; // 체력 바
 
     public float damage = 40f; // 공격력
+    public float defense = 0f; // 방어력
     public float attackDelay = 3f; // 공격 딜레이
+    public int attackStack = 0; // 공격 스택 (임시, 마나로 대체할 수도 있음)
+
     private float attackRange = 10f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
@@ -24,6 +26,9 @@ public class MagicianAI : LivingEntity
     public GameObject firePoint; // 매직미사일이 발사될 위치
     public GameObject magicMissilePrefab; // 사용할 매직미사일 할당
     public GameObject magicMissile; // Instantiate() 메서드로 생성하는 매직미사일을 담는 게임오브젝트
+
+    public GameObject pgoHpBar; // 체력 바
+    public GameObject hpBarPrefab; // 체력 바 프리팹 할당
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -53,13 +58,15 @@ public class MagicianAI : LivingEntity
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(float newHealth, float newDamage, float newSpeed)
+    public void Setup(float newHealth, float newDamage, float newDefense, float newSpeed)
     {
         // 체력 설정
         startingHealth = newHealth;
         Health = newHealth;
         // 공격력 설정
         damage = newDamage;
+        // 방어력 설정
+        defense = newDefense;
         // 네비메쉬 에이전트의 이동 속도 설정
         pathFinder.speed = newSpeed;
     }
@@ -69,7 +76,8 @@ public class MagicianAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-        pgoHpBar = GameObject.Find("Canvas/Slider");
+        pgoHpBar = Instantiate(hpBarPrefab);
+        pgoHpBar.transform.parent = GameObject.Find("Canvas").transform;
     }
 
     void Update()
@@ -88,7 +96,7 @@ public class MagicianAI : LivingEntity
         }
 
         // 오브젝트위에 체력 바가 따라다님
-        //pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -109,7 +117,7 @@ public class MagicianAI : LivingEntity
                 isMove = false;
 
                 // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
 
                 // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
                 // 검출이 안되면 return
@@ -207,6 +215,17 @@ public class MagicianAI : LivingEntity
         // playerAnimator.SetTrigger("Hit");
     }
 
+    public void MagicianSkill()
+    {
+        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+        Debug.Log("마법사 스킬 사용!");
+
+        // 스택 요구 조건에 충족하면 스킬이 나가도록 한다
+        attackTarget.OnDamage(damage);
+        //playerAnimator.SetInteger("Skill", attackStack);
+        attackStack = 0;
+    }
     // 사망 처리
     public override void Die()
     {
