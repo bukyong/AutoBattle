@@ -15,6 +15,8 @@ public class LivingEntity : MonoBehaviour
     public bool Dead { get; protected set; } // 사망 상태
 
     public GameObject DamageText_GO;
+
+    public GameObject Hpbar;
     //public Transform DamageText_Pos;
 
     //public event Action OnDeath; // 사망 시 발동할 이벤트
@@ -27,6 +29,7 @@ public class LivingEntity : MonoBehaviour
         // 체력을 시작 체력으로 초기화
         Health = startingHealth;
         Mana = startingMana;
+
     }
 
     // 피해를 받는 기능
@@ -34,7 +37,7 @@ public class LivingEntity : MonoBehaviour
     {
         // 데미지만큼 체력 감소
         Health -= damage;
-        Debug.Log(Health);
+        //Debug.Log(Health);
 
         GameObject damageGO = Instantiate(DamageText_GO);
         damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);

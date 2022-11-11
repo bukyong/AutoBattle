@@ -73,6 +73,8 @@ public class WarriorAI: LivingEntity
         tr = GetComponent<Transform>();
         pgoHpBar = Instantiate(hpBarPrefab);
         pgoHpBar.transform.SetParent(GameObject.Find("Canvas").transform);
+        pgoHpBar.GetComponentInChildren<HpBar>().MaxHP = base.Health;
+
     }
 
     void Update()
@@ -92,6 +94,7 @@ public class WarriorAI: LivingEntity
 
         // 오브젝트위에 체력 바가 따라다님
         pgoHpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.0f, 0.3f));
+        pgoHpBar.GetComponentInChildren<HpBar>().HP = base.Health;
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -112,7 +115,7 @@ public class WarriorAI: LivingEntity
                 isMove = false;
 
                 // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
 
                 // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
                 // 검출이 안되면 return

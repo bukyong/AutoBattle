@@ -254,5 +254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   startingMana: 0
+  DamageText_GO: {fileID: 0}
   HP: 0
   isZero: 0
