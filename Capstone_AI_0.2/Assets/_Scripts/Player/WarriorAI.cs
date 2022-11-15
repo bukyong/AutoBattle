@@ -11,8 +11,8 @@ public class WarriorAI: LivingEntity
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
 
-    public float damage = 10f; // 공격력
-    public float defense = 2f; // 방어력
+    public float damage; // 공격력
+    public float defense; // 방어력
     public float attackDelay = 1f; // 공격 딜레이
     public int attackStack = 0; // 공격 스택, (임시, 마나로 대체할 수도 있음)
 
@@ -53,7 +53,7 @@ public class WarriorAI: LivingEntity
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(float newHealth, float newDamage, float newDefense, float newSpeed)
+    public void Setup(float newHealth, float newDamage, float newDefense)
     {
         // 체력 설정
         startingHealth = newHealth;
@@ -63,18 +63,18 @@ public class WarriorAI: LivingEntity
         // 방어력 설정
         defense = newDefense;
         // 네비메쉬 에이전트의 이동 속도 설정
-        pathFinder.speed = newSpeed;
+        //pathFinder.speed = newSpeed;
     }
 
     void Start()
     {
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
+        Setup(200f, 10f, 5f);
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         pgoHpBar = Instantiate(hpBarPrefab);
         pgoHpBar.transform.SetParent(GameObject.Find("Canvas").transform);
         pgoHpBar.GetComponentInChildren<HpBar>().MaxHP = base.Health;
-
     }
 
     void Update()
@@ -114,11 +114,10 @@ public class WarriorAI: LivingEntity
                 isAttack = false;
                 isMove = false;
 
-                // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+                // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
 
-                // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
-                // 검출이 안되면 return
+                // 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
                 if (colliders.Length > 0)
                 {
                     GameObject target;
@@ -217,6 +216,8 @@ public class WarriorAI: LivingEntity
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         Debug.Log("전사 스킬 사용!");
+
+        defense += 5f;
 
         playerAnimator.SetInteger("Skill", attackStack);
 

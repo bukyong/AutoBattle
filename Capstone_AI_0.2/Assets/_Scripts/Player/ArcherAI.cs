@@ -58,7 +58,7 @@ public class ArcherAI : LivingEntity
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(float newHealth, float newDamage, float newDefense, float newSpeed)
+    public void Setup(float newHealth, float newDamage, float newDefense)
     {
         // 체력 설정
         startingHealth = newHealth;
@@ -68,12 +68,13 @@ public class ArcherAI : LivingEntity
         // 방어력 설정
         defense = newDefense;
         // 네비메쉬 에이전트의 이동 속도 설정
-        pathFinder.speed = newSpeed;
+        //pathFinder.speed = newSpeed;
     }
 
     void Start()
     {
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
+        //Setup(100f, 20f, 1f);
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         pgoHpBar = Instantiate(hpBarPrefab);
@@ -118,7 +119,7 @@ public class ArcherAI : LivingEntity
                 isAttack = false;
                 isMove = false;
 
-                // 반지름 10f의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+                // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
 
                 // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경

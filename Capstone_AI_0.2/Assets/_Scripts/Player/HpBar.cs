@@ -15,8 +15,8 @@ public class HpBar : MonoBehaviour
     {
         Hp_gauge = GetComponent<Image>();
         Hp_gauge.fillAmount = 1f;
-        HP = 9999f;
     }
+
     void Update()
     {
         // isZero가 true가 되면 (HP가 0이 되면) 실행 종료
@@ -24,8 +24,6 @@ public class HpBar : MonoBehaviour
         {
             return;
         }
-
-        //HP = base.Health;
 
         Hp_gauge.fillAmount = HP / MaxHP;
 
@@ -35,9 +33,10 @@ public class HpBar : MonoBehaviour
             isZero = true;
         }
     }
-
+    /*
     public void Damaged(float n)
     { 
         HP -= n;
     }
+    */
 }
