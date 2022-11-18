@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagicMissileMove : MonoBehaviour
 {
+    public MagicianAI magicianAI;
     public LivingEntity targetEntity; // 공격 대상
 
     public float speed = 15f;
@@ -19,7 +20,7 @@ public class MagicMissileMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sphCollider = GetComponent<SphereCollider>();
         // 수정 필요
-        MagicianAI magicianAI = GameObject.FindWithTag("Magician").GetComponent<MagicianAI>();
+        magicianAI = GameObject.FindWithTag("Magician").GetComponent<MagicianAI>();
         damage = magicianAI.damage;
 
         Destroy(gameObject, 5);
@@ -52,13 +53,11 @@ public class MagicMissileMove : MonoBehaviour
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
-
             Destroy(gameObject);
 
             // 데미지 처리
             attackTarget.OnDamage(damage);
-            Debug.Log("현재 데미지 : " + damage);
+            //Debug.Log("현재 데미지 : " + damage);
         }
         // 매직미사일이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
@@ -66,15 +65,13 @@ public class MagicMissileMove : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
-
             Destroy(gameObject);
         }
         
         else
         {
             sphCollider.enabled = false;
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 

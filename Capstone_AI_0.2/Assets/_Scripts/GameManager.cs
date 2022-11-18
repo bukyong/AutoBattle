@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
 	public AudioClip H_Shield;
 	public AudioClip H_Monster;
 
+
+	public bool isBattle;
 	public enum GameState 
 	{
 		Waiting,

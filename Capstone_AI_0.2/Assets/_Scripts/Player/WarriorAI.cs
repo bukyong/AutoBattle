@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -82,14 +83,17 @@ public class WarriorAI: LivingEntity
         playerAnimator.SetBool("isMove", isMove);
         playerAnimator.SetBool("isAttack", isAttack);
 
-        if (hasTarget)
+        if(GameManager.Instance.isBattle)
         {
-            // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-            dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+            if (hasTarget)
+            {
+                // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+                dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
-            // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-            this.transform.LookAt(targetPosition);
+                // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+                Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+                this.transform.LookAt(targetPosition);
+            }
         }
 
         // 오브젝트위에 체력 바가 따라다님
@@ -155,12 +159,6 @@ public class WarriorAI: LivingEntity
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
-                if (attackStack == 10)
-                {
-                    WarriorSkillEvent();
-                    attackStack = 0;
-                    playerAnimator.SetInteger("Skill", attackStack);
-                }
                 isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -179,6 +177,54 @@ public class WarriorAI: LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
+    }
+
+    // 전사 버프 스킬 메소드
+    public void WarriorSkillBuff()
+    {
+        Debug.Log("전사 버프 스킬 사용!");
+
+        StartCoroutine(OnBuffCoroutine(3, 1f));
+
+        attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
+    }
+
+    // 전사 광역기 스킬 메소드
+    public void WarriorSkillAOE()
+    {
+        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+        Debug.Log("전사 광역기 스킬 사용!");
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+
+        foreach (Collider hit in colliders)
+        {
+            LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
+            hitTarget.OnDamage(damage);
+        }
+
+        attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
+    }
+
+    // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
+    IEnumerator OnBuffCoroutine(int time, float value)
+    {
+        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
+        defense += value;
+        Debug.Log("전사 방어력 증가!");
+
+        while (time > 0)
+        {
+            time--;
+            //Debug.Log(time);
+            yield return new WaitForSeconds(1f);
+        }
+
+        defense -= value;
+        Debug.Log("전사 방어력 감소!");
     }
 
     // 데미지 처리하기
@@ -204,25 +250,17 @@ public class WarriorAI: LivingEntity
     public override void OnDamage(float damage)
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        // 방어력 적용은 어떻게 할 것인가
-        base.OnDamage(damage);
+        if (damage - defense <= 0 )
+        {
+            base.OnDamage(0);
+        }
+        else
+        {
+            base.OnDamage(damage - defense);
+        }
 
         // 피격 애니메이션 재생
         // playerAnimator.SetTrigger("Hit");
-    }
-
-    public void WarriorSkillEvent()
-    {
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        Debug.Log("전사 스킬 사용!");
-
-        defense += 5f;
-
-        playerAnimator.SetInteger("Skill", attackStack);
-
-        // 스택 요구 조건에 충족하면 스킬이 나가도록 한다
-        //attackTarget.OnDamage(damage);
     }
 
     // 사망 처리

@@ -10,9 +10,10 @@ public class ArcherAI : LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
+    private float animSpeed = 1.0f;
 
-    public float damage = 20f; // 공격력
-    public float defense = 1f; // 방어력
+    public float damage = 10f; // 공격력
+    private float defense = 9f; // 방어력
     public float attackDelay = 2f; // 공격 딜레이
     public int attackStack = 0; // 공격 스택, (임시, 마나로 대체할 수도 있음)
 
@@ -78,8 +79,9 @@ public class ArcherAI : LivingEntity
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         pgoHpBar = Instantiate(hpBarPrefab);
-        pgoHpBar.transform.parent = GameObject.Find("Canvas").transform;
+        pgoHpBar.transform.SetParent(GameObject.Find("Canvas").transform);
         pgoHpBar.GetComponentInChildren<HpBar>().MaxHP = base.Health;
+        playerAnimator.SetFloat("AttackSpeed", animSpeed);
     }
 
     void Update()
@@ -87,14 +89,17 @@ public class ArcherAI : LivingEntity
         playerAnimator.SetBool("isMove", isMove);
         playerAnimator.SetBool("isAttack", isAttack);
 
-        if (hasTarget)
+        if (GameManager.Instance.isBattle)
         {
-            // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-            dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+            if (hasTarget)
+            {
+                // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+                dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
-            // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-            this.transform.LookAt(targetPosition);
+                // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+                Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+                this.transform.LookAt(targetPosition);
+            }
         }
 
         // 오브젝트위에 체력 바가 따라다님
@@ -163,7 +168,6 @@ public class ArcherAI : LivingEntity
             {
                 isAttack = true;
                 Debug.Log("궁수 공격 실행");
-                //Fire();
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -188,43 +192,66 @@ public class ArcherAI : LivingEntity
     public void Fire()
     {
         // Instatiate()로 화살 프리팹을 복제 생성
-        Arrow = Instantiate(arrowPrefab, firePoint.transform.position, firePoint.transform.rotation); 
+        Arrow = Instantiate(arrowPrefab, firePoint.transform.position, firePoint.transform.rotation);
+
+        attackStack += 2;
+        playerAnimator.SetInteger("Skill", attackStack);
 
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("화살 발사!");
     }
 
-    // 화살에서 데미지 처리하기
-    public void OnDamageEvent()
+    public void ArcherSkillBuff()
     {
-        // 상대방의 LivingEntity 타입 가져오기
-        // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+        Debug.Log("궁수 버프 스킬 사용!");
 
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("궁수 공격!");
+        StartCoroutine(OnBuffCoroutine(5, 1f));
 
-        // 공격 처리
-        attackTarget.OnDamage(damage);
+        attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
     }
 
-    public void ArcherSkill()
+    public void ArcherSkillAOE()
     {
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+        Debug.Log("궁수 광역기 스킬 사용!");
 
-        Debug.Log("궁수 스킬 사용!");
-
-        // 스택 요구 조건에 충족하면 스킬이 나가도록 한다
-        attackTarget.OnDamage(damage);
-        //playerAnimator.SetInteger("Skill", attackStack);
         attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
+    }
+
+    // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
+    IEnumerator OnBuffCoroutine(int time, float value)
+    {
+        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
+
+        attackDelay -= value;
+        playerAnimator.SetFloat("AttackSpeed", animSpeed * 2);
+        Debug.Log("궁수 공격 속도 증가!");
+
+        while (time > 0)
+        {
+            time--;
+            Debug.Log(time);
+            yield return new WaitForSeconds(1f);
+        }
+
+        attackDelay += value;
+        playerAnimator.SetFloat("AttackSpeed", animSpeed);
+        Debug.Log("궁수 공격 속도 감소!");
     }
 
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage)
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        base.OnDamage(damage);
+        if (damage - defense <= 0)
+        {
+            base.OnDamage(0);
+        }
+        else
+        {
+            base.OnDamage(damage - defense);
+        }
 
         // 피격 애니메이션 재생
         // playerAnimator.SetTrigger("Hit");

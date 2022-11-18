@@ -78,7 +78,7 @@ public class MagicianAI : LivingEntity
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         pgoHpBar = Instantiate(hpBarPrefab);
-        pgoHpBar.transform.parent = GameObject.Find("Canvas").transform;
+        pgoHpBar.transform.SetParent(GameObject.Find("Canvas").transform);
         pgoHpBar.GetComponentInChildren<HpBar>().MaxHP = base.Health;
     }
 
@@ -87,14 +87,17 @@ public class MagicianAI : LivingEntity
         playerAnimator.SetBool("isMove", isMove);
         playerAnimator.SetBool("isAttack", isAttack);
 
-        if (hasTarget)
+        if (GameManager.Instance.isBattle)
         {
-            // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-            dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+            if (hasTarget)
+            {
+                // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+                dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
-            // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-            Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-            this.transform.LookAt(targetPosition);
+                // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+                Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+                this.transform.LookAt(targetPosition);
+            }
         }
 
         // 오브젝트위에 체력 바가 따라다님
@@ -162,7 +165,6 @@ public class MagicianAI : LivingEntity
             {
                 isAttack = true;
                 Debug.Log("마법사 공격 실행");
-                //Fire();
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -189,45 +191,56 @@ public class MagicianAI : LivingEntity
         // Instatiate()로 매직 미사일 프리팹을 복제 생성
         magicMissile = Instantiate(magicMissilePrefab, firePoint.transform.position, firePoint.transform.rotation);
 
+        attackStack += 2;
+        playerAnimator.SetInteger("Skill", attackStack);
+
         // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("화살 생성!");
+        Debug.Log("매직미사일 생성!");
     }
 
-    // 매직 미사일에서 데미지 처리하기
-    public void OnDamageEvent()
+    public void MagicianSkillAOE()
     {
-        // 상대방의 LivingEntity 타입 가져오기
-        // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("마법사 공격!");
+        Debug.Log("마법사 광역기 스킬 사용!");
 
-        // 공격 처리
-        attackTarget.OnDamage(damage);
+        attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
+    }
+
+    public void MagicianSkillHeal()
+    {
+        Debug.Log("마법사 회복 스킬 사용!");
+        
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, LayerMask.GetMask("Player"));
+
+        foreach (Collider heal in colliders)
+        {
+            LivingEntity healTarget = heal.gameObject.GetComponent<LivingEntity>();
+            healTarget.Heal(10);
+        }
+        
+        attackStack = 0;
+        playerAnimator.SetInteger("Skill", attackStack);
     }
 
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage)
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        base.OnDamage(damage);
+        if (damage - defense <= 0)
+        {
+            base.OnDamage(0);
+        }
+        else
+        {
+            base.OnDamage(damage - defense);
+        }
 
         // 피격 애니메이션 재생
         // playerAnimator.SetTrigger("Hit");
     }
 
-    public void MagicianSkill()
-    {
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        Debug.Log("마법사 스킬 사용!");
-
-        // 스택 요구 조건에 충족하면 스킬이 나가도록 한다
-        attackTarget.OnDamage(damage);
-        //playerAnimator.SetInteger("Skill", attackStack);
-        attackStack = 0;
-    }
     // 사망 처리
     public override void Die()
     {

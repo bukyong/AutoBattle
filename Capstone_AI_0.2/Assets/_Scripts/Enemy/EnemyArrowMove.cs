@@ -52,13 +52,13 @@ public class EnemyArrowMove : MonoBehaviour
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
 
             Destroy(gameObject);
 
             // 데미지 처리
             attackTarget.OnDamage(damage);
-            Debug.Log("현재 데미지 : " + damage);
+            //Debug.Log("현재 데미지 : " + damage);
         }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
@@ -66,14 +66,14 @@ public class EnemyArrowMove : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
 
             Destroy(gameObject);
         }
         else
         {
             sphCollider.enabled = false;
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 

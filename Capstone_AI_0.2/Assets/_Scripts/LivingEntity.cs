@@ -48,17 +48,11 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    // 방어력 증가 표시
-    public virtual void DefenseUp(float defense)
-    {
-
-    }
-
     // 체력 회복 (미구현 상태)
-    public virtual void Heal()
+    public virtual void Heal(float value)
     {
         // 설정된 값 만큼 체력 회복
-        //Health += damage;
+        Health += value;
     }
 
     // 사망 처리

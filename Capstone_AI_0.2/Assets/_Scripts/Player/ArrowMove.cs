@@ -2,26 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
+using static UnityEngine.GraphicsBuffer;
 
 public class ArrowMove : MonoBehaviour
 {
+    public ArcherAI archerAI;
     public LivingEntity targetEntity; // 공격 대상
 
     public float speed = 10f;
     public float damage; // 화살 고정 데미지
+    public bool isSkill;
 
     private Rigidbody rb;
     private SphereCollider sphCollider;
     private float lastCollisionEnterTime;
     private float collisionDealy = 0.1f;
 
+    public float hitOffset = 0f;
+    public bool UseFirePointRotation;
+    public Vector3 rotationOffset = new Vector3(0, 0, 0);
+    public GameObject hit;
+    public GameObject flash;
+    public GameObject[] Detached;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         sphCollider = GetComponent<SphereCollider>();
         // 수정 필요
-        ArcherAI archerAI = GameObject.FindWithTag("Archer").GetComponent<ArcherAI>();
+        archerAI = GameObject.FindWithTag("Archer").GetComponent<ArcherAI>();
         damage = archerAI.damage;
+
+        if (flash != null)
+        {
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity); //Quaternion.identity 회전 없음
+            flashInstance.transform.forward = gameObject.transform.forward;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+            if (flashPs != null)
+            {
+                Destroy(flashInstance, flashPs.main.duration);   //ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
 
         Destroy(gameObject, 5);
     }
@@ -47,19 +74,39 @@ public class ArrowMove : MonoBehaviour
         // 화살이 적과 충돌했을 경우
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;
+            if (archerAI.attackStack == 10f)
+            {
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+                speed = 0;
 
-            // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-            LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
+                Destroy(gameObject);
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, archerAI.whatIsTarget);
 
-            Destroy(gameObject);
+                foreach (Collider hit in colliders)
+                {
+                    LivingEntity attackTarget = hit.gameObject.GetComponent<LivingEntity>();
 
-            // 데미지 처리
-            attackTarget.OnDamage(damage);
-            Debug.Log("현재 데미지 : " + damage);
+                    // 데미지 처리
+                    attackTarget.OnDamage(damage);
+                }
+            }
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+                speed = 0;
+
+                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
+                LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
+
+                Destroy(gameObject);
+
+                // 데미지 처리
+                attackTarget.OnDamage(damage);
+                //Debug.Log("현재 데미지 : " + damage);
+            }
+
         }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
@@ -67,14 +114,12 @@ public class ArrowMove : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
 
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
-
             Destroy(gameObject);
         }
         else
         {
             sphCollider.enabled = false;
-            Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 
