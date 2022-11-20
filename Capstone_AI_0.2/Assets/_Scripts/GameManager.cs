@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 			{
 				Debug.Log("최소 클릭 시간 초과");
 				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-				raycastGO.transform.root.position = new Vector3(mousePos.x, 1f, mousePos.z);
+				raycastGO.transform.position = new Vector3(mousePos.x, 1f, mousePos.z);
 			}
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
 				{
 					Debug.Log("블록 감지");
 
-					raycastGO.transform.root.position = new Vector3(hit[i].point.x, 0.5f, hit[i].point.z);
+					raycastGO.transform.position = new Vector3(hit[i].point.x, 0.5f, hit[i].point.z);
 				}
 				else
 				{
@@ -167,11 +167,11 @@ public class GameManager : MonoBehaviour
 
 			if(blockGO != null)
 			{
-				raycastGO.transform.root.position = new Vector3(blockGO.transform.position.x, 0, blockGO.transform.position.z);
+				raycastGO.transform.position = new Vector3(blockGO.transform.position.x, 0, blockGO.transform.position.z);
 			}
 			else
 			{
-				raycastGO.transform.root.position = raycastStartPos;
+				raycastGO.transform.position = raycastStartPos;
 			}
 
 		}
