@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
 			{
 				if(hit.collider.name == "S_Warrior")
 				{
-					hit.collider.GetComponent<>()
+					//hit.collider.GetComponent<>()
 				}
 			}
 			else
