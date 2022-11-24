@@ -110,46 +110,50 @@ public class ArcherAI : LivingEntity
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
     {
+
+
         // 살아 있는 동안 무한 루프
         while (!Dead)
         {
-            if (hasTarget)
-            {
-                Attack();
-            }
-            else
-            {
-                // 추적 대상이 없을 경우, AI 이동 정지
-                pathFinder.isStopped = true;
-                isAttack = false;
-                isMove = false;
-
-                // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
-
-                // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
-                // 검출이 안되면 return
-                if (colliders.Length > 0)
+			if (GameManager.Instance.isBattle)
+			{
+				if (hasTarget)
                 {
-                    GameObject target;
-                    target = colliders[0].gameObject;
+                    Attack();
+                }
+                else
+                {
+                    // 추적 대상이 없을 경우, AI 이동 정지
+                    pathFinder.isStopped = true;
+                    isAttack = false;
+                    isMove = false;
 
-                    for (int i = 0; i < colliders.Length; i++)
+                    // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+
+                    // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
+                    // 검출이 안되면 return
+                    if (colliders.Length > 0)
                     {
-                        if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
-                        {
-                            target = colliders[i].gameObject;
-                            //break;
-                        }
-                    }
+                        GameObject target;
+                        target = colliders[0].gameObject;
 
-                    targetEntity = target.GetComponent<LivingEntity>();
+                        for (int i = 0; i < colliders.Length; i++)
+                        {
+                            if (Vector3.Distance(target.transform.position, this.transform.position) > Vector3.Distance(this.transform.position, colliders[i].transform.position))
+                            {
+                                target = colliders[i].gameObject;
+                                //break;
+                            }
+                        }
+
+                        targetEntity = target.GetComponent<LivingEntity>();
+                    }
                 }
             }
-
-            // 0.25초 주기로 처리 반복
-            yield return new WaitForSeconds(0.25f);
-        }
+			// 0.25초 주기로 처리 반복
+			yield return new WaitForSeconds(0.25f);
+		}
     }
 
     // 적과 플레이어 사이의 거리 측정, 거리에 따라 공격 실행

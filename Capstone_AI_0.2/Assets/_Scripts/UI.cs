@@ -74,6 +74,13 @@ public class UI : MonoBehaviour
 		SceneManager.LoadScene("GamePlay");
 	}
 
+	public void BattleStart()
+	{
+		GameManager.Instance.isBattle = true;
+
+		Debug.Log("전투시작");
+	}
+
 	public void PauseGame()
 	{
 		Time.timeScale = 0.0f;

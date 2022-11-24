@@ -30,10 +30,23 @@ public class GameManager : MonoBehaviour
 	public GameObject block;
 	public Vector3 mapCenter;
 
+	Storage storage;
+
 	float pressedTime = 0;
 	float Min_pressedTime = 1f;
 	GameObject raycastGO;
 	Vector3 raycastStartPos;
+
+	public GameObject Panel_Character;
+
+	public List<GameObject> List_Warrior;
+	public List<GameObject> List_Shield;
+	public List<GameObject> List_Archer;
+	public List<GameObject> List_Crossbow;
+	public List<GameObject> List_Magician;
+	public List<GameObject> List_Healer;
+
+	public GameObject Prefab_Warrior;
 
 
 	[Header("Sound_Background")]
@@ -67,11 +80,6 @@ public class GameManager : MonoBehaviour
 
 
 	public bool isBattle;
-	public enum GameState 
-	{
-		Waiting,
-		Battle
-	}
 
 	private void Awake()
 	{
@@ -96,7 +104,9 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+		storage = GameObject.Find("Storage").GetComponent<Storage>();
 
+		isBattle = false;
 	}
 
 	private void Update()
@@ -113,6 +123,13 @@ public class GameManager : MonoBehaviour
 			{
 				raycastGO = hit.collider.gameObject;
 			}
+			else if(hit.transform.gameObject.tag == "Storage")
+			{
+				if(hit.collider.name == "S_Warrior")
+				{
+					hit.collider.GetComponent<>()
+				}
+			}
 			else
 			{
 				raycastGO = null;
@@ -127,49 +144,88 @@ public class GameManager : MonoBehaviour
 			if(pressedTime >=Min_pressedTime)
 			{
 				Debug.Log("최소 클릭 시간 초과");
-				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-				raycastGO.transform.position = new Vector3(mousePos.x, 1f, mousePos.z);
+
+/*				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+				if(raycastGO.layer == 8)
+				{
+					raycastGO.transform.position = new Vector3(mousePos.x, 1f, mousePos.z);
+				}*/
+				
+
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				RaycastHit[] hit = Physics.RaycastAll(ray);
+
+				for (int i = 0; i < hit.Length; i++)
+				{
+					if (hit == null)
+					{
+						Debug.Log("레이케스트 실패");
+					}
+					else if (hit[i].collider.name == "Plane" && raycastGO)
+					{
+						Debug.Log("블록 감지");
+
+						raycastGO.transform.position = new Vector3(hit[i].point.x, 0.5f, hit[i].point.z);
+					}
+					else if (hit[i].collider.name == "Storage" && raycastGO)
+					{
+						//현재는 워리어 채력만 보임
+						raycastGO.GetComponent<WarriorAI>().pgoHpBar.SetActive(false);
+						raycastGO.transform.position = new Vector3(hit[i].point.x, 1f, hit[i].point.z);
+					}
+					else
+					{
+						Debug.Log("클릭 중 맵 감지 실패");
+					}
+				}
 			}
 
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit[] hit = Physics.RaycastAll(ray);
 
-			for (int i = 0; i < hit.Length; i++)
-			{
-				if (hit[i].collider.name == "Plane")
-				{
-					Debug.Log("블록 감지");
-
-					raycastGO.transform.position = new Vector3(hit[i].point.x, 0.5f, hit[i].point.z);
-				}
-				else
-				{
-					Debug.Log("클릭 중 맵 감지 실패");
-				}
-			}
 		}
 
 		if (Input.GetMouseButtonUp(0))
 		{
-			pressedTime = 0;
+
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit[] hit = Physics.RaycastAll(ray);
 
+			if(raycastGO != null)
+			{
+				if (raycastGO.layer == 8 && pressedTime < Min_pressedTime)
+				{
+					Panel_Character.transform.position = Camera.main.WorldToScreenPoint(raycastGO.transform.position + new Vector3(2f, 0f, 0f));
+				}
+			}
+
+
+			pressedTime = 0;
+
 			GameObject blockGO = null;
+			GameObject storageGO = null;
 			for (int i = 0; i < hit.Length; i++)
 			{
 				if(hit[i].collider.name == "Plane_Block")
 				{
 					blockGO = hit[i].collider.gameObject;
 				}
+
+				if (hit[i].collider.name == "Storage")
+				{
+					storageGO = hit[i].collider.gameObject;
+				}
 			}
 
-			if(blockGO != null)
+			if(blockGO != null && raycastGO)
 			{
 				raycastGO.transform.position = new Vector3(blockGO.transform.position.x, 0, blockGO.transform.position.z);
 			}
-			else
+			else if(storageGO && raycastGO)
+			{
+				storage.StoreUnit(raycastGO);
+				Destroy(raycastGO);
+			}
+			else if(raycastGO)
 			{
 				raycastGO.transform.position = raycastStartPos;
 			}
@@ -177,5 +233,35 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+
+	public void SpawnUnit(GameObject GO)
+	{
+		var spawnGO = Instantiate(GO);
+
+		if(spawnGO.CompareTag("Warrior"))
+		{
+			List_Warrior.Add(spawnGO);
+		}
+		else if(spawnGO.CompareTag("Shield"))
+		{
+			List_Shield.Add(spawnGO);
+		}
+		else if (spawnGO.CompareTag("Archer"))
+		{
+			List_Archer.Add(spawnGO);
+		}
+		else if (spawnGO.CompareTag("Crossbow"))
+		{
+			List_Crossbow.Add(spawnGO);
+		}
+		else if (spawnGO.CompareTag("Magician"))
+		{
+			List_Magician.Add(spawnGO);
+		}
+		else if (spawnGO.CompareTag("Healer"))
+		{
+			List_Healer.Add(spawnGO);
+		}
+	}
 
 }
