@@ -47,9 +47,14 @@ public class GameManager : MonoBehaviour
 	public List<GameObject> List_Healer;
 
 	public GameObject Prefab_Warrior;
+    public GameObject Prefab_Shield;
+    public GameObject Prefab_Archer;
+    public GameObject Prefab_Crossbow;
+    public GameObject Prefab_Magician;
+    public GameObject Prefab_Healer;
 
 
-	[Header("Sound_Background")]
+    [Header("Sound_Background")]
 	public AudioClip Title;
 	public AudioClip Cave;
 	public AudioClip Village;
@@ -125,10 +130,42 @@ public class GameManager : MonoBehaviour
 			}
 			else if(hit.transform.gameObject.tag == "Storage")
 			{
-				if(hit.collider.name == "S_Warrior")
+				int unitNum;
+                GameObject Prefab = null;
+
+                unitNum = storage.GetComponent<Storage>().TakeOutUnit(hit.collider.gameObject);
+
+                if (unitNum == 0)
 				{
-					//hit.collider.GetComponent<>()
+					Prefab = Prefab_Warrior;
 				}
+                else if (unitNum == 1)
+                {
+                    Prefab = Prefab_Shield;
+                }
+				else if(unitNum == 2)
+				{
+                    Prefab = Prefab_Archer;
+                }
+                else if (unitNum == 3)
+                {
+                    Prefab = Prefab_Crossbow;
+                }
+                else if (unitNum == 4)
+                {
+                    Prefab = Prefab_Magician;
+                }
+                else if (unitNum == 5)
+                {
+                    Prefab = Prefab_Healer;
+                }
+				else
+				{
+					Prefab = null;
+					Debug.Log("유닛 못 불러옴. 창고 클릭시 생성 불가");
+				}
+
+                raycastGO = Instantiate(Prefab, new Vector3(hit.point.x, 1f, hit.point.z), Quaternion.identity);
 			}
 			else
 			{

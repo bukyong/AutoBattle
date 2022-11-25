@@ -14,18 +14,6 @@ public class Storage : MonoBehaviour
     public GameObject SP_Warrior;
 
 
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void StoreUnit(GameObject GO)
     {
         //나중엔 유닛 타입에 따라 번호 부여하고 이걸로 구별해서 분별
@@ -34,6 +22,11 @@ public class Storage : MonoBehaviour
 		S_Warrior.GetComponent<StorageSorting>().AddList(prefabGO);
 	}
 
-	//public GameObject TakeOutUnit()
+	public int TakeOutUnit(GameObject GO)
+	{
+		GO.GetComponent<StorageSorting>().removeList();
+
+        return (int)GO.GetComponent<StorageSorting>().StoreType;
+	}
 
 }

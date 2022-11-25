@@ -5,14 +5,28 @@ using UnityEngine;
 public class StorageSorting : MonoBehaviour
 {
     public List<GameObject> GO_List;
+    public GO_Type StoreType;
 
     float distance;
+
+    public enum GO_Type
+    {
+        warrior,
+        shield,
+        archer,
+        crossbow,
+        magician,
+        healer,
+        maxValue
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         GO_List = new List<GameObject>();
         distance = 0.3f;
+
+        StoreType = GO_Type.maxValue;
     }
 
     // Update is called once per frame
@@ -26,6 +40,7 @@ public class StorageSorting : MonoBehaviour
         GO_List.Add(GO);
         Sorting();
 
+        
 	}
 
     void Sorting()
@@ -36,9 +51,11 @@ public class StorageSorting : MonoBehaviour
 		}
     }
 
-    public void removeList()
+    public int removeList()
     {
-        GO_List[GO_List.Count - 1].gameObject.SetActive(false);
-        //리스트 빼고 오브젝트 생성하고 마우스에 부착해야함
+        Destroy(GO_List[GO_List.Count - 1].gameObject);
+        GO_List.RemoveAt(GO_List.Count - 1);
+
+        return (int)StoreType;
     }
 }
