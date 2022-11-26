@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6060328872141530184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4085851817416934975}
+  - component: {fileID: 501932980193748368}
+  m_Layer: 0
+  m_Name: GameManager_Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4085851817416934975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060328872141530184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &501932980193748368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060328872141530184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f835d80692d4d4a9f1b157842b8ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 3876340907474570620, guid: 1c5711a11a3aa0f478f45a7b05c87a9e, type: 3}
+  block: {fileID: 4959863351200791874, guid: 66f69d01e8818de4e8caafe70f353e9f, type: 3}
+  mapCenter: {x: 0, y: 0, z: 0}
+  Title: {fileID: 8300000, guid: c04625ab9229387489c3f395f0f8d122, type: 3}
+  Cave: {fileID: 8300000, guid: 6fbd540688c9e5b46b72041ecf95c751, type: 3}
+  Village: {fileID: 8300000, guid: 7fb4c23b5c02cc94b968d560d12bb172, type: 3}
+  WarriorAttack: {fileID: 8300000, guid: 2444855a17750ec43bab7496edd31fc2, type: 3}
+  WarriorSkill: {fileID: 8300000, guid: 6698b7ed244d0c443910af39b0a95fee, type: 3}
+  WarriorWalk: {fileID: 8300000, guid: 712a2a5e00b645a42bdccf0d76404128, type: 3}
+  WarriorGrapTouch: {fileID: 8300000, guid: 02a2d108925cdbf4482a7f1cd36811b9, type: 3}
+  ArcherAttack: {fileID: 8300000, guid: cb28c719a787a6640acc6ffd1918ecfd, type: 3}
+  ArcherSkill: {fileID: 8300000, guid: f8196ec9db2154045b8c962feb239037, type: 3}
+  ArcherWalk: {fileID: 8300000, guid: c25e609f1550fdc419e6396e7afa6b4f, type: 3}
+  ArcherGrapTouch: {fileID: 8300000, guid: f67cec131f9b60946923de806052e63a, type: 3}
+  WizardAttack: {fileID: 8300000, guid: bffd04c63c968ad4fb0e13f0e411bace, type: 3}
+  WizardSkill: {fileID: 8300000, guid: eec754939fc197b49aab14950413fa12, type: 3}
+  WizardWalk: {fileID: 8300000, guid: c25e609f1550fdc419e6396e7afa6b4f, type: 3}
+  WizardGrapTouch: {fileID: 8300000, guid: 1edf0ef77ab492c4982bf4566b19a737, type: 3}
+  H_HeavyArmor: {fileID: 8300000, guid: a726e50fd1b8e5d4d9224d6415722fe9, type: 3}
+  H_NormalArmor: {fileID: 8300000, guid: 083744b5eb24f2e42a6b9bbcc826dcf8, type: 3}
+  H_Shield: {fileID: 8300000, guid: 51eb97b2a4bf20b4fb5e8195b1333daa, type: 3}
+  H_Monster: {fileID: 8300000, guid: 62f87a12223d8cf4cbdc26b9d9b967bb, type: 3}
+  isBattle: 1

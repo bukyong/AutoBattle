@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
 					else if (hit[i].collider.name == "Storage" && raycastGO)
 					{
 						//현재는 워리어 채력만 보임
-						raycastGO.GetComponent<WarriorAI>().pgoHpBar.SetActive(false);
+						raycastGO.GetComponent<WarriorAI>().pgoGauge.SetActive(false);
 						raycastGO.transform.position = new Vector3(hit[i].point.x, 1f, hit[i].point.z);
 					}
 					else

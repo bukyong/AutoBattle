@@ -59,6 +59,7 @@ public class MagicMissileMove : MonoBehaviour
             attackTarget.OnDamage(damage);
             //Debug.Log("현재 데미지 : " + damage);
         }
+
         // 매직미사일이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {

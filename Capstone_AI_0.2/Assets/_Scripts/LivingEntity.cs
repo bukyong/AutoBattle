@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 // 생명체로 동작할 게임 오브젝트들의 뼈대를 제공
@@ -8,15 +9,16 @@ using UnityEngine;
 
 public class LivingEntity : MonoBehaviour
 {
-    public float startingHealth = 100f; // 시작 체력
-    public float startingMana = 0f; // 시작 마나
+    public float startingHealth; // 시작 체력
+    public float startingMana; // 시작 마나
     public float Health { get; protected set; } // 현재 체력
+    public float MaxHealth { get; protected set; } // 최대 체력
     public float Mana { get; protected set; } // 현재 마나
+    public float MaxMana { get; protected set; } // 최대 마나
     public bool Dead { get; protected set; } // 사망 상태
 
     public GameObject DamageText_GO;
 
-    //public GameObject hpBar;
     //public Transform DamageText_Pos;
 
     //public event Action OnDeath; // 사망 시 발동할 이벤트
@@ -48,11 +50,23 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    // 체력 회복 (미구현 상태)
+    // 체력 회복
     public virtual void Heal(float value)
     {
         // 설정된 값 만큼 체력 회복
-        Health += value;
+        if (Health + value >= MaxHealth)
+        {
+            Health = MaxHealth;
+        }
+        else
+        {
+            Health += value;
+        }
+
+        GameObject damageGO = Instantiate(DamageText_GO);
+        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        damageGO.GetComponent<TextMeshPro>().color = Color.green;
+        damageGO.GetComponent<DamageText>().damage = value;
     }
 
     // 사망 처리

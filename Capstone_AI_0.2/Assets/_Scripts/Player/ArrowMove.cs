@@ -74,39 +74,17 @@ public class ArrowMove : MonoBehaviour
         // 화살이 적과 충돌했을 경우
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            if (archerAI.attackStack == 10f)
-            {
-                rb.constraints = RigidbodyConstraints.FreezeAll;
-                speed = 0;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            speed = 0;
 
-                Destroy(gameObject);
+            // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
+            LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, archerAI.whatIsTarget);
+            Destroy(gameObject);
 
-                foreach (Collider hit in colliders)
-                {
-                    LivingEntity attackTarget = hit.gameObject.GetComponent<LivingEntity>();
-
-                    // 데미지 처리
-                    attackTarget.OnDamage(damage);
-                }
-            }
-            else
-            {
-                rb.constraints = RigidbodyConstraints.FreezeAll;
-                speed = 0;
-
-                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-                LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
-
-                Destroy(gameObject);
-
-                // 데미지 처리
-                attackTarget.OnDamage(damage);
-                //Debug.Log("현재 데미지 : " + damage);
-            }
-
+            // 데미지 처리
+            attackTarget.OnDamage(damage);
+            //Debug.Log("현재 데미지 : " + damage);
         }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))

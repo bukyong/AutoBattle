@@ -360,7 +360,6 @@ GameObject:
   - component: {fileID: 9924723}
   - component: {fileID: 9924722}
   - component: {fileID: 9924721}
-  - component: {fileID: 9924724}
   m_Layer: 8
   m_Name: C_Warrior
   m_TagString: Player
@@ -464,13 +463,12 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  tr: {fileID: 0}
   damage: 20
   defense: 2
   attackDelay: 1
-  attackStack: 0
-  tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 0}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &9924722
@@ -511,18 +509,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &9924724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9924716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d376affa16ac7f41b0e5978ccb1892d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &15158766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bb50251a74ed45b43bb7c87350a1e3fe, type: 3}
@@ -573,13 +559,12 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+  tr: {fileID: 0}
   damage: 10
   defense: 2
   attackDelay: 1
-  attackStack: 0
-  tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!95 &15158770
@@ -1443,15 +1428,15 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  damage: 20
-  attackDelay: 2
-  attackStack: 0
   tr: {fileID: 0}
+  damage: 20
+  defense: 0
+  attackDelay: 2
   firePoint: {fileID: 582616902}
   arrowPrefab: {fileID: 7408335190288422121, guid: 5a75c4de7722e2241993587a373d71fa, type: 3}
   Arrow: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &50250748
@@ -3869,19 +3854,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0212fe6957cd0b14cbb73a40aab761bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 0
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   whatIsTarget:
     serializedVersion: 2
-    m_Bits: 128
-  damage: 10
-  defense: 2
-  attackDelay: 1
-  attackStack: 0
+    m_Bits: 0
   tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  damage: 0
+  defense: 0
+  attackDelay: 1
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &201865282
@@ -5856,6 +5840,11 @@ Transform:
   m_Father: {fileID: 85277987}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &365575375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3224676266347265197, guid: 246579ea85da1764ab955b48afaebca3, type: 3}
+  m_PrefabInstance: {fileID: 2144300434}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &370886292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6634,19 +6623,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0212fe6957cd0b14cbb73a40aab761bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 0
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   whatIsTarget:
     serializedVersion: 2
-    m_Bits: 128
-  damage: 10
-  defense: 2
-  attackDelay: 1
-  attackStack: 0
+    m_Bits: 0
   tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  damage: 0
+  defense: 0
+  attackDelay: 1
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!54 &401452229
@@ -6789,16 +6777,15 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+  tr: {fileID: 0}
   damage: 40
   defense: 0
   attackDelay: 3
-  attackStack: 0
-  tr: {fileID: 0}
   firePoint: {fileID: 1819576303}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: fdfec5da23a63b2459af03c785d4c761, type: 3}
   magicMissile: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!95 &416670490
@@ -9158,7 +9145,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573287973}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24390c84b5031a040b77fd6ccdabd800, type: 3}
   m_Name: 
@@ -9169,15 +9156,15 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
-  damage: 20
-  attackDelay: 2.5
-  attackStack: 0
   tr: {fileID: 0}
+  damage: 20
+  defense: 0
+  attackDelay: 2.5
   firePoint: {fileID: 296722910}
   arrowPrefab: {fileID: 7408335190288422121, guid: 3fa15d9a88afcff4ea0b4052e4f31992, type: 3}
   Arrow: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 0}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &573287975
@@ -9925,15 +9912,15 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  damage: 20
-  attackDelay: 2
-  attackStack: 0
   tr: {fileID: 0}
+  damage: 20
+  defense: 0
+  attackDelay: 2
   firePoint: {fileID: 606793010}
   arrowPrefab: {fileID: 7408335190288422121, guid: 5a75c4de7722e2241993587a373d71fa, type: 3}
   Arrow: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!95 &606793014
@@ -11459,13 +11446,12 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+  tr: {fileID: 0}
   damage: 10
   defense: 2
   attackDelay: 1
-  attackStack: 0
-  tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!195 &689758829
@@ -20880,7 +20866,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351176529}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}
   m_Name: 
@@ -23600,7 +23586,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515545923}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}
   m_Name: 
@@ -25629,7 +25615,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656632464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}
   m_Name: 
@@ -27191,13 +27177,12 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+  tr: {fileID: 0}
   damage: 10
   defense: 2
   attackDelay: 1
-  attackStack: 0
-  tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!95 &1765950838
@@ -28244,6 +28229,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: 405f57f735d3cff4e94255dc22332fdf, type: 3}
   m_PrefabInstance: {fileID: 1823249486}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1825719571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3126986349031087641, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+  m_PrefabInstance: {fileID: 7147886608064673458}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1829929569
 PrefabInstance:
@@ -32302,7 +32292,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2087030699}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2385ed248f8edce4eba5d5f0ff234590, type: 3}
   m_Name: 
@@ -32313,16 +32303,15 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  tr: {fileID: 0}
   damage: 40
   defense: 0
   attackDelay: 3
-  attackStack: 0
-  tr: {fileID: 0}
   firePoint: {fileID: 2095240023}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
   magicMissile: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 0}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 0}
   isMove: 0
   isAttack: 0
 --- !u!1001 &2087646319
@@ -33186,11 +33175,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 246579ea85da1764ab955b48afaebca3, type: 3}
   m_PrefabInstance: {fileID: 2144300434}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2144300436 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3224676266347265197, guid: 246579ea85da1764ab955b48afaebca3, type: 3}
-  m_PrefabInstance: {fileID: 2144300434}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2144300437 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 246579ea85da1764ab955b48afaebca3, type: 3}
@@ -33230,22 +33214,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2385ed248f8edce4eba5d5f0ff234590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 0
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   whatIsTarget:
     serializedVersion: 2
-    m_Bits: 128
-  damage: 40
-  defense: 0
-  attackDelay: 3
-  attackStack: 0
+    m_Bits: 0
   tr: {fileID: 0}
-  firePoint: {fileID: 2144300436}
+  damage: 0
+  defense: 0
+  attackDelay: 5
+  firePoint: {fileID: 365575375}
   magicMissilePrefab: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
   magicMissile: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!95 &2144300440
@@ -33371,6 +33354,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4d094d01f70e8874fa6c3b834db34ef1, type: 3}
   m_PrefabInstance: {fileID: 2146009579}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2146260871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8460088121100087298, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+  m_PrefabInstance: {fileID: 2762926861401184884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &543450652422934222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2440205712503887034, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
@@ -33442,6 +33430,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 2146260871}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: attackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: gaugePrefab
+      value: 
+      objectReference: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: DamageText_GO
+      value: 
+      objectReference: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: startingHealth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: magicMissilePrefab
+      value: 
+      objectReference: {fileID: 5379623473208530178, guid: d3d922c1bb53a2f4db1a9df53c6480aa, type: 3}
+    - target: {fileID: 2762926861397868547, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
+      propertyPath: whatIsTarget.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3068792504936304128, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
       propertyPath: m_Name
       value: P_Magician
@@ -33460,6 +33480,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1312933584}
     m_Modifications:
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 1825719571}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: arrowPrefab
+      value: 
+      objectReference: {fileID: 7408335190288422121, guid: 3fa15d9a88afcff4ea0b4052e4f31992, type: 3}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: gaugePrefab
+      value: 
+      objectReference: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: DamageText_GO
+      value: 
+      objectReference: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: startingHealth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147886607850922438, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
+      propertyPath: whatIsTarget.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7257794353608089336, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -33520,6 +33568,30 @@ PrefabInstance:
     - target: {fileID: 7230138777154339659, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
       propertyPath: m_Name
       value: P_Knight (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: defense
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: gaugePrefab
+      value: 
+      objectReference: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: DamageText_GO
+      value: 
+      objectReference: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: startingHealth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536762126471379150, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
+      propertyPath: whatIsTarget.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8006639574652525041, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
       propertyPath: m_RootOrder
