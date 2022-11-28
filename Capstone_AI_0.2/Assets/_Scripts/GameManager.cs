@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
 	public GameObject Panel_Character;
 
+	[Header("List_Unit")]
 	public List<GameObject> List_Warrior;
 	public List<GameObject> List_Shield;
 	public List<GameObject> List_Archer;
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
 	public List<GameObject> List_Magician;
 	public List<GameObject> List_Healer;
 
+
+	[Header("Prefabs")]
 	public GameObject Prefab_Warrior;
     public GameObject Prefab_Shield;
     public GameObject Prefab_Archer;
@@ -109,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-		storage = GameObject.Find("Storage").GetComponent<Storage>();
+		//storage = GameObject.Find("Storage").GetComponent<Storage>();
 
 		isBattle = false;
 	}
@@ -117,61 +120,65 @@ public class GameManager : MonoBehaviour
 	private void Update()
 	{
 		// 전투가 끝난 상태이고 유닛을 클릭했을 때 
-		if(Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0))
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			Physics.Raycast(ray, out hit);
 			raycastStartPos = hit.point;
 
-			if(hit.collider.gameObject.layer == 8)
+			if(hit.collider != null)
 			{
-				raycastGO = hit.collider.gameObject;
-			}
-			else if(hit.transform.gameObject.tag == "Storage")
-			{
-				int unitNum;
-                GameObject Prefab = null;
-
-                unitNum = storage.GetComponent<Storage>().TakeOutUnit(hit.collider.gameObject);
-
-                if (unitNum == 0)
+				if (hit.collider.gameObject.layer == 8)
 				{
-					Prefab = Prefab_Warrior;
+					raycastGO = hit.collider.gameObject;
 				}
-                else if (unitNum == 1)
-                {
-                    Prefab = Prefab_Shield;
-                }
-				else if(unitNum == 2)
-				{
-                    Prefab = Prefab_Archer;
-                }
-                else if (unitNum == 3)
-                {
-                    Prefab = Prefab_Crossbow;
-                }
-                else if (unitNum == 4)
-                {
-                    Prefab = Prefab_Magician;
-                }
-                else if (unitNum == 5)
-                {
-                    Prefab = Prefab_Healer;
-                }
+				/*			else if (hit.transform.gameObject.tag == "Storage")
+							{
+								int unitNum;
+								GameObject Prefab = null;
+
+								unitNum = storage.GetComponent<Storage>().TakeOutUnit(hit.collider.gameObject);
+
+								if (unitNum == 0)
+								{
+									Prefab = Prefab_Warrior;
+								}
+								else if (unitNum == 1)
+								{
+									Prefab = Prefab_Shield;
+								}
+								else if (unitNum == 2)
+								{
+									Prefab = Prefab_Archer;
+								}
+								else if (unitNum == 3)
+								{
+									Prefab = Prefab_Crossbow;
+								}
+								else if (unitNum == 4)
+								{
+									Prefab = Prefab_Magician;
+								}
+								else if (unitNum == 5)
+								{
+									Prefab = Prefab_Healer;
+								}
+								else
+								{
+									Prefab = null;
+									Debug.Log("유닛 못 불러옴. 창고 클릭시 생성 불가");
+								}
+
+								raycastGO = Instantiate(Prefab, new Vector3(hit.point.x, 1f, hit.point.z), Quaternion.identity);
+							}*/
 				else
 				{
-					Prefab = null;
-					Debug.Log("유닛 못 불러옴. 창고 클릭시 생성 불가");
+					raycastGO = null;
+					Debug.Log("클릭 시 유닛 찾기 실패");
 				}
-
-                raycastGO = Instantiate(Prefab, new Vector3(hit.point.x, 1f, hit.point.z), Quaternion.identity);
 			}
-			else
-			{
-				raycastGO = null;
-				Debug.Log("클릭 시 유닛 찾기 실패");
-			}
+			
 		}
 
 		if (Input.GetMouseButton(0))
@@ -182,12 +189,12 @@ public class GameManager : MonoBehaviour
 			{
 				Debug.Log("최소 클릭 시간 초과");
 
-/*				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-				if(raycastGO.layer == 8)
+				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+				if (raycastGO.layer == 8)
 				{
 					raycastGO.transform.position = new Vector3(mousePos.x, 1f, mousePos.z);
-				}*/
-				
+				}
+
 
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				RaycastHit[] hit = Physics.RaycastAll(ray);

@@ -1,0 +1,555 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.39f1 (fd6670bb8be9) revision 16606832'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Professional' Language: 'ko' Physical Memory: 32718 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.39f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/navys/Documents/GitHub/AutoBattle/Capstone_AI_0.2
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+15748
+Successfully changed project path to: C:/Users/navys/Documents/GitHub/AutoBattle/Capstone_AI_0.2
+C:/Users/navys/Documents/GitHub/AutoBattle/Capstone_AI_0.2
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 50.08 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.39f1 (fd6670bb8be9)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.39f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/navys/Documents/GitHub/AutoBattle/Capstone_AI_0.2/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: AMD Radeon RX 6600 XT (ID=0x73ff)
+    Vendor:   
+    VRAM:     8147 MB
+    Driver:   31.0.12027.7000
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.39f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.39f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.39f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56532
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.39f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001421 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 54.62 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.489 seconds
+Domain Reload Profiling:
+	ReloadAssembly (490ms)
+		BeginReloadAssembly (50ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (380ms)
+			LoadAssemblies (49ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (121ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (25ms)
+			SetupLoadedEditorAssemblies (158ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (55ms)
+				BeforeProcessingInitializeOnLoad (12ms)
+				ProcessInitializeOnLoadAttributes (65ms)
+				ProcessInitializeOnLoadMethodAttributes (22ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.002103 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file data-000001EE6C08B830 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.Services.Core.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6C2D04F0 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.VSCode.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6CC8E230 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6C08B830 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6C0DF630 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\UnityEngine.TestRunner.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6AD95E90 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.Timeline.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6AFEDE30 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.Timeline.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6AD95E90 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.TextMeshPro.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6AFEDE30 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6C0DF630 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\UnityEditor.TestRunner.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6B197230 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\UnityEditor.UI.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6B3B0020 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6B197230 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\Unity.Rider.Editor.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file data-000001EE6B3E9430 doesn't match image C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2\Library\ScriptAssemblies\UnityEngine.UI.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.804 seconds
+Domain Reload Profiling:
+	ReloadAssembly (805ms)
+		BeginReloadAssembly (124ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (631ms)
+			LoadAssemblies (72ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (220ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (37ms)
+			SetupLoadedEditorAssemblies (236ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (64ms)
+				ProcessInitializeOnLoadAttributes (152ms)
+				ProcessInitializeOnLoadMethodAttributes (11ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (2ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.58 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1625 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 84.5 MB.
+System memory in use after: 84.5 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 2065.
+Total: 2.699100 ms (FindLiveObjects: 0.162400 ms CreateObjectMapping: 0.038400 ms MarkObjects: 2.391100 ms  DeleteObjects: 0.106700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/Graphics/Bar_Background.png
+  artifactKey: Guid(43cc2d0eecf05cc4ebc77a05848a6300) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Graphics/Bar_Background.png using Guid(43cc2d0eecf05cc4ebc77a05848a6300) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '58604c4c8847c1ebbc288ac7a2f1dcb1') in 0.094145 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000133 seconds.
+  path: Assets/Graphics/HpBar.png
+  artifactKey: Guid(4b790f9daf2467f449bcce9e3a648709) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Graphics/HpBar.png using Guid(4b790f9daf2467f449bcce9e3a648709) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7604d66704d9dd02958f85c27d32864e') in 0.016491 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000136 seconds.
+  path: Assets/Font/BMJUA_ttf SDF.asset
+  artifactKey: Guid(17304e04472a8034ab218bfde166d04f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Font/BMJUA_ttf SDF.asset using Guid(17304e04472a8034ab218bfde166d04f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22de04d6070b8bb1c4acfb70deda9025') in 0.265099 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000124 seconds.
+  path: Assets/Graphics/MpBar.png
+  artifactKey: Guid(5e1d00832d2465142a125d91439031e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Graphics/MpBar.png using Guid(5e1d00832d2465142a125d91439031e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb0825245d9cee1a4bfd6d63138e7571') in 0.011391 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 77.366029 seconds.
+  path: Assets/_Scripts/GameManager.cs
+  artifactKey: Guid(86f835d80692d4d4a9f1b157842b8ae6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Scripts/GameManager.cs using Guid(86f835d80692d4d4a9f1b157842b8ae6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2adb551832ace3c992111f4c70d85c6d') in 0.007883 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 41.996852 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_1.wav
+  artifactKey: Guid(23f33f6dcb66ae6498f5cf00d926faf5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_1.wav using Guid(23f33f6dcb66ae6498f5cf00d926faf5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de5d22c56d65a7adc812497b8b825fda') in 0.028388 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000149 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_3.wav
+  artifactKey: Guid(59956f6dbd772e94889925201a309380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_3.wav using Guid(59956f6dbd772e94889925201a309380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22accf2eee7870821a87c24ea468fbf0') in 0.023189 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000129 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_3.wav
+  artifactKey: Guid(bdc69b0d8d0f2f74bbde0c22fdd70416) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_3.wav using Guid(bdc69b0d8d0f2f74bbde0c22fdd70416) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ebc71048dc0b10338d5cbccc5223cca') in 0.014322 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_10.wav
+  artifactKey: Guid(1edf0ef77ab492c4982bf4566b19a737) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_10.wav using Guid(1edf0ef77ab492c4982bf4566b19a737) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d1cd4025ff437fbacedce12e27cb789') in 0.011683 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000171 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_4.wav
+  artifactKey: Guid(11f65804e2012f04aa89fe928fbd42f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_4.wav using Guid(11f65804e2012f04aa89fe928fbd42f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e362decd002766ab5d42ddb5e1973dbb') in 0.012379 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_2.wav
+  artifactKey: Guid(093108edcba1429408db9574c7efbec8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_2.wav using Guid(093108edcba1429408db9574c7efbec8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e048036361310f0e824a1d6b7de38f7a') in 0.012737 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000133 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_9.wav
+  artifactKey: Guid(9c4f41e04cd21fa43abd23d044e0b4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_9.wav using Guid(9c4f41e04cd21fa43abd23d044e0b4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ef08b8d20104aa926d45bef8941954e') in 0.016287 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000126 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_8.wav
+  artifactKey: Guid(de7334b2addd37a4a84c317b1b09331b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_8.wav using Guid(de7334b2addd37a4a84c317b1b09331b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04504932a30d76449fa5841ed55a1d84') in 0.012376 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_4.wav
+  artifactKey: Guid(57e3ada7b6d3a3f4b803366954b41f7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_4.wav using Guid(57e3ada7b6d3a3f4b803366954b41f7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89ae12028776808f91d74b2ee5ddeb2b') in 0.012858 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000137 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_11.wav
+  artifactKey: Guid(01fdcd401955a2547b5bfe347cdc2f3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_11.wav using Guid(01fdcd401955a2547b5bfe347cdc2f3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f263b83c04c98aa28435e3981e0ae3d') in 0.012341 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000182 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_3.wav
+  artifactKey: Guid(b2eb9f250389fa24c99ea759c1e280d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_3.wav using Guid(b2eb9f250389fa24c99ea759c1e280d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd53f2b7d148dc9475fb3f8d47692074a') in 0.012618 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_1.wav
+  artifactKey: Guid(a3feec449da461844bd1eb71e5acb913) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_1.wav using Guid(a3feec449da461844bd1eb71e5acb913) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12803209d354a52f3392807187716552') in 0.014025 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000119 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_3.wav
+  artifactKey: Guid(341fb5f2059821f4ca956ba5ea6c7877) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_3.wav using Guid(341fb5f2059821f4ca956ba5ea6c7877) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2806bac85db5af42c6a4605fdafedcd') in 0.013423 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_2.wav
+  artifactKey: Guid(0ea3ea11957de7d4daa4ffdeeb62f770) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_2.wav using Guid(0ea3ea11957de7d4daa4ffdeeb62f770) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd92e1cf260ffc8fc45edde178384cfd7') in 0.012454 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000176 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_6.wav
+  artifactKey: Guid(86fc557ed1bf22c428a97db52e14ca45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_6.wav using Guid(86fc557ed1bf22c428a97db52e14ca45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7e6154900d7a30e0ff3639b5cbfcac6') in 0.012339 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000188 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_4.wav
+  artifactKey: Guid(9bb1f0031f044c844822a261b2fda28d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_4.wav using Guid(9bb1f0031f044c844822a261b2fda28d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3dcb2b6a64bcb1260feef58caed26d5') in 0.012550 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_2.wav
+  artifactKey: Guid(f6d361fda8ff5f94eac7f8de1f1ca185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_2.wav using Guid(f6d361fda8ff5f94eac7f8de1f1ca185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a7e928e05fbb8750c9e302323efb6be') in 0.012802 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_8.wav
+  artifactKey: Guid(8cdd7ab8126407f419e2d940e90f782f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_8.wav using Guid(8cdd7ab8126407f419e2d940e90f782f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2b86645b8d474bf2215a0e11e281cbd') in 0.013095 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000153 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_4.wav
+  artifactKey: Guid(34ba75b36f279564cb438a97666cb21c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_4.wav using Guid(34ba75b36f279564cb438a97666cb21c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4204a0876c8f288e450204c6d66134a9') in 0.011986 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_7.wav
+  artifactKey: Guid(2867a3166bb8dc84ea14ef495902c055) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_7.wav using Guid(2867a3166bb8dc84ea14ef495902c055) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2630aaad7a31d553844af0fa5c0f88a') in 0.013471 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000171 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_9.wav
+  artifactKey: Guid(acd39f673d8a21545ba1811dcb4ad57d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_9.wav using Guid(acd39f673d8a21545ba1811dcb4ad57d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7aaf2e6484c6308ef971953df223d729') in 0.012505 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_3.wav
+  artifactKey: Guid(cf3377c7192956d4aac6fb019dd759ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_3.wav using Guid(cf3377c7192956d4aac6fb019dd759ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35bbc45e6b638caa53f58b958e4ce643') in 0.015803 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000144 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_8.wav
+  artifactKey: Guid(210235a3582614c40a275f678744104d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_8.wav using Guid(210235a3582614c40a275f678744104d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62c6c8c9b5e6aca7909f817f8837de21') in 0.016597 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000139 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_2.wav
+  artifactKey: Guid(f39fc693f0ba95a449d8596ee1fc24fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_2.wav using Guid(f39fc693f0ba95a449d8596ee1fc24fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '996336deb2379f56e8eb77ea1bfdef0d') in 0.015480 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000136 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_7.wav
+  artifactKey: Guid(8fc1e1d7604fe6e439c995c9ae6ba47d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_7.wav using Guid(8fc1e1d7604fe6e439c995c9ae6ba47d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff1359fa85cb9cbbdd4bc495cdd972a2') in 0.016947 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000118 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_5.wav
+  artifactKey: Guid(c10e6f39e9ea85040a938ffd89cc0992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_5.wav using Guid(c10e6f39e9ea85040a938ffd89cc0992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '18dee9ea75740508572dcd97e98e479a') in 0.016667 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000143 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_9.wav
+  artifactKey: Guid(bf5f9306488cdc34ba36e0824aa998e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_9.wav using Guid(bf5f9306488cdc34ba36e0824aa998e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd83bd932bd67e73a4b5cbef8f004155') in 0.012695 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_6.wav
+  artifactKey: Guid(f4f4ca9867494a64ea5b489449678eeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_6.wav using Guid(f4f4ca9867494a64ea5b489449678eeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '538f8a9f7a54280eaf012a8707d67d1f') in 0.013280 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000183 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_5.wav
+  artifactKey: Guid(0e26bd299441047469d3c1914aa3c0f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_5.wav using Guid(0e26bd299441047469d3c1914aa3c0f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16f133bf59aa1aae60904a163c1a76f3') in 0.012033 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000176 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_6.wav
+  artifactKey: Guid(a8241c0b01be43144a9cb80a25d8d587) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_6.wav using Guid(a8241c0b01be43144a9cb80a25d8d587) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4986832c641dabf43936dfcf209f9a3f') in 0.013245 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000178 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_9.wav
+  artifactKey: Guid(02a2d108925cdbf4482a7f1cd36811b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_9.wav using Guid(02a2d108925cdbf4482a7f1cd36811b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2a8267bf5b739f57f3b1b1ef26aacbf') in 0.013121 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000180 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_5.wav
+  artifactKey: Guid(f3eefb2c5edde5b4cb4fc39c1cb63768) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_5.wav using Guid(f3eefb2c5edde5b4cb4fc39c1cb63768) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bccb2e52966406eb230dac51ff8ba495') in 0.015190 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000149 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_1.wav
+  artifactKey: Guid(8c4372899507d324db56034838100ca5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_1.wav using Guid(8c4372899507d324db56034838100ca5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60ed3b655eb096bb00077c7ab8c6a3eb') in 0.018581 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000168 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_5.wav
+  artifactKey: Guid(cb663d7734615264eb062204e2f04d5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_5.wav using Guid(cb663d7734615264eb062204e2f04d5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71267a039802c2da39cbcc758b6f4a4c') in 0.012129 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_1.wav
+  artifactKey: Guid(3b2a8294fee0c494ea5d1241f60a68ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_1.wav using Guid(3b2a8294fee0c494ea5d1241f60a68ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e259f53616ebc49d8d9ea2c9431088e6') in 0.015044 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000164 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_4.wav
+  artifactKey: Guid(6582b81824acd444cb935fdc30b32ce5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_4.wav using Guid(6582b81824acd444cb935fdc30b32ce5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84bcbae9255822b7d033daead14bd8ab') in 0.012367 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000164 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_4.wav
+  artifactKey: Guid(23cf53d751307464dbad5d9566a56119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_4.wav using Guid(23cf53d751307464dbad5d9566a56119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad45545bcfde6c1da99ab0a27fca1de6') in 0.012069 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000169 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_1.wav
+  artifactKey: Guid(213756b24f6324d438601e2d02f0a170) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_1.wav using Guid(213756b24f6324d438601e2d02f0a170) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '741d863380ba7638da0a24bb4a4ede08') in 0.013216 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000142 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_2.wav
+  artifactKey: Guid(342f3829121ba214cb89d2c657f6e859) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_2.wav using Guid(342f3829121ba214cb89d2c657f6e859) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0e6fe8a1c16693907803ae3e4f1d3ed') in 0.014776 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000125 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_2.wav
+  artifactKey: Guid(6490b6c25d12fa74a9a89ec6538bf67e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_2.wav using Guid(6490b6c25d12fa74a9a89ec6538bf67e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2094f7569d6ec8f80e01af5e59f7c072') in 0.018322 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000185 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_6.wav
+  artifactKey: Guid(a69c22798e82c7b49b90dae52c94799b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_6.wav using Guid(a69c22798e82c7b49b90dae52c94799b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1345bd1e2f8267ec3dc8f1d72eeb55b5') in 0.012572 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000167 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_7.wav
+  artifactKey: Guid(2328845537e9afa4fb72b9cfea006be5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_7.wav using Guid(2328845537e9afa4fb72b9cfea006be5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7a9b775a2b2fab3b8b2995bade1c37f') in 0.014539 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000140 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_10.wav
+  artifactKey: Guid(202ba03950a22414ab1d8fb9d0a07c06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Blacksmith 3_10.wav using Guid(202ba03950a22414ab1d8fb9d0a07c06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e969dd55b130c883e82629d949f5a23') in 0.012363 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000137 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_3.wav
+  artifactKey: Guid(97b45e474069f5e43891fedbacbf873d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_3.wav using Guid(97b45e474069f5e43891fedbacbf873d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e012098851acbb525282b95e41b9443') in 0.011969 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_2.wav
+  artifactKey: Guid(319c1e8e866fa6744b6ed8556f9e9f7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 2_2.wav using Guid(319c1e8e866fa6744b6ed8556f9e9f7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52b570926397fec9753cce3998e27782') in 0.012580 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000131 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_8.wav
+  artifactKey: Guid(f67cec131f9b60946923de806052e63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_8.wav using Guid(f67cec131f9b60946923de806052e63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de35f494e22c67b1155c763ed82fe57f') in 0.009458 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000148 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_5.wav
+  artifactKey: Guid(712a2a5e00b645a42bdccf0d76404128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_5.wav using Guid(712a2a5e00b645a42bdccf0d76404128) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e9773a59ddb6e5f5255a38044a67651') in 0.009011 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000164 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_7.wav
+  artifactKey: Guid(2eca3b7180997b14ab54cb6f62a4254d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_7.wav using Guid(2eca3b7180997b14ab54cb6f62a4254d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '087b730b7f98924bd7d8ec8d88e3dbcb') in 0.011625 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000187 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_1.wav
+  artifactKey: Guid(e6466b18690db58459d4a977d851475b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_1.wav using Guid(e6466b18690db58459d4a977d851475b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0746bd113a7c6ae147de0519cb203ac1') in 0.015671 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000138 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_10.wav
+  artifactKey: Guid(38be32849b30e9641adc4920011de68f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 2_10.wav using Guid(38be32849b30e9641adc4920011de68f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0c412f237015bbbfbb7e8fe60b5e8f2') in 0.015558 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000142 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_3.wav
+  artifactKey: Guid(9eacce56f83fab1498269654006428f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_3.wav using Guid(9eacce56f83fab1498269654006428f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3dc25b25631e6c8aede5c9ff32cb9b2f') in 0.014606 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000120 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_4.wav
+  artifactKey: Guid(2b98cd39009d29d408c7620c639a2d66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 3_4.wav using Guid(2b98cd39009d29d408c7620c639a2d66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bee8e38d1877919dbeed54de2c2d25d1') in 0.016333 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000121 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_1.wav
+  artifactKey: Guid(0c9f185fe9d3d074e9a6c12a7312dbcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 3_1.wav using Guid(0c9f185fe9d3d074e9a6c12a7312dbcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b098759ade23e6c4e28b32cc029a74f1') in 0.016294 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000169 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_1.wav
+  artifactKey: Guid(64e5171576bff73409bee6a0985606c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_1.wav using Guid(64e5171576bff73409bee6a0985606c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4589f7fdffa467930743040e730e7d21') in 0.016637 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_3.wav
+  artifactKey: Guid(85f598a346751ea439e8deeeb68a2d7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 4_3.wav using Guid(85f598a346751ea439e8deeeb68a2d7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cfd5b7d7eab2f1ab19fed7d0cf9e61d') in 0.014677 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 6_1.wav
+  artifactKey: Guid(e9d24ddbb4b8c1f41adc8b6daa50f216) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 6_1.wav using Guid(e9d24ddbb4b8c1f41adc8b6daa50f216) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3ae4d89f5d0edc5d4019596de88656b') in 0.015202 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000152 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_1.wav
+  artifactKey: Guid(e31d0b25d5e69484787a1baf4415ee0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_1.wav using Guid(e31d0b25d5e69484787a1baf4415ee0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cff61f2f3695f43b8a5276a7ae340b6') in 0.014665 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000133 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_2.wav
+  artifactKey: Guid(c25e609f1550fdc419e6396e7afa6b4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 1_2.wav using Guid(c25e609f1550fdc419e6396e7afa6b4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23f97831fb91bbc91fca93b35f8ec1d1') in 0.010883 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000123 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_3.wav
+  artifactKey: Guid(ce51339b641271e4887c1e7a743a23ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Chain 4_3.wav using Guid(ce51339b641271e4887c1e7a743a23ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf9aa1c01055dc0f820edd780ae17c06') in 0.013735 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000198 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_5.wav
+  artifactKey: Guid(baff1d9662e5f41469c657c12d2d5c80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_5.wav using Guid(baff1d9662e5f41469c657c12d2d5c80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd90abaf9e4a9eb06a0b4fdd99271febf') in 0.011984 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000143 seconds.
+  path: Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_2.wav
+  artifactKey: Guid(424160126886f6c42a56d05ecfacb475) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Fantasy Sounds Bundle/Exclusive Sounds/Craft/Nail 5_2.wav using Guid(424160126886f6c42a56d05ecfacb475) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19f758fdad83b152775d0f3cb6718dab') in 0.012250 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
