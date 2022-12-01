@@ -1373,13 +1373,12 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  tr: {fileID: 0}
   damage: 10
   defense: 2
   attackDelay: 1
-  attackStack: 0
-  tr: {fileID: 0}
-  pgoHpBar: {fileID: 0}
-  hpBarPrefab: {fileID: 1867169880180707750, guid: 0fff21089a1fd154da6554d5155ccdac, type: 3}
+  pgoGauge: {fileID: 0}
+  gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &7536762126471379151

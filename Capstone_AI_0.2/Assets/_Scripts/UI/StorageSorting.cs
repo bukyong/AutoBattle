@@ -26,11 +26,12 @@ public class StorageSorting : MonoBehaviour
 
 	}
 
-    public GO_Type removeList()
+    public GameObject removeList()
     {
-        GO_List.RemoveAt(GO_List.Count - 1);
+        var GO = GO_List[0];
+        GO_List.RemoveAt(0);
 
-        return StoreType;
+        return GO;
     }
 
 	// 창고 유닛 정렬 (현재 미사용)
@@ -45,6 +46,11 @@ public class StorageSorting : MonoBehaviour
     public void setGO_Type(GO_Type GOT)
     {
         StoreType = GOT;
+    }
+
+    public GO_Type getGO_Type()
+    {
+        return StoreType;
     }
 }
 

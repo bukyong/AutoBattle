@@ -7,6 +7,11 @@ public class Block : MonoBehaviour
 	Vector3 pos;
 	GameObject PlacedObject;
 
+	private void Start()
+	{
+		PlacedObject = null;
+	}
+
 	private void FixedUpdate()
 	{
 		if(GameManager.Instance.isBattle == false)
