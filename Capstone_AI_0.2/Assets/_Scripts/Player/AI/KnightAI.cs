@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class KnightAI : LivingEntity
 {
@@ -24,6 +25,8 @@ public class KnightAI : LivingEntity
     // 게이지
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
+
+    public GameObject flash;
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -202,6 +205,25 @@ public class KnightAI : LivingEntity
     {
         Debug.Log("기사 버프 스킬 사용!");
 
+        if (flash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
+
         StartCoroutine(OnBuffCoroutine(5, 3f));
 
         Mana = 0;
@@ -237,7 +259,7 @@ public class KnightAI : LivingEntity
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("기사 공격 실행");
 
-        Mana += 1;
+        Mana += 0;
         playerAnimator.SetInteger("Mana", (int)Mana);
         attackTarget.OnDamage(damage);
 

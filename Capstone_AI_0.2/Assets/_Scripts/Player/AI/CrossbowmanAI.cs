@@ -17,15 +17,14 @@ public class CrossbowmanAI : LivingEntity
     public float defense; // 방어력
     public float attackDelay = 2f; // 공격 딜레이
 
-    private float attackRange = 7.5f; // 공격 사거리
+    private float attackRange = 10f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
-    private float animSpeed = 1.0f; // 애니메이션 스피드 (공격 애니메이션만 적용)
 
     // 원거리 공격
     public GameObject firePoint; // 화살이 발사될 위치
-    public GameObject arrowPrefab; // 사용할 화살 할당
-    public GameObject Arrow; // Instantiate() 메서드로 생성하는 화살을 담는 게임오브젝트
+    public GameObject boltPrefab; // 사용할 화살 할당
+    public GameObject Bolt; // Instantiate() 메서드로 생성하는 화살을 담는 게임오브젝트
 
     // 게이지
     public GameObject pgoGauge; // 유닛의 체력,마나 게이지
@@ -56,7 +55,7 @@ public class CrossbowmanAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 20f, 1f);
+        Setup(100f, 10f, 50f, 1f);
         SetGauge();
     }
 
@@ -91,7 +90,6 @@ public class CrossbowmanAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-        playerAnimator.SetFloat("AttackSpeed", animSpeed);
     }
 
     void Update()
@@ -109,6 +107,7 @@ public class CrossbowmanAI : LivingEntity
                 // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
                 Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
                 this.transform.LookAt(targetPosition);
+                gameObject.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 90, 0);
             }
         }
 
@@ -210,7 +209,7 @@ public class CrossbowmanAI : LivingEntity
     public void Fire()
     {
         // Instatiate()로 화살 프리팹을 복제 생성
-        Arrow = Instantiate(arrowPrefab, firePoint.transform.position, firePoint.transform.rotation);
+        Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
 
         Mana += 2f;
         playerAnimator.SetInteger("Mana", (int)Mana);
@@ -223,7 +222,12 @@ public class CrossbowmanAI : LivingEntity
     {
         Debug.Log("석궁병 한방기 스킬 사용!");
 
-        //damage *= 2f; 
+        // 일시적으로 데미지 3배 증가
+        damage *= 3f;
+
+        Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
+
+        damage /= 3f;
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);

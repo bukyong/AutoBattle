@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class MagicianAI : LivingEntity
 {
@@ -17,7 +18,7 @@ public class MagicianAI : LivingEntity
     public float defense; // 방어력
     public float attackDelay = 5f; // 공격 딜레이
 
-    private float attackRange = 5f; // 공격 사거리
+    private float attackRange = 10f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
@@ -29,6 +30,8 @@ public class MagicianAI : LivingEntity
     // 게이지
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
+
+    public GameObject flash;
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -222,6 +225,26 @@ public class MagicianAI : LivingEntity
         //LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         Debug.Log("마법사 광역기 스킬 사용!");
+
+        if (flash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            flashInstance.transform.position = targetEntity.transform.position;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
 

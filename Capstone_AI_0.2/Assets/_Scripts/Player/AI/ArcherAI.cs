@@ -17,7 +17,7 @@ public class ArcherAI : LivingEntity
     public float defense; // 방어력
     public float attackDelay = 2f; // 공격 딜레이
 
-    private float attackRange = 7.5f; // 공격 사거리
+    private float attackRange = 10f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
     private float animSpeed = 1.0f; // 애니메이션 스피드 (공격 애니메이션만 적용)
@@ -56,7 +56,7 @@ public class ArcherAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 20f, 1f);
+        Setup(100f, 10f, 50f, 1f);
         SetGauge();
     }
 

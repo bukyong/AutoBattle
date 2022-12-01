@@ -69,6 +69,17 @@ public class LivingEntity : MonoBehaviour
         damageGO.GetComponent<DamageText>().damage = value;
     }
 
+    /*
+    // 방어력 증가
+    public virtual void DefenceUp(float value)
+    {
+        GameObject damageGO = Instantiate(DamageText_GO);
+        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        damageGO.GetComponent<TextMeshPro>().color = Color.blue;
+        damageGO.GetComponent<DamageText>().damage = value;
+    }
+    */
+
     // 사망 처리
     public virtual void Die()
     {

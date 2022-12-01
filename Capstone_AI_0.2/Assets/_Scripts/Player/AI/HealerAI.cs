@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class HealerAI : LivingEntity
 {
@@ -24,6 +25,9 @@ public class HealerAI : LivingEntity
     // 게이지
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
+
+    public GameObject flash;
+    public GameObject skillFlash;
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -175,11 +179,10 @@ public class HealerAI : LivingEntity
             isMove = false;
             pathFinder.isStopped = true;
 
-            TargetSearch();
-
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
+                TargetSearch();
                 isAttack = true;
                 Debug.Log("힐러 공격 실행");
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
@@ -208,6 +211,26 @@ public class HealerAI : LivingEntity
 
         attackTarget.Heal(damage * 2f);
 
+        if (flash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            flashInstance.transform.position = attackTarget.transform.position;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
+
         Debug.Log("힐러 스킬 사용!");
 
         Mana += 2f;
@@ -223,6 +246,27 @@ public class HealerAI : LivingEntity
         foreach (Collider heal in colliders)
         {
             LivingEntity healTarget = heal.gameObject.GetComponent<LivingEntity>();
+
+            if (skillFlash != null)
+            {
+                // Quaternion.identity 회전 없음
+                var flashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
+                flashInstance.transform.forward = gameObject.transform.forward;
+                flashInstance.transform.position = healTarget.transform.position;
+                var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+                if (flashPs != null)
+                {
+                    // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                    Destroy(flashInstance, flashPs.main.duration);
+                }
+                else
+                {
+                    var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(flashInstance, flashPsParts.main.duration);
+                }
+            }
+
             healTarget.Heal(damage * 2f);
         }
 
