@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+	public int bCount;
+
 	Vector3 pos;
 	GameObject PlacedObject;
 

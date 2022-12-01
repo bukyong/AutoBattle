@@ -19,6 +19,8 @@ public class LivingEntity : MonoBehaviour
 
     public GameObject DamageText_GO;
 
+    public GameObject StandingBlock;
+
     //public Transform DamageText_Pos;
 
     //public event Action OnDeath; // 사망 시 발동할 이벤트
@@ -46,6 +48,14 @@ public class LivingEntity : MonoBehaviour
 		// 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
 		if (Health <= 0 && !Dead)
         {
+            if(transform.gameObject.layer == 8)
+            {
+                GameManager.Instance.RemovePlayerUnitCount();
+            }
+            if(transform.gameObject.layer == 7)
+            {
+				GameManager.Instance.RemoveEnemyUnitCount();
+			}
             Die();
         }
     }

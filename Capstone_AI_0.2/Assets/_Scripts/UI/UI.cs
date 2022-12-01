@@ -76,8 +76,11 @@ public class UI : MonoBehaviour
 
 	public void BattleStart()
 	{
-		GameManager.Instance.isBattle = true;
-
+		if(GameManager.Instance.GetGameStage() == GameState.BeforeBattle)
+		{
+			GameManager.Instance.ChangeGameState();
+		}
+		
 		Debug.Log("전투시작");
 	}
 

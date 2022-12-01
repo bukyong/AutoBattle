@@ -5,6 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
+public enum GameState
+{
+	None,
+	BeforeBattle,
+	Battle,
+	AfterBattle,
+	NextStage
+}
+
 public class GameManager : MonoBehaviour
 {
 	#region Singleton
@@ -28,9 +37,12 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
-	public GameObject map;
-	public GameObject block;
-	public Vector3 mapCenter;
+
+	public GameState gamestate;
+
+	public int Stage;
+	public List<Map> P_maps= new List<Map>();
+	public List<Map> E_maps = new List<Map>();
 
 	//아직 할당한됨
 	Storage storage;
@@ -41,10 +53,16 @@ public class GameManager : MonoBehaviour
 	public GameObject PlayerUnit;
 	public GameObject EnemyUnit;
 
+	public int PlayerUnitCount;
+	public int EnemyUnitCount;
+	public int GoalUnitCount;
+
+
 	float pressedTime = 0;
-	float Min_pressedTime = 1f;
+	float Min_pressedTime = 0.5f;
 	GameObject raycastGO;
 	Vector3 raycastStartPos;
+
 
 	public GameObject Panel_Character;
 
@@ -68,6 +86,12 @@ public class GameManager : MonoBehaviour
     public GameObject Prefab_Crossbow;
     public GameObject Prefab_Magician;
     public GameObject Prefab_Healer;
+
+	public GameObject Prefab_Orc;
+	public GameObject Prefab_Golem;
+
+
+	#region Sound_Resource
 
 	[Header("GM_AudioSource")]
 	public AudioSource AudioSource_Background;
@@ -101,8 +125,11 @@ public class GameManager : MonoBehaviour
 	public AudioClip H_Shield;
 	public AudioClip H_Monster;
 
+	#endregion
+
 
 	public bool isBattle;
+	public bool isMapChange;
 
 	private void Awake()
 	{
@@ -137,7 +164,12 @@ public class GameManager : MonoBehaviour
 		spawnedGO = null;
 
 		isBattle = false;
+		isMapChange = false;
 
+		Stage = 0;
+		gamestate = GameState.None;
+
+		ChangeGameState();
 	}
 
 	private void Update()
@@ -301,37 +333,6 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-
-	public void SpawnUnit(GameObject GO)
-	{
-		var spawnGO = Instantiate(GO);
-
-		if(spawnGO.CompareTag("Warrior"))
-		{
-			List_Warrior.Add(spawnGO);
-		}
-		else if(spawnGO.CompareTag("Shield"))
-		{
-			List_Shield.Add(spawnGO);
-		}
-		else if (spawnGO.CompareTag("Archer"))
-		{
-			List_Archer.Add(spawnGO);
-		}
-		else if (spawnGO.CompareTag("Crossbow"))
-		{
-			List_Crossbow.Add(spawnGO);
-		}
-		else if (spawnGO.CompareTag("Magician"))
-		{
-			List_Magician.Add(spawnGO);
-		}
-		else if (spawnGO.CompareTag("Healer"))
-		{
-			List_Healer.Add(spawnGO);
-		}
-	}
-
 	#region Audio
 
 	public void PlayAudio(GameObject GO, AudioClip audio, int clipType)
@@ -425,4 +426,189 @@ public class GameManager : MonoBehaviour
 	}
 
 	#endregion Audio_End
+
+	public void ChangeGameState()
+	{
+		if(gamestate == GameState.None)
+		{
+			SpawnEnemy(20);
+			SpawnEnemy(22);
+
+			gamestate= GameState.BeforeBattle;
+		}
+		else if(gamestate == GameState.BeforeBattle)
+		{
+			isBattle= true;
+			GoalUnitCount = 0;
+			// 유닛 이동쪽 변수 버그로 3개 이상 스테이지가 진행이 안됨 나중에 확인
+
+
+			gamestate = GameState.Battle;
+		}
+		else if(gamestate == GameState.Battle)
+		{
+			isBattle= false;
+
+			for(int i = 0; i < PlayerUnit.transform.childCount; i++)
+			{
+				PlayerUnit.transform.GetChild(i).gameObject.SetActive(true);
+			}
+
+			for(int a = 0; a < P_maps[Stage].GO_Blocks.Count; a++)
+			{
+				if(P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO() != null)
+				{
+					P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO().transform.position = P_maps[Stage].GO_Blocks[a].transform.position;
+				}
+			}
+
+			gamestate = GameState.AfterBattle;
+			ChangeGameState();
+		}
+		else if(gamestate == GameState.AfterBattle)
+		{
+			isMapChange= true;
+
+			
+			
+
+			SpawnEnemy(20);
+			SpawnEnemy(22);
+
+			Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
+
+			gamestate = GameState.NextStage;
+		}
+		else if(gamestate == GameState.NextStage)
+		{
+			isMapChange= false;
+
+
+			gamestate = GameState.BeforeBattle;
+		}
+	}
+
+	public void AddMap(Map map)
+	{
+		if (map.name == "Player_Map")
+		{
+			P_maps.Add(map);
+			SortingPMap();
+			SortingPMap();
+		}
+		else if(map.name == "Enemy_Map")
+		{
+			E_maps.Add(map);
+			SortingEMap();
+			SortingEMap();
+		}
+	}
+
+	public void SortingPMap()
+	{
+		int num = 0;
+
+		for(int i =0; i < P_maps.Count; i++)
+		{
+			if(P_maps[i].MapCount > num)
+			{
+				var map = P_maps[i];
+				P_maps.Remove(map);
+				P_maps.Add(map);
+			}
+			num++;
+		}
+	}
+
+	public void SortingEMap()
+	{
+		int num = 0;
+
+		for (int i = 0; i < E_maps.Count; i++)
+		{
+			if (E_maps[i].MapCount > num)
+			{
+				var map = E_maps[i];
+				E_maps.Remove(map);
+				E_maps.Add(map);
+			}
+			num++;
+		}
+	}
+
+	public void AddPlayerUnitCount()
+	{
+		PlayerUnitCount++;
+	}
+
+	public void AddEnemyUnitCount()
+	{
+		EnemyUnitCount++;
+	}
+
+	public void RemovePlayerUnitCount()
+	{
+		PlayerUnitCount--;
+
+		if(PlayerUnitCount <= 0)
+		{
+			Debug.Log("게임오버");
+			//게임오버
+		}
+	}
+
+	public void RemoveEnemyUnitCount()
+	{
+		EnemyUnitCount--;
+		if (EnemyUnitCount <= 0)
+		{
+			if(gamestate == GameState.Battle)
+			{
+				Stage++;
+				ChangeGameState();
+			}
+			
+			//다음 스테이지로
+			
+		}
+	}
+
+	public GameState GetGameStage()
+	{
+		return gamestate;
+	}
+
+	public void SpawnEnemy(int posNum)
+	{
+		AddEnemyUnitCount();
+
+		var GO = Instantiate(Prefab_Golem);
+		GO.transform.parent = EnemyUnit.transform;
+		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
+		Debug.Log(E_maps[Stage].GO_Blocks[posNum].transform.position);
+	}
+
+	GameObject targetBlock= null;
+	public Vector3 FindTargetToChangeMap(GameObject GO)
+	{
+		for (int a = 0; a < P_maps[Stage - 1].GO_Blocks.Count; a++)
+		{
+			if (P_maps[Stage - 1].GO_Blocks[a].GetComponent<Block>().getGO() == GO)
+			{
+				targetBlock = P_maps[Stage].GO_Blocks[a];
+				targetBlock.GetComponent<Block>().setGO(GO);
+			}
+		}
+		return targetBlock.transform.position;
+	}
+
+	public void AddGoalUnit()
+	{
+		GoalUnitCount++;
+		if(PlayerUnitCount <= GoalUnitCount)
+		{
+			isMapChange= false;
+			ChangeGameState();
+		}
+	}
 }

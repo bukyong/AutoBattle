@@ -13,7 +13,9 @@ public class WarriorAI: LivingEntity
 
     public Transform tr;
 
-    public float damage; // 공격력
+	bool isGoal = false;
+
+	public float damage; // 공격력
     public float defense; // 방어력
     public float attackDelay = 1f; // 공격 딜레이
 
@@ -104,9 +106,27 @@ public class WarriorAI: LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
+		else if (GameManager.Instance.isMapChange)
+		{
+			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+			pathFinder.destination = targetV3;
+			pathFinder.isStopped = false;
+			isMove = true;
+			pathFinder.stoppingDistance = 0.5f;
 
-        // 오브젝트위에 체력 바가 따라다님
-        pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
+			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
+			{
+				isMove = false;
+				pathFinder.stoppingDistance = 1.5f;
+
+				isGoal = true;
+
+				GameManager.Instance.AddGoalUnit();
+			}
+		}
+
+		// 오브젝트위에 체력 바가 따라다님
+		pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
         pgoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
         pgoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
     }

@@ -5,23 +5,26 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-	public List<Block> block_List;
+	List<Block> block_List;
+
+	public int MapCount;
+	public List<GameObject> GO_Blocks;
 	public GameObject blockGO;
 	public int blockNum;
 
 	Vector3 center;
-	int unitCount;
-	float distance = 0.75f;
+	float distance = 1.2f;
 
 	private void Start()
 	{
 		center = transform.position;
-		unitCount = 0;
-		blockNum = 10;
+		blockNum = 6;
 
 		initBlock(blockNum);
 		initBlockPosition();
 		SpawnBlock();
+
+		GameManager.Instance.AddMap(this);
 	}
 
 
@@ -70,7 +73,10 @@ public class Map : MonoBehaviour
 	{
 		for(int i = 0; i < block_List.Count; i++)
 		{
-			GameObject.Instantiate(blockGO, block_List[i].getPos(), Quaternion.identity).transform.parent = this.transform;
+			GameObject GO = GameObject.Instantiate(blockGO, block_List[i].getPos(), Quaternion.identity);
+			GO.transform.parent = this.transform;
+			GO_Blocks.Add(GO);
+			GO.GetComponent<Block>().bCount = i;
 		}
 	}
 

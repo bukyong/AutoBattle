@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
@@ -12,7 +13,9 @@ public class KnightAI : LivingEntity
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
 
-    public Transform tr;
+    bool isGoal = false;
+
+	public Transform tr;
 
     public float damage; // 공격력
     public float defense; // 방어력
@@ -88,7 +91,8 @@ public class KnightAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-    }
+
+	}
 
     void Update()
     {
@@ -136,6 +140,24 @@ public class KnightAI : LivingEntity
                     TargetSearch();
                 }
             }
+            else if(GameManager.Instance.isMapChange)
+            {
+                Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+                pathFinder.destination = targetV3;
+				pathFinder.isStopped = false;
+                isMove = true;
+                pathFinder.stoppingDistance= 0.5f;
+
+                if(Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
+                {
+                    isMove= false;
+					pathFinder.stoppingDistance = 1.5f;
+
+                    isGoal= true;
+
+                    GameManager.Instance.AddGoalUnit();
+				}
+			}
 
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
