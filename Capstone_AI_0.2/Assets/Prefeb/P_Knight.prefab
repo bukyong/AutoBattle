@@ -1229,9 +1229,10 @@ MonoBehaviour:
   startingHealth: 0
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
+  StandingBlock: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   tr: {fileID: 0}
   damage: 0
   defense: 0

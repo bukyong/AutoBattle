@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -11,7 +12,7 @@ public enum GameState
 	BeforeBattle,
 	Battle,
 	AfterBattle,
-	NextStage
+    CameraMove
 }
 
 public class GameManager : MonoBehaviour
@@ -44,8 +45,8 @@ public class GameManager : MonoBehaviour
 	public List<Map> P_maps= new List<Map>();
 	public List<Map> E_maps = new List<Map>();
 
-	//아직 할당한됨
 	Storage storage;
+	int gold;
 
 	public Transform spawnPos;
 	public GameObject spawnedGO;
@@ -59,12 +60,14 @@ public class GameManager : MonoBehaviour
 
 
 	float pressedTime = 0;
-	float Min_pressedTime = 0.5f;
+	float Min_pressedTime = 0.3f;
 	GameObject raycastGO;
 	Vector3 raycastStartPos;
 
 
 	public GameObject Panel_Character;
+	public TextMeshProUGUI Text_Stage;
+	public TextMeshProUGUI Text_Gold;
 
 	float Sound_Total;
 	float Sound_Background;
@@ -147,29 +150,25 @@ public class GameManager : MonoBehaviour
 
 		DontDestroyOnLoad(gameObject);
 
-		#endregion
+        #endregion
 
+        AudioSource_Background = GetComponent<AudioSource>();
+        Sound_Total = 0.5f;
+        Sound_Background = 0.5f;
+        Sound_Effect = 0.5f;
 
-	}
+        spawnedGO = null;
+        isBattle = false;
+        isMapChange = false;
+
+        Stage = 0;
+		gold = 30;
+        gamestate = GameState.None;
+    }
 
     public void Start()
     {
-		AudioSource_Background = GetComponent<AudioSource>();
-		Sound_Total = 0.5f;
-		Sound_Background = 0.5f;
-		Sound_Effect = 0.5f;
-
 		PlayAudio(this.gameObject, Title, 0);
-
-		spawnedGO = null;
-
-		isBattle = false;
-		isMapChange = false;
-
-		Stage = 0;
-		gamestate = GameState.None;
-
-		ChangeGameState();
 	}
 
 	private void Update()
@@ -431,7 +430,9 @@ public class GameManager : MonoBehaviour
 	{
 		if(gamestate == GameState.None)
 		{
-			SpawnEnemy(20);
+            ChangeTextGold();
+
+            SpawnEnemy(20);
 			SpawnEnemy(22);
 
 			gamestate= GameState.BeforeBattle;
@@ -440,8 +441,6 @@ public class GameManager : MonoBehaviour
 		{
 			isBattle= true;
 			GoalUnitCount = 0;
-			// 유닛 이동쪽 변수 버그로 3개 이상 스테이지가 진행이 안됨 나중에 확인
-
 
 			gamestate = GameState.Battle;
 		}
@@ -469,22 +468,23 @@ public class GameManager : MonoBehaviour
 		{
 			isMapChange= true;
 
-			
-			
+			gold += 10;
+            ChangeTextGold();
 
-			SpawnEnemy(20);
+
+            SpawnEnemy(20);
 			SpawnEnemy(22);
 
 			Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
 
-			gamestate = GameState.NextStage;
+			gamestate = GameState.CameraMove;
 		}
-		else if(gamestate == GameState.NextStage)
+		else if(gamestate == GameState.CameraMove)
 		{
 			isMapChange= false;
-
-
-			gamestate = GameState.BeforeBattle;
+			P_maps[Stage - 1].gameObject.SetActive(false);
+            E_maps[Stage - 1].gameObject.SetActive(false);
+            gamestate = GameState.BeforeBattle;
 		}
 	}
 
@@ -553,8 +553,15 @@ public class GameManager : MonoBehaviour
 		if(PlayerUnitCount <= 0)
 		{
 			Debug.Log("게임오버");
-			//게임오버
-		}
+            //게임오버
+            spawnedGO = null;
+
+            isBattle = false;
+            isMapChange = false;
+
+            Stage = 0;
+            gamestate = GameState.None;
+        }
 	}
 
 	public void RemoveEnemyUnitCount()
@@ -565,7 +572,8 @@ public class GameManager : MonoBehaviour
 			if(gamestate == GameState.Battle)
 			{
 				Stage++;
-				ChangeGameState();
+				ChangeTextStage();
+                ChangeGameState();
 			}
 			
 			//다음 스테이지로
@@ -585,7 +593,6 @@ public class GameManager : MonoBehaviour
 		var GO = Instantiate(Prefab_Golem);
 		GO.transform.parent = EnemyUnit.transform;
 		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
-		Debug.Log(E_maps[Stage].GO_Blocks[posNum].transform.position);
 	}
 
 	GameObject targetBlock= null;
@@ -611,4 +618,17 @@ public class GameManager : MonoBehaviour
 			ChangeGameState();
 		}
 	}
+
+	void ChangeTextStage()
+	{
+		int T_Stage = Stage;
+		T_Stage++;
+
+        Text_Stage.text = T_Stage.ToString();
+	}
+
+	void ChangeTextGold()
+	{
+        Text_Gold.text = gold.ToString();
+    }
 }

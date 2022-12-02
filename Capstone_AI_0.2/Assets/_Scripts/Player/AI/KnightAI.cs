@@ -126,6 +126,8 @@ public class KnightAI : LivingEntity
         {
             if (GameManager.Instance.isBattle)
             {
+                isGoal = false;
+
                 if (hasTarget)
                 {
                     Attack();
@@ -140,7 +142,7 @@ public class KnightAI : LivingEntity
                     TargetSearch();
                 }
             }
-            else if(GameManager.Instance.isMapChange)
+            else if(GameManager.Instance.isMapChange && isGoal == false)
             {
                 Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
                 pathFinder.destination = targetV3;

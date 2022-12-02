@@ -98,7 +98,7 @@ public class Storage : MonoBehaviour
 				DivisionUnit(GO.GetComponent<StorageSorting>().getGO_Type(), GameManager.Instance.spawnedGO);
 				GameManager.Instance.spawnedGO.SetActive(true);
 				GameManager.Instance.spawnedGO.transform.SetParent(GameManager.Instance.PlayerUnit.transform);
-				GameManager.Instance.spawnedGO.transform.position = GameManager.Instance.spawnPos.localPosition;        //배치할 유닛 위치 바꿔야함
+				GameManager.Instance.spawnedGO.transform.position = GameManager.Instance.spawnPos.position;        //배치할 유닛 위치 바꿔야함
 
 				GameManager.Instance.AddPlayerUnitCount();
 			}

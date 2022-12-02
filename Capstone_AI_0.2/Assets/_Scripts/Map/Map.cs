@@ -15,16 +15,21 @@ public class Map : MonoBehaviour
 	Vector3 center;
 	float distance = 1.2f;
 
+	private void Awake()
+	{
+        center = transform.position;
+        blockNum = 6;
+
+        initBlock(blockNum);
+        initBlockPosition();
+        SpawnBlock();
+
+        GameManager.Instance.AddMap(this);
+    }
+
 	private void Start()
 	{
-		center = transform.position;
-		blockNum = 6;
 
-		initBlock(blockNum);
-		initBlockPosition();
-		SpawnBlock();
-
-		GameManager.Instance.AddMap(this);
 	}
 
 

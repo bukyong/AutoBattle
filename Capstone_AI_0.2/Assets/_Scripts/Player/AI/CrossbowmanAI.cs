@@ -101,6 +101,8 @@ public class CrossbowmanAI : LivingEntity
 
         if (GameManager.Instance.isBattle)
         {
+            isGoal = false;
+
             if (hasTarget)
             {
                 // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
@@ -113,7 +115,7 @@ public class CrossbowmanAI : LivingEntity
             }
 
 		}
-		else if (GameManager.Instance.isMapChange)
+		else if (GameManager.Instance.isMapChange && isGoal == false)
 		{
 			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
