@@ -16,7 +16,7 @@ public class ArrowMove : MonoBehaviour
     private Rigidbody rb;
     private SphereCollider sphCollider;
     private float lastCollisionEnterTime;
-    private float collisionDealy = 0.1f;
+    private float collisionDealy = 0f;
 
     public float hitOffset = 0f;
     public bool UseFirePointRotation;

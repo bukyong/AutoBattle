@@ -32490,6 +32490,10 @@ PrefabInstance:
       propertyPath: Prefab_Golem
       value: 
       objectReference: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
+    - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
+      propertyPath: Prefab_Crossbow
+      value: 
+      objectReference: {fileID: 8223382295679055321, guid: 99a9a15c9e4bcd1478c6e2bdd89c30c4, type: 3}
     - target: {fileID: 2235726197832964903, guid: 460506782fcd6644989024723c09ebda, type: 3}
       propertyPath: m_Name
       value: GameManager

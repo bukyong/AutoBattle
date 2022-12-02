@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f835d80692d4d4a9f1b157842b8ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamestate: 0
   Stage: 0
   P_maps: []
   E_maps: []
@@ -54,7 +55,10 @@ MonoBehaviour:
   EnemyUnit: {fileID: 0}
   PlayerUnitCount: 0
   EnemyUnitCount: 0
+  GoalUnitCount: 0
   Panel_Character: {fileID: 0}
+  Text_Stage: {fileID: 0}
+  Text_Gold: {fileID: 0}
   List_Warrior: []
   List_Shield: []
   List_Archer: []
@@ -64,7 +68,7 @@ MonoBehaviour:
   Prefab_Warrior: {fileID: 6274836066665201526, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
   Prefab_Shield: {fileID: 6274836066665201526, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
   Prefab_Archer: {fileID: 5514698359946518477, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
-  Prefab_Crossbow: {fileID: 8284318803524855037, guid: 99a9a15c9e4bcd1478c6e2bdd89c30c4, type: 3}
+  Prefab_Crossbow: {fileID: 8223382295679055321, guid: 99a9a15c9e4bcd1478c6e2bdd89c30c4, type: 3}
   Prefab_Magician: {fileID: 4635407917977119440, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
   Prefab_Healer: {fileID: 3371512157567900187, guid: 850b5dcb1846d6a41889007a13182631, type: 3}
   Prefab_Orc: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
@@ -90,6 +94,7 @@ MonoBehaviour:
   H_Shield: {fileID: 8300000, guid: 51eb97b2a4bf20b4fb5e8195b1333daa, type: 3}
   H_Monster: {fileID: 8300000, guid: 62f87a12223d8cf4cbdc26b9d9b967bb, type: 3}
   isBattle: 0
+  isMapChange: 0
 --- !u!114 &2235726197832964899
 MonoBehaviour:
   m_ObjectHideFlags: 0

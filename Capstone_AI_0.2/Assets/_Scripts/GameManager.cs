@@ -472,10 +472,11 @@ public class GameManager : MonoBehaviour
             ChangeTextGold();
 
 
-            SpawnEnemy(20);
+            SpawnEnemy(10);
 			SpawnEnemy(22);
+            SpawnEnemy(32);
 
-			Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
+            Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
 
 			gamestate = GameState.CameraMove;
 		}

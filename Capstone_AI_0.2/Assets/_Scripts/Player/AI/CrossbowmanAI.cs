@@ -111,7 +111,6 @@ public class CrossbowmanAI : LivingEntity
                 // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
                 Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
                 this.transform.LookAt(targetPosition);
-                gameObject.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 90, 0);
             }
 
 		}
