@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8e8c502cd7996854181faabb9d145130
+guid: 9be7e6b75d7cb3a428886546ec4654fe
 ModelImporter:
   serializedVersion: 20300
   internalIDToNameTable:
@@ -203,7 +203,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.54545456
+      - time: 0.49919742
         functionName: OnDamageEvent
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}

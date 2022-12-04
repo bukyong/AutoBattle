@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff576e532460df14dac5d564774c5de2
+guid: f3f010c2477bc6d429b3f311be5e474d
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -49,7 +49,7 @@ ModelImporter:
     400042: //RootNode
     2100000: 'Material #3'
     4300000: ms01_golem
-    7400000: ms01_Idle
+    7400000: ms01_Jump
     9500000: //RootNode
     13700000: ms01_golem
   externalObjects: {}
@@ -81,10 +81,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ms01_Idle
+      name: ms01_Jump
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
