@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2235726197832964903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2235726197832964897}
+  - component: {fileID: 2235726197832964902}
+  - component: {fileID: 2235726197832964899}
+  - component: {fileID: 2235726197832964896}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2235726197832964897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2235726197832964903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2235726197832964902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2235726197832964903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f835d80692d4d4a9f1b157842b8ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamestate: 0
+  Stage: 0
+  P_maps: []
+  E_maps: []
+  spawnPos: {fileID: 0}
+  spawnedGO: {fileID: 0}
+  PlayerUnit: {fileID: 0}
+  EnemyUnit: {fileID: 0}
+  PlayerUnitCount: 0
+  EnemyUnitCount: 0
+  GoalUnitCount: 0
+  Panel_Character: {fileID: 0}
+  Text_Stage: {fileID: 0}
+  Text_Gold: {fileID: 0}
+  List_Warrior: []
+  List_Shield: []
+  List_Archer: []
+  List_Crossbow: []
+  List_Magician: []
+  List_Healer: []
+  Prefab_Warrior: {fileID: 3166896947906736343, guid: 1ca928e73c30cc947a8b3a17699fe52a, type: 3}
+  Prefab_Shield: {fileID: 2349193847289594625, guid: b7b375afbc8a21d4e99d9c8f05ee5747, type: 3}
+  Prefab_Archer: {fileID: 2221444781592181732, guid: d4e48011109b1ef48b01937eda4881ba, type: 3}
+  Prefab_Crossbow: {fileID: 1703184727530509228, guid: fd1bfa5135de625429903e07858506e4, type: 3}
+  Prefab_Magician: {fileID: 8138134253580899733, guid: 7b62146c7a5417444b11bf2ace9fd082, type: 3}
+  Prefab_Healer: {fileID: 3321439251181726964, guid: bce089118cee980409c51f3a70f30460, type: 3}
+  Prefab_Orc: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+  Prefab_Golem: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
+  AudioSource_Background: {fileID: 0}
+  Title: {fileID: 8300000, guid: c04625ab9229387489c3f395f0f8d122, type: 3}
+  Cave: {fileID: 8300000, guid: 6fbd540688c9e5b46b72041ecf95c751, type: 3}
+  Village: {fileID: 8300000, guid: 7fb4c23b5c02cc94b968d560d12bb172, type: 3}
+  WarriorAttack: {fileID: 8300000, guid: 2444855a17750ec43bab7496edd31fc2, type: 3}
+  WarriorSkill: {fileID: 8300000, guid: 6698b7ed244d0c443910af39b0a95fee, type: 3}
+  WarriorWalk: {fileID: 8300000, guid: 712a2a5e00b645a42bdccf0d76404128, type: 3}
+  WarriorGrapTouch: {fileID: 8300000, guid: 02a2d108925cdbf4482a7f1cd36811b9, type: 3}
+  ArcherAttack: {fileID: 8300000, guid: cb28c719a787a6640acc6ffd1918ecfd, type: 3}
+  ArcherSkill: {fileID: 8300000, guid: f8196ec9db2154045b8c962feb239037, type: 3}
+  ArcherWalk: {fileID: 8300000, guid: c25e609f1550fdc419e6396e7afa6b4f, type: 3}
+  ArcherGrapTouch: {fileID: 8300000, guid: f67cec131f9b60946923de806052e63a, type: 3}
+  WizardAttack: {fileID: 8300000, guid: bffd04c63c968ad4fb0e13f0e411bace, type: 3}
+  WizardSkill: {fileID: 8300000, guid: eec754939fc197b49aab14950413fa12, type: 3}
+  WizardWalk: {fileID: 8300000, guid: c25e609f1550fdc419e6396e7afa6b4f, type: 3}
+  WizardGrapTouch: {fileID: 8300000, guid: 1edf0ef77ab492c4982bf4566b19a737, type: 3}
+  H_HeavyArmor: {fileID: 8300000, guid: a726e50fd1b8e5d4d9224d6415722fe9, type: 3}
+  H_NormalArmor: {fileID: 8300000, guid: 083744b5eb24f2e42a6b9bbcc826dcf8, type: 3}
+  H_Shield: {fileID: 8300000, guid: 51eb97b2a4bf20b4fb5e8195b1333daa, type: 3}
+  H_Monster: {fileID: 8300000, guid: 62f87a12223d8cf4cbdc26b9d9b967bb, type: 3}
+  isBattle: 0
+  isMapChange: 0
+--- !u!114 &2235726197832964899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2235726197832964903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6a5b0bccd15b545ac09167e0803330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 0
+--- !u!82 &2235726197832964896
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2235726197832964903}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
