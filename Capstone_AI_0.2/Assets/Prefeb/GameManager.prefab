@@ -66,11 +66,11 @@ MonoBehaviour:
   List_Magician: []
   List_Healer: []
   Prefab_Warrior: {fileID: 6274836066665201526, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
-  Prefab_Shield: {fileID: 6274836066665201526, guid: a7e122f4e2e9ef640818e457d2e58c67, type: 3}
-  Prefab_Archer: {fileID: 5514698359946518477, guid: bb150d0b33286b84c859065e01a928d4, type: 3}
-  Prefab_Crossbow: {fileID: 8223382295679055321, guid: 99a9a15c9e4bcd1478c6e2bdd89c30c4, type: 3}
-  Prefab_Magician: {fileID: 4635407917977119440, guid: d05902b3c14cf2f4e93c60ec77379cc8, type: 3}
-  Prefab_Healer: {fileID: 3371512157567900187, guid: 850b5dcb1846d6a41889007a13182631, type: 3}
+  Prefab_Shield: {fileID: 2349193847289594625, guid: b7b375afbc8a21d4e99d9c8f05ee5747, type: 3}
+  Prefab_Archer: {fileID: 2221444781592181732, guid: d4e48011109b1ef48b01937eda4881ba, type: 3}
+  Prefab_Crossbow: {fileID: 3365635203864915403, guid: c3a929617c36f6c4ba95597b466e9c53, type: 3}
+  Prefab_Magician: {fileID: 8138134253580899733, guid: 7b62146c7a5417444b11bf2ace9fd082, type: 3}
+  Prefab_Healer: {fileID: 3321439251181726964, guid: bce089118cee980409c51f3a70f30460, type: 3}
   Prefab_Orc: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
   Prefab_Golem: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
   AudioSource_Background: {fileID: 0}

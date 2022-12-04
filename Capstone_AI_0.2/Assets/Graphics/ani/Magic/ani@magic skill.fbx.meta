@@ -6,12 +6,6 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  - first:
-      74: -203655887218126122
-    second: magic skill
-  - first:
-      74: -3780516532778130023
-    second: mixamo.com (1)
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -39,68 +33,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: magic skill
-      takeName: mixamo.com
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 106
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves:
-      - name: Curve
-        curve:
-          serializedVersion: 2
-          curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          preInfinity: 3
-          postInfinity: 3
-          rotationOrder: 4
-      events:
-      - time: 0.61462665
-        functionName: MagicianSkillAOE
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2385ed248f8edce4eba5d5f0ff234590, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -142,14 +75,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 2d42acbf8d5568143b818ab0a826823c
-  - c3bab0614b23b9943a2f43d2895b2588
-  - 63e63d91b6ce0454f8c7d30449c065cd
-  - 246579ea85da1764ab955b48afaebca3
-  - b2a7851380a194a4c8c37e101d8ea9a1
-  - c9e642815d4f6704c9c75c50934e9b85
-  - 7c10e2ef5d42d594185038e69b2d32f6
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
