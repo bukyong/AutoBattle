@@ -59,9 +59,4 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Folder
-Library/
-Logs/
-obj/
-Packages/
-ProjectSettings/
-UserSettings/
+
