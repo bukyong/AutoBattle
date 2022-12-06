@@ -21,6 +21,8 @@ public class LivingEntity : MonoBehaviour
 
     public GameObject StandingBlock;
 
+    //public AudioSource Audio;
+
     //public Transform DamageText_Pos;
 
     //public event Action OnDeath; // 사망 시 발동할 이벤트
@@ -44,6 +46,14 @@ public class LivingEntity : MonoBehaviour
         GameObject damageGO = Instantiate(DamageText_GO);
         damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         damageGO.GetComponent<DamageText>().damage = damage;
+
+
+/*        Audio.clip = null;
+        if(Audio.clip != null)
+        {
+			Audio.Play();
+		}*/
+        
 
 		// 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
 		if (Health <= 0 && !Dead)

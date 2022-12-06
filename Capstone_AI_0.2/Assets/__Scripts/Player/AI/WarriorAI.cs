@@ -85,10 +85,11 @@ public class WarriorAI: LivingEntity
 
     void Start()
     {
-        // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
-        StartCoroutine(UpdatePath());
-        tr = GetComponent<Transform>();
-    }
+		// 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
+		StartCoroutine(UpdatePath());
+		tr = GetComponent<Transform>();
+		playerRigid = GetComponent<Rigidbody>();
+	}
 
     void Update()
     {
@@ -119,6 +120,7 @@ public class WarriorAI: LivingEntity
 			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
 			pathFinder.isStopped = false;
+
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
 

@@ -498,11 +498,6 @@ public class GameManager : MonoBehaviour
 		{
 			isBattle= false;
 
-			for(int i = 0; i < PlayerUnit.transform.childCount; i++)
-			{
-				PlayerUnit.transform.GetChild(i).gameObject.SetActive(true);
-			}
-
 			for(int a = 0; a < P_maps[Stage].GO_Blocks.Count; a++)
 			{
 				if(P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO() != null)
@@ -512,6 +507,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			gamestate = GameState.AfterBattle;
+			//여기
 			ChangeGameState();
 		}
 		else if(gamestate == GameState.AfterBattle)
@@ -627,25 +623,20 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.Log("게임오버");
             //게임오버
-
-            gamestate = GameState.None;
         }
 	}
 
 	public void RemoveEnemyUnitCount()
 	{
 		EnemyUnitCount--;
-		if (EnemyUnitCount <= 0)
+		if (EnemyUnitCount == 0)
 		{
 			if(gamestate == GameState.Battle)
 			{
 				Stage++;
 				ChangeTextStage();
                 ChangeGameState();
-			}
-			
-			//다음 스테이지로
-			
+			}		
 		}
 	}
 
@@ -665,8 +656,11 @@ public class GameManager : MonoBehaviour
 			GameObject.Find("Enemy");
 		}
 
+		Debug.Log("유닛 부모 할당 전");
 		GO.transform.parent = EnemyUnit.transform;
+		Debug.Log("유닛 위치 이동전");
 		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
+		Debug.Log("유닛 위치 이동후");
 	}
 
 	public void SpawnEnemys(SO_Enemy SO)
@@ -695,7 +689,7 @@ public class GameManager : MonoBehaviour
 	public void AddGoalUnit()
 	{
 		GoalUnitCount++;
-		if(PlayerUnitCount <= GoalUnitCount)
+		if(PlayerUnitCount == GoalUnitCount)
 		{
 			isMapChange= false;
 			ChangeGameState();
