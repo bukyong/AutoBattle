@@ -610,7 +610,8 @@ public class GameManager : MonoBehaviour
             isBattle = false;
             isMapChange = false;
 
-            Stage = 0;
+
+			Stage = 0;
             gamestate = GameState.None;
         }
 	}
