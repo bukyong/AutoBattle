@@ -330,7 +330,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.7171717
-        functionName: EnemySkillAOE
+        functionName: EnemyOrcSkillAOE
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}
         floatParameter: 0

@@ -132,8 +132,8 @@ MonoBehaviour:
   hitOffset: 0
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 3564951699679014849, guid: 75506f950408b374ca4f4d9802107533, type: 3}
   flash: {fileID: 3564951699679014849, guid: 75506f950408b374ca4f4d9802107533, type: 3}
+  hit: {fileID: 1643851402782444, guid: 5f2ac11a6e11a2e49a1ab478e350ab4a, type: 3}
   Detached: []
 --- !u!1001 &8541604364445816487
 PrefabInstance:

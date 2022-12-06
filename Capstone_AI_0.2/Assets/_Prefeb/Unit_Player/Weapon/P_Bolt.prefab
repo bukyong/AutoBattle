@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7408335190288422121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.49}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 733386743789566738}
@@ -129,12 +129,8 @@ MonoBehaviour:
   crossbowmanAI: {fileID: 0}
   targetEntity: {fileID: 0}
   damage: 0
-  hitOffset: 0
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 3564951699679014849, guid: 75506f950408b374ca4f4d9802107533, type: 3}
   flash: {fileID: 3564951699679014849, guid: 75506f950408b374ca4f4d9802107533, type: 3}
-  Detached: []
+  hit: {fileID: 1643851402782444, guid: 5f2ac11a6e11a2e49a1ab478e350ab4a, type: 3}
 --- !u!1001 &8541604364445816487
 PrefabInstance:
   m_ObjectHideFlags: 0
