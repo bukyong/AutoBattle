@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.000018994191, g: 0.000000036370295, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.000017040758, g: 0.000000025750374, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -81535,7 +81535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2015332901701586551, guid: 1c5711a11a3aa0f478f45a7b05c87a9e, type: 3}
       propertyPath: blockNum
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3876340907474570620, guid: 1c5711a11a3aa0f478f45a7b05c87a9e, type: 3}
       propertyPath: m_Name
@@ -101837,7 +101837,7 @@ PrefabInstance:
       objectReference: {fileID: 1703184727530509228, guid: fd1bfa5135de625429903e07858506e4, type: 3}
     - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
       propertyPath: List_SO.Array.size
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
       propertyPath: List_SO.Array.data[0]
@@ -101855,6 +101855,22 @@ PrefabInstance:
       propertyPath: List_SO.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: 36cac8b6252935a4c812a3a6a1b828c4, type: 2}
+    - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
+      propertyPath: List_SO.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: b552eb24100acbc45bb8f737f14ab6ae, type: 2}
+    - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
+      propertyPath: List_SO.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: acc4587d6cc0ca3498b46e32374d7542, type: 2}
+    - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
+      propertyPath: List_SO.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ce891a026361674685ec69fc9d47f1b, type: 2}
+    - target: {fileID: 2235726197832964902, guid: 460506782fcd6644989024723c09ebda, type: 3}
+      propertyPath: List_SO.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: b4075cebd312da94fa480ead58b3922a, type: 2}
     - target: {fileID: 2235726197832964903, guid: 460506782fcd6644989024723c09ebda, type: 3}
       propertyPath: m_Name
       value: GameManager

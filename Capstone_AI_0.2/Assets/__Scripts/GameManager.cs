@@ -522,11 +522,9 @@ public class GameManager : MonoBehaviour
             ChangeTextGold();
 
 
-            SpawnEnemy(Prefab_Orc,10);
-			SpawnEnemy(Prefab_Golem, 22);
-            SpawnEnemy(Prefab_Golem, 32);
+			SpawnEnemys(List_SO[Stage]);
 
-            Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
+			Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
 
 			gamestate = GameState.CameraMove;
 		}
@@ -546,10 +544,34 @@ public class GameManager : MonoBehaviour
 			P_maps.Add(map);
 			SortingPMap();
 			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
+			SortingPMap();
 		}
 		else if(map.name == "Enemy_Map")
 		{
 			E_maps.Add(map);
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
+			SortingEMap();
 			SortingEMap();
 			SortingEMap();
 		}
@@ -605,13 +627,7 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.Log("게임오버");
             //게임오버
-            spawnedGO = null;
 
-            isBattle = false;
-            isMapChange = false;
-
-
-			Stage = 0;
             gamestate = GameState.None;
         }
 	}
