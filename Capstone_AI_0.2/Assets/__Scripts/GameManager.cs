@@ -280,7 +280,7 @@ public class GameManager : MonoBehaviour
 					}
 				}
 
-				Ray ray2 = new Ray(raycastStartPos, -transform.up);
+				Ray ray2 = new Ray(new Vector3(raycastStartPos.x, 5f, raycastStartPos.z), -transform.up);
 				RaycastHit[] hit2 = Physics.RaycastAll(ray2);
 
 				for (int i = 0; i < hit2.Length; i++)
@@ -288,7 +288,6 @@ public class GameManager : MonoBehaviour
 					if (hit2[i].collider.name == "Plane_Block")
 					{
 						firstGOBlock = hit2[i].collider.gameObject;
-						Debug.Log(firstGOBlock.name);
 					}
 				}
 
@@ -299,6 +298,8 @@ public class GameManager : MonoBehaviour
 					{
 						raycastGO.transform.position = new Vector3(blockGO.transform.position.x, 0, blockGO.transform.position.z);
 						blockGO.GetComponentInParent<Block>().setGO(raycastGO);
+
+						Debug.Log("블록으로 정상 이동");
 
 						// 블록이 없는 곳에서 처음 배치할 때 문제가 생기지 않도록 확인
 						if (firstGOBlock != null)
@@ -709,7 +710,6 @@ public class GameManager : MonoBehaviour
 			if (child.name == transform.name)
 				return;
 
-			Debug.Log(child.name);
 			if (child.name == "Text_Gold")
 				Text_Gold = child.GetComponent<TextMeshProUGUI>();
 
@@ -744,11 +744,10 @@ public class GameManager : MonoBehaviour
 
 		if(scene.name == "GamePlay")
 		{
-			Debug.Log("게임플레이 씬 실행");
-
 			spawnedGO = null;
 			isBattle = false;
 			isMapChange = false;
+
 
 			PlayerUnitCount = 0;
 			EnemyUnitCount = 0;
@@ -766,8 +765,6 @@ public class GameManager : MonoBehaviour
 
 			StartCoroutine(DelayChangeScene());
 		}
-
-		Debug.Log("OnSceneLoaded: " + scene.name);
 	}
 
 	void OnDisable()
