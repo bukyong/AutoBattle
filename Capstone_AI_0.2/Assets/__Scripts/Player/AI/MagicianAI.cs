@@ -11,6 +11,7 @@ public class MagicianAI : LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
+    private Rigidbody playerRigid;
 
     public Transform tr;
 
@@ -60,7 +61,7 @@ public class MagicianAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 30f, 0f);
+        Setup(100f, 10f, 45f, 0f);
         SetGauge();
     }
 
@@ -95,12 +96,18 @@ public class MagicianAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
+        playerRigid = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         playerAnimator.SetBool("isMove", isMove);
         playerAnimator.SetBool("isAttack", isAttack);
+
+        // 오브젝트위에 체력, 마나 게이지가 따라다님
+        pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
+        pgoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
+        pgoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
 
         if (GameManager.Instance.isBattle)
         {
@@ -134,11 +141,6 @@ public class MagicianAI : LivingEntity
 				GameManager.Instance.AddGoalUnit();
 			}
 		}
-
-		// 오브젝트위에 체력, 마나 게이지가 따라다님
-		pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
-        pgoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
-        pgoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -300,6 +302,9 @@ public class MagicianAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
+        playerRigid.isKinematic = true;
+        pgoGauge.SetActive(false);
+
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
@@ -324,7 +329,6 @@ public class MagicianAI : LivingEntity
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
-        pgoGauge.SetActive(false);
         //Destroy(gameObject);
     }
 }

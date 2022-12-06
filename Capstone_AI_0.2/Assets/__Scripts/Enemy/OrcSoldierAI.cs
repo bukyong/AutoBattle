@@ -59,7 +59,7 @@ public class OrcSoldierAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 10f, 5f);
+        Setup(200f, 10f, 30f, 5f);
         SetGauge();
     }
 
@@ -268,6 +268,9 @@ public class OrcSoldierAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
+        enemyRigid.isKinematic = true;
+        egoGauge.SetActive(false);
+
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
@@ -288,11 +291,11 @@ public class OrcSoldierAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("적 사망...");
+        Debug.Log("오크 전사 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
-        egoGauge.SetActive(false);
+        //Destroy(egoGauge);
         //Destroy(gameObject);
     }
 }

@@ -11,6 +11,7 @@ public class KnightAI : LivingEntity
     private LivingEntity targetEntity; // 추적 대상
     private NavMeshAgent pathFinder; // 경로 계산 AI 에이전트
     private Animator playerAnimator; // 플레이어 애니메이션
+    private Rigidbody playerRigid;
 
     bool isGoal = false;
 
@@ -55,7 +56,7 @@ public class KnightAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         playerAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 10f, 5f);
+        Setup(200f, 10f, 15f, 10f);
         SetGauge();
     }
 
@@ -90,16 +91,23 @@ public class KnightAI : LivingEntity
         // 게임 오브젝트 활성화와 동시에 AI의 탐지 루틴 시작
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
-
-	}
+        playerRigid = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
         playerAnimator.SetBool("isMove", isMove);
         playerAnimator.SetBool("isAttack", isAttack);
 
+        // 오브젝트위에 체력 바가 따라다님
+        pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
+        pgoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
+        pgoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
+
         if (GameManager.Instance.isBattle)
         {
+            isGoal = false;
+
             if (hasTarget)
             {
                 // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
@@ -110,11 +118,24 @@ public class KnightAI : LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
+        else if (GameManager.Instance.isMapChange && isGoal == false)
+        {
+            Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+            pathFinder.destination = targetV3;
+            pathFinder.isStopped = false;
+            isMove = true;
+            pathFinder.stoppingDistance = 0.5f;
 
-        // 오브젝트위에 체력 바가 따라다님
-        pgoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
-        pgoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
-        pgoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
+            if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
+            {
+                isMove = false;
+                pathFinder.stoppingDistance = 1.5f;
+
+                isGoal = true;
+
+                GameManager.Instance.AddGoalUnit();
+            }
+        }
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -282,7 +303,7 @@ public class KnightAI : LivingEntity
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("기사 공격 실행");
 
-        Mana += 0;
+        Mana += 2;
         playerAnimator.SetInteger("Mana", (int)Mana);
         attackTarget.OnDamage(damage);
 
@@ -310,6 +331,9 @@ public class KnightAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
+        playerRigid.isKinematic = true;
+        pgoGauge.SetActive(false);
+
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
@@ -334,7 +358,6 @@ public class KnightAI : LivingEntity
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
-        pgoGauge.SetActive(false);
         //Destroy(gameObject);
     }
 }

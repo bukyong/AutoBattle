@@ -61,7 +61,7 @@ public class GolemAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 10f, 5f);
+        Setup(300f, 10f, 20f, 10f);
         SetGauge();
     }
 
@@ -104,27 +104,30 @@ public class GolemAI : LivingEntity
         enemyAnimator.SetBool("isMove", isMove);
         enemyAnimator.SetBool("isAttack", isAttack);
 
-        if (GameManager.Instance.isBattle)
-        {
-            if (isDash)
-            {
-                return;
-            }
-            else
-            {
-                // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-                dist = Vector3.Distance(tr.position, targetEntity.transform.position);
-
-                // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-                Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-                this.transform.LookAt(targetPosition);
-            }
-        }
-
         // 오브젝트위에 체력 바가 따라다님
         egoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
         egoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
         egoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
+
+        if (GameManager.Instance.isBattle)
+        {
+            if (hasTarget)
+            {
+                if (isDash)
+                {
+                    return;
+                }
+                else
+                {
+                    // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+                    dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+
+                    // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+                    Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+                    this.transform.LookAt(targetPosition);
+                }
+            }
+        }
     }
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
@@ -287,12 +290,11 @@ public class GolemAI : LivingEntity
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
-                attackTarget.OnDamage(damage*5);
+                attackTarget.OnDamage(damage * 2f);
             }
         }
     }
 
-    // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
     IEnumerator OnTimeCoroutine(int time)
     {
         // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
@@ -389,6 +391,9 @@ public class GolemAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
+        enemyRigid.isKinematic = true;
+        egoGauge.SetActive(false);
+
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
@@ -409,11 +414,11 @@ public class GolemAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("적 사망...");
+        Debug.Log("골렘 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
-        egoGauge.SetActive(false);
+        //Destroy(egoGauge);
         //Destroy(gameObject);
     }
 }
