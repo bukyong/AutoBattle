@@ -23,13 +23,11 @@ public class Map : MonoBehaviour
         initBlock(blockNum);
         initBlockPosition();
         SpawnBlock();
-
-        GameManager.Instance.AddMap(this);
     }
 
 	private void Start()
 	{
-
+		GameManager.Instance.AddMap(this);
 	}
 
 

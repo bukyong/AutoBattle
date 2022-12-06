@@ -9,10 +9,11 @@ TagManager:
   - Warrior
   - Archer
   - Magician
-  - E_Archer
-  - E_Magician
   - Block
   - Storage
+  - Shield
+  - Crossbow
+  - Healer
   layers:
   - Default
   - TransparentFX

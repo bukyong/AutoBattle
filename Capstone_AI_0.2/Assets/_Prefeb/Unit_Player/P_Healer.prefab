@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 5058936520748359400}
   m_Layer: 8
   m_Name: P_Healer
-  m_TagString: Untagged
+  m_TagString: Healer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

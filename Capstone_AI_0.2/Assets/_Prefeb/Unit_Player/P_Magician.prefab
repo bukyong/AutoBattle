@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 5633086596977936443}
   m_Layer: 8
   m_Name: P_Magician
-  m_TagString: Untagged
+  m_TagString: Magician
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

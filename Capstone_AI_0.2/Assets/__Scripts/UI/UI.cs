@@ -7,11 +7,9 @@ public class UI : MonoBehaviour
 {
 	public GameObject P_Option;
 	public GameObject P_Menu;
-
-	public GameObject L_Graphics;
-	public GameObject L_Sound;
-
+	public GameObject P_GameOver;
 	public GameObject B_Pause;
+	
 
 	public void Active_Option()
 	{
@@ -43,27 +41,6 @@ public class UI : MonoBehaviour
 		B_Pause.SetActive(false);
 	}
 
-
-	public void Active_L_Graphics()
-	{
-		L_Graphics.SetActive(true);
-	}
-
-	public void Close_L_Graphics()
-	{
-		L_Graphics.SetActive(false);
-	}
-
-	public void Active_L_Sound()
-	{
-		L_Sound.SetActive(true);
-	}
-
-	public void Close_L_Sound()
-	{
-		L_Sound.SetActive(false);
-	}
-
 	public void CS_Title()
 	{
 		SceneManager.LoadScene("Title");
@@ -91,7 +68,7 @@ public class UI : MonoBehaviour
 
 	public void ResumGame()
 	{
-		Time.timeScale = 1.0f;
+		Time.timeScale = GameManager.Instance.GameSpeed;
 	}
 
 	public void QuitGame()
