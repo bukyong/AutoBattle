@@ -15,12 +15,8 @@ public class MagicMissileMove : MonoBehaviour
     private float lastCollisionEnterTime;
     private float collisionDealy = 0f;
 
-    public float hitOffset = 0f;
-    public bool UseFirePointRotation;
-    public Vector3 rotationOffset = new Vector3(0, 0, 0);
-    public GameObject hit;
     public GameObject flash;
-    public GameObject[] Detached;
+    public GameObject hit;
 
     void Start()
     {
@@ -28,25 +24,6 @@ public class MagicMissileMove : MonoBehaviour
         sphCollider = GetComponent<SphereCollider>();
         magicianAI = GameObject.FindWithTag("Magician").GetComponent<MagicianAI>();
         damage = magicianAI.damage;
-
-        if (flash != null)
-        {
-            // Quaternion.identity 회전 없음
-            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
-            flashInstance.transform.forward = gameObject.transform.forward;
-            var flashPs = flashInstance.GetComponent<ParticleSystem>();
-
-            if (flashPs != null)
-            {
-                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
-                Destroy(flashInstance, flashPs.main.duration);
-            }
-            else
-            {
-                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(flashInstance, flashPsParts.main.duration);
-            }
-        }
 
         Destroy(gameObject, 5);
     }
@@ -67,101 +44,6 @@ public class MagicMissileMove : MonoBehaviour
     }
 
     // 매직미사일이 충돌했을 경우
-    void OnCollisionEnter(Collision collision)
-    {
-        // 매직미사일이 적과 충돌했을 경우
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;
-
-            // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-            LivingEntity attackTarget = collision.gameObject.GetComponent<LivingEntity>();
-
-            ContactPoint contact = collision.contacts[0];
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            Vector3 pos = contact.point + contact.normal * hitOffset;
-
-            if (hit != null)
-            {
-                var hitInstance = Instantiate(hit, pos, rot);
-                if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-                else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-                else { hitInstance.transform.LookAt(contact.point + contact.normal); }
-
-                var hitPs = hitInstance.GetComponent<ParticleSystem>();
-                if (hitPs != null)
-                {
-                    Destroy(hitInstance, hitPs.main.duration);
-                }
-                else
-                {
-                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitInstance, hitPsParts.main.duration);
-                }
-            }
-            foreach (var detachedPrefab in Detached)
-            {
-                if (detachedPrefab != null)
-                {
-                    detachedPrefab.transform.parent = null;
-                }
-            }
-
-            Destroy(gameObject);
-
-            // 데미지 처리
-            attackTarget.OnDamage(damage);
-            Debug.Log("현재 데미지" + damage);
-        }
-
-        // 매직미사일이 장애물과 충돌했을 경우
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;
-
-            ContactPoint contact = collision.contacts[0];
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            Vector3 pos = contact.point + contact.normal * hitOffset;
-
-            if (hit != null)
-            {
-                var hitInstance = Instantiate(hit, pos, rot);
-                if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-                else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-                else { hitInstance.transform.LookAt(contact.point + contact.normal); }
-
-                var hitPs = hitInstance.GetComponent<ParticleSystem>();
-                if (hitPs != null)
-                {
-                    Destroy(hitInstance, hitPs.main.duration);
-                }
-                else
-                {
-                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitInstance, hitPsParts.main.duration);
-                }
-            }
-            foreach (var detachedPrefab in Detached)
-            {
-                if (detachedPrefab != null)
-                {
-                    detachedPrefab.transform.parent = null;
-                }
-            }
-
-            Destroy(gameObject);
-        }
-
-        else
-        {
-            sphCollider.enabled = false;
-        }
-    }
-
-    /*
-    // 매직미사일이 충돌했을 경우
     void OnTriggerEnter(Collider other)
     {
         // 매직미사일이 적과 충돌했을 경우
@@ -172,6 +54,25 @@ public class MagicMissileMove : MonoBehaviour
 
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
+
+            if (hit != null)
+            {
+                // Quaternion.identity 회전 없음
+                var hitInstance = Instantiate(hit, transform.position, Quaternion.identity);
+                hitInstance.transform.forward = gameObject.transform.forward;
+                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+
+                if (hitPs != null)
+                {
+                    // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                    Destroy(hitInstance, hitPs.main.duration);
+                }
+                else
+                {
+                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitInstance, hitPsParts.main.duration);
+                }
+            }
 
             Destroy(gameObject);
 
@@ -195,7 +96,7 @@ public class MagicMissileMove : MonoBehaviour
             //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
-    */
+    
     void OnSphereCollider()
     {
         if (lastCollisionEnterTime + collisionDealy < Time.time)

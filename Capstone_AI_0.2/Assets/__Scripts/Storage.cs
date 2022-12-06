@@ -18,7 +18,7 @@ public class Storage : MonoBehaviour
 		Storage_ = new GameObject("Storage_");
 	}
 
-	public void AddUnit(GO_Type GY)
+	public GameObject SpawnUnit(GO_Type GY)
 	{
 		GameObject GO = null;
 
@@ -26,41 +26,62 @@ public class Storage : MonoBehaviour
 		{
 			case GO_Type.warrior:
 				GO = Instantiate(GameManager.Instance.Prefab_Warrior);
-				S_Warrior.GetComponent<StorageSorting>().AddList(GO, GO_Type.warrior);
 				break;
 			case GO_Type.shield:
 				GO = Instantiate(GameManager.Instance.Prefab_Shield);
-				S_Shield.GetComponent<StorageSorting>().AddList(GO, GO_Type.shield);
 				break;
 			case GO_Type.archer:
 				GO = Instantiate(GameManager.Instance.Prefab_Archer);
-				S_Archer.GetComponent<StorageSorting>().AddList(GO, GO_Type.archer);
 				break;
 			case GO_Type.crossbow:
 				GO = Instantiate(GameManager.Instance.Prefab_Crossbow);
-				S_Crossbow.GetComponent<StorageSorting>().AddList(GO, GO_Type.crossbow);
 				break;
 			case GO_Type.magician:
 				GO = Instantiate(GameManager.Instance.Prefab_Magician);
-				S_Magician.GetComponent<StorageSorting>().AddList(GO, GO_Type.magician);
 				break;
 			case GO_Type.healer:
 				GO = Instantiate(GameManager.Instance.Prefab_Healer);
-				S_Healer.GetComponent<StorageSorting>().AddList(GO, GO_Type.healer);
 				break;
 			default:
 				break;
 		}
-
-		GO.transform.SetParent(Storage_.transform);
-		GO.SetActive(false);
+		return GO;
 	}
 
 	public void DrawUnit()
 	{
 		int randomInt = Random.Range(0, 6);
+		GO_Type GY = (GO_Type)randomInt;
 
-		AddUnit((GO_Type)randomInt);
+		switch (GY)
+		{
+			case GO_Type.warrior:
+				S_Warrior.GetComponent<StorageSorting>().SetGO_Type(GO_Type.warrior);
+				S_Warrior.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			case GO_Type.shield:
+				S_Shield.GetComponent<StorageSorting>().SetGO_Type(GO_Type.shield);
+				S_Shield.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			case GO_Type.archer:
+				S_Archer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.archer);
+				S_Archer.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			case GO_Type.crossbow:
+				S_Crossbow.GetComponent<StorageSorting>().SetGO_Type(GO_Type.crossbow);
+				S_Crossbow.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			case GO_Type.magician:
+				S_Magician.GetComponent<StorageSorting>().SetGO_Type(GO_Type.magician);
+				S_Magician.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			case GO_Type.healer:
+				S_Healer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.healer);
+				S_Healer.GetComponent<StorageSorting>().AddUnitCount();
+				break;
+			default:
+				break;
+		}
 	}
 
     public void StoreUnit(GameObject GO)
@@ -68,37 +89,40 @@ public class Storage : MonoBehaviour
 		switch(GO.tag)
 		{
 			case "Warrior":
-				S_Warrior.GetComponent<StorageSorting>().AddList(GO, GO_Type.warrior);
+				S_Warrior.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 			case "Shield":
-				S_Shield.GetComponent<StorageSorting>().AddList(GO, GO_Type.shield);
+				S_Shield.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 			case "Archer":
-				S_Archer.GetComponent<StorageSorting>().AddList(GO, GO_Type.archer);
+				S_Archer.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 			case "Crossbow":
-				S_Crossbow.GetComponent<StorageSorting>().AddList(GO, GO_Type.crossbow);
+				S_Crossbow.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 			case "Magician":
-				S_Magician.GetComponent<StorageSorting>().AddList(GO, GO_Type.magician);
+				S_Magician.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 			case "Healer":
-				S_Healer.GetComponent<StorageSorting>().AddList(GO, GO_Type.healer);
+				S_Healer.GetComponent<StorageSorting>().AddUnitCount();
 				break;
 		}
+
+		Destroy(GO);
 	}
 
 	public void TakeOutUnit(GameObject GO)
 	{
-		if (GO.GetComponent<StorageSorting>().GO_List.Count != 0)
+		if (GO.GetComponent<StorageSorting>().GetUnitCount() != 0)
 		{
 			if (GameManager.Instance.spawnedGO == null)
 			{
-				GameManager.Instance.spawnedGO = GO.GetComponent<StorageSorting>().removeList();
-				DivisionUnit(GO.GetComponent<StorageSorting>().getGO_Type(), GameManager.Instance.spawnedGO);
-				GameManager.Instance.spawnedGO.SetActive(true);
+				GO.GetComponent<StorageSorting>().RemoveUnitCount();
+				GameManager.Instance.spawnedGO = SpawnUnit(GO.GetComponent<StorageSorting>().GetGO_Type());
+				DivisionUnit(GO.GetComponent<StorageSorting>().GetGO_Type(), GameManager.Instance.spawnedGO);
 				GameManager.Instance.spawnedGO.transform.SetParent(GameManager.Instance.PlayerUnit.transform);
-				GameManager.Instance.spawnedGO.transform.position = GameManager.Instance.spawnPos.position;        //배치할 유닛 위치 바꿔야함
+				GameManager.Instance.spawnedGO.transform.position = new Vector3(Camera.main.transform.position.x, 2f, 0f);
+				
 
 				GameManager.Instance.AddPlayerUnitCount();
 			}

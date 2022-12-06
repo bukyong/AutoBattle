@@ -14,7 +14,7 @@ public class Audio : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		audioSource.volume = GameManager.Instance.GetVolume(audioType);
 	}

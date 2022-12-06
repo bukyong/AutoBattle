@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -48,7 +49,8 @@ public class GameManager : MonoBehaviour
 	Storage storage;
 	int gold;
 
-	public Transform spawnPos;
+	public float GameSpeed;
+
 	public GameObject spawnedGO;
 
 	public GameObject PlayerUnit;
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
 	public int PlayerUnitCount;
 	public int EnemyUnitCount;
 	public int GoalUnitCount;
+	public int LimitUnitCount;
 
 
 	float pressedTime = 0;
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
 	Vector3 raycastStartPos;
 
 
+	GameObject Canvas;
 	public GameObject Panel_Character;
 	public TextMeshProUGUI Text_Stage;
 	public TextMeshProUGUI Text_Gold;
@@ -72,6 +76,13 @@ public class GameManager : MonoBehaviour
 	float Sound_Total;
 	float Sound_Background;
 	float Sound_Effect;
+	public bool isMute;
+	public float Sound_MuteTotal;
+	public float Sound_MuteBackground;
+	public float Sound_MuteEffect;
+
+	[Header("SO_Enemy")]
+	public List<SO_Enemy> List_SO;
 
 	[Header("List_Unit")]
 	public List<GameObject> List_Warrior;
@@ -156,15 +167,18 @@ public class GameManager : MonoBehaviour
         Sound_Total = 0.5f;
         Sound_Background = 0.5f;
         Sound_Effect = 0.5f;
+		isMute = false;
 
-        spawnedGO = null;
-        isBattle = false;
-        isMapChange = false;
+		spawnedGO = null;
+		isBattle = false;
+		isMapChange = false;
 
-        Stage = 0;
+		GameSpeed= 1f;
+
+		Stage = 0;
 		gold = 30;
-        gamestate = GameState.None;
-    }
+		gamestate = GameState.None;
+	}
 
     public void Start()
     {
@@ -391,6 +405,11 @@ public class GameManager : MonoBehaviour
 			return -1;
 	}
 
+	public void Change_GameSpeed(UnityEngine.UI.Slider slider)
+	{
+		GameSpeed = slider.value;
+	}
+
 	public void Change_Soundtotal(UnityEngine.UI.Slider slider)
 	{
 		Sound_Total= slider.value;
@@ -404,6 +423,34 @@ public class GameManager : MonoBehaviour
 	public void Change_SoundEffect(UnityEngine.UI.Slider slider)
 	{
 		Sound_Effect = slider.value;
+	}
+
+	public bool Change_Mute()
+	{
+		if (isMute == false)
+		{
+			Sound_MuteTotal = Sound_Total;
+			Sound_MuteBackground = Sound_Background;
+			Sound_MuteEffect = Sound_Effect;
+
+/*			Sound_Total = 0f;
+			Sound_Background = 0f;
+			Sound_Effect = 0f;*/
+
+			isMute = true;
+
+			return true;
+		}
+		else
+		{
+			Sound_Total = Sound_MuteTotal;
+			Sound_Background = Sound_MuteBackground;
+			Sound_Effect  = Sound_MuteEffect;
+
+			isMute = false;
+
+			return false;
+		}
 	}
 
 	public float Synchronization_Sound(int type)
@@ -432,17 +479,19 @@ public class GameManager : MonoBehaviour
 		{
             ChangeTextGold();
 
-            SpawnEnemy(20);
-			SpawnEnemy(22);
+			SpawnEnemys(List_SO[Stage]);
 
 			gamestate= GameState.BeforeBattle;
 		}
 		else if(gamestate == GameState.BeforeBattle)
 		{
-			isBattle= true;
-			GoalUnitCount = 0;
+			if(PlayerUnitCount > 0)
+			{
+				isBattle = true;
+				GoalUnitCount = 0;
 
-			gamestate = GameState.Battle;
+				gamestate = GameState.Battle;
+			}
 		}
 		else if(gamestate == GameState.Battle)
 		{
@@ -472,9 +521,9 @@ public class GameManager : MonoBehaviour
             ChangeTextGold();
 
 
-            SpawnEnemy(10);
-			SpawnEnemy(22);
-            SpawnEnemy(32);
+            SpawnEnemy(Prefab_Orc,10);
+			SpawnEnemy(Prefab_Golem, 22);
+            SpawnEnemy(Prefab_Golem, 32);
 
             Camera.main.GetComponent<CameraMove>().ChangeStage_Camera();
 
@@ -587,13 +636,28 @@ public class GameManager : MonoBehaviour
 		return gamestate;
 	}
 
-	public void SpawnEnemy(int posNum)
+	public void SpawnEnemy(GameObject EnemyPrefab,int posNum)
 	{
 		AddEnemyUnitCount();
 
-		var GO = Instantiate(Prefab_Golem);
+		GameObject GO = Instantiate(EnemyPrefab);
+
+		if (!EnemyUnit)
+		{
+			GameObject.Find("Enemy");
+		}
+
 		GO.transform.parent = EnemyUnit.transform;
 		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
+	}
+
+	public void SpawnEnemys(SO_Enemy SO)
+	{
+		for(int i =0; i < SO.spawnList.Count; i++)
+		{
+			var info = SO.spawnList[i];
+			SpawnEnemy(info.prefab, info.blockPos);
+		}
 	}
 
 	GameObject targetBlock= null;
@@ -632,4 +696,82 @@ public class GameManager : MonoBehaviour
 	{
         Text_Gold.text = gold.ToString();
     }
+
+	void Init_GamePlay()
+	{
+		Canvas = GameObject.Find("Canvas");
+
+		Transform[] allChildren = Canvas.GetComponentsInChildren<Transform>();
+		foreach (Transform child in allChildren)
+		{
+			// 자기 자신의 경우엔 무시 
+			// (게임오브젝트명이 다 다르다고 가정했을 때 통하는 코드)
+			if (child.name == transform.name)
+				return;
+
+			Debug.Log(child.name);
+			if (child.name == "Text_Gold")
+				Text_Gold = child.GetComponent<TextMeshProUGUI>();
+
+			if (child.name == "Num_Stage")
+				Text_Stage = child.GetComponent<TextMeshProUGUI>();
+		}
+
+		Time.timeScale = GameSpeed;
+
+		PlayerUnit = GameObject.Find("Player");
+		EnemyUnit = GameObject.Find("Enemy");
+		storage = Canvas.GetComponentInChildren<Storage>();
+	}
+
+	IEnumerator DelayChangeScene()
+	{
+		yield return new WaitForSeconds(1.0f);
+
+		ChangeGameState();
+	}
+
+	void OnEnable()
+	{
+		// 씬 매니저의 sceneLoaded에 체인을 건다.
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+
+	// 체인을 걸어서 이 함수는 매 씬마다 호출된다.
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+
+
+		if(scene.name == "GamePlay")
+		{
+			Debug.Log("게임플레이 씬 실행");
+
+			spawnedGO = null;
+			isBattle = false;
+			isMapChange = false;
+
+			PlayerUnitCount = 0;
+			EnemyUnitCount = 0;
+			GoalUnitCount = 0;
+
+			P_maps.Clear();
+			E_maps.Clear();
+
+			Stage = 0;
+			gold = 30;
+			gamestate = GameState.None;
+
+
+			Init_GamePlay();
+
+			StartCoroutine(DelayChangeScene());
+		}
+
+		Debug.Log("OnSceneLoaded: " + scene.name);
+	}
+
+	void OnDisable()
+	{
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
 }

@@ -3901,7 +3901,7 @@ ParticleSystem:
     colliderQueryMode: 0
     radiusScale: 1
     primitives:
-    - {fileID: 0}
+    - {fileID: 3563208821905530279, guid: 75506f950408b374ca4f4d9802107533, type: 3}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}

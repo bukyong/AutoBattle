@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 3196265501959229822}
   m_Layer: 8
   m_Name: P_Knight
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -555,7 +555,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2349193847289594625}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -1.89}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7458384551145175343}
@@ -661,7 +661,7 @@ MonoBehaviour:
   attackDelay: 1
   pgoGauge: {fileID: 0}
   gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
-  flash: {fileID: 1159970587636746, guid: 1818d0991b8cfb7418b18b86d693be1b, type: 3}
+  flash: {fileID: 1365538819899408, guid: 3936fb4916dc1f14d936f2331d64a38c, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!1 &2464881266350085925
