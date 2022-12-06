@@ -206,7 +206,7 @@ ModelImporter:
       - time: 1
         functionName: OnDie
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 92ce54a1c1c0cd046b1827d625754fab, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 064b14fa7afc6ca4c8be717f6e3be92e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
