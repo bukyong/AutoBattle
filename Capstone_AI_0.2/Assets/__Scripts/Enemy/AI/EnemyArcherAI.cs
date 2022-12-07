@@ -27,7 +27,7 @@ public class EnemyArcherAI : LivingEntity
     [Header("Stats")]
     public float damage; // 공격력
     public float defense; // 방어력
-    public float attackDelay = 2f; // 공격 딜레이
+    public float attackDelay; // 공격 딜레이
 
     [Header("Prefabs")]
     public GameObject firePoint; // 화살이 발사될 위치
@@ -99,6 +99,7 @@ public class EnemyArcherAI : LivingEntity
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         enemyRigid = GetComponent<Rigidbody>();
+        attackDelay = 2f;
     }
 
     void Update()
