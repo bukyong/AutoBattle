@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 492}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -121,10 +121,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1307
-  m_MinSize: {x: 910, y: 442}
-  m_MaxSize: {x: 22005, y: 14042}
+  m_MinSize: {x: 911, y: 442}
+  m_MaxSize: {x: 22006, y: 14021}
   vertical: 0
-  controlID: 13858
+  controlID: 134
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 13863
+  controlID: 159
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -250,10 +250,10 @@ MonoBehaviour:
     y: 0
     width: 698
     height: 1307
-  m_MinSize: {x: 232, y: 392}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 232, y: 371}
+  m_MaxSize: {x: 10002, y: 14021}
   vertical: 1
-  controlID: 13805
+  controlID: 46
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,8 +325,8 @@ MonoBehaviour:
     y: 0
     width: 594
     height: 1307
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.5568476, y: -8.018096, z: 7.726845}
+    m_Target: {x: 7.8503833, y: -6.9827814, z: 9.520383}
     speed: 2
-    m_Value: {x: 3.5568476, y: -8.018096, z: 7.726845}
+    m_Value: {x: 7.8503833, y: -6.9827814, z: 9.520383}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -507,13 +507,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.28362265, y: 0.34659627, z: -0.110649146, w: 0.88738364}
+    m_Target: {x: 0.44656157, y: 0.17553702, z: -0.08954937, w: 0.87293863}
     speed: 2
-    m_Value: {x: 0.28358525, y: 0.34655058, z: -0.11063456, w: 0.88726664}
+    m_Value: {x: 0.44650102, y: 0.17551321, z: -0.089537226, w: 0.8728202}
   m_Size:
-    m_Target: 9.7524
+    m_Target: 18.83865
     speed: 2
-    m_Value: 9.7524
+    m_Value: 18.83865
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -686,9 +686,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 1a57052fd3d65454986cb4fc85e2f6e6, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: e379739a4c840854b8201f96a85942bb, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -9095883999685945781, guid: 1a57052fd3d65454986cb4fc85e2f6e6, type: 2}
+  - m_Target: {fileID: -9095883999685945781, guid: e379739a4c840854b8201f96a85942bb, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -731,7 +731,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 04ade8ffacfee9ffa6ffe9ff6825eaff9425eaffb698eeff6a49efffde72f5ff927cf5ffde4cfcff78edfffff4ffffffd25d0000245e000032fe2300180624006e0624004207240014082400be092400320c2400aa122400
+      m_ExpandedIDs: 6cfbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -793,22 +793,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/__Scripts
+    - Assets/__Scripts/Enemy/AI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 74
   m_LastFolders:
-  - Assets/__Scripts
+  - Assets/__Scripts/Enemy/AI
   m_LastFoldersGridSize: 74
   m_LastProjectPath: C:\Users\navys\Documents\GitHub\AutoBattle\Capstone_AI_0.2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d0960000
-    m_LastClickedID: 38608
-    m_ExpandedIDs: 00000000c0960000c2960000c4960000c6960000c8960000ca960000cc960000ce960000d0960000d2960000d496000000ca9a3b
+    m_SelectedIDs: d48a0900
+    m_LastClickedID: 625364
+    m_ExpandedIDs: 000000002a8400002c8400002e84000030840000328400003484000036840000388400003a8400003c8400003e84000044840000488400004e8400005a840000d0840000348f13003c8f13003e8f130000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -836,7 +836,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c0960000c2960000c4960000c6960000c8960000ca960000cc960000ce960000d0960000d2960000d496000000ca9a3b
+    m_ExpandedIDs: 000000002a8400002c8400002e84000030840000328400003484000036840000388400003a8400003c8400003e840000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   spawnList:
-  - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
+  - prefab: {fileID: 7541092239562137852, guid: 15676784109e3fd4ea507471fa57ff00, type: 3}
     blockPos: 7
+  - prefab: {fileID: 7541092239562137852, guid: 15676784109e3fd4ea507471fa57ff00, type: 3}
+    blockPos: 19

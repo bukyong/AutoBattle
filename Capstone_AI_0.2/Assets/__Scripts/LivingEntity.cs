@@ -44,7 +44,7 @@ public class LivingEntity : MonoBehaviour
         Health -= damage;
 
         GameObject damageGO = Instantiate(DamageText_GO);
-        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z + 0.8f);
         damageGO.GetComponent<DamageText>().damage = damage;
 
 

@@ -105,7 +105,7 @@ public class GolemAI : LivingEntity
         enemyAnimator.SetBool("isAttack", isAttack);
 
         // 오브젝트위에 체력 바가 따라다님
-        egoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 0.5f, 0.5f));
+        egoGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0.2f, 0.7f, 0.7f));
         egoGauge.GetComponentInChildren<HpBar>().HP = base.Health;
         egoGauge.GetComponentInChildren<MpBar>().MP = base.Mana;
 
