@@ -134,6 +134,9 @@ public class GameManager : MonoBehaviour
 	public AudioClip H_Shield;
 	public AudioClip H_Monster;
 
+	[Header("Sound_Healer")]
+	public AudioClip HealerHeal;
+
 	#endregion
 
 
