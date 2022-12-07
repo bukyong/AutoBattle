@@ -31,6 +31,10 @@ public class WarriorAI: LivingEntity
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
 
+    // 애니메이션 실행 조건을 위한 변수
+    public bool isMove;
+    public bool isAttack;
+
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
     {
@@ -47,14 +51,11 @@ public class WarriorAI: LivingEntity
         }
     }
 
-    // 애니메이션 실행 조건을 위한 변수
-    public bool isMove;
-    public bool isAttack;
-
     private void Awake()
     {
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
+        pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
         Setup(200f, 10f, 25f, 5f);
         SetGauge();

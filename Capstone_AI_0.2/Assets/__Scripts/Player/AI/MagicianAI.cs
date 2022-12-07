@@ -38,6 +38,10 @@ public class MagicianAI : LivingEntity
 
     public GameObject flash;
 
+    // 애니메이션 실행 조건을 위한 변수
+    public bool isMove;
+    public bool isAttack;
+
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
     {
@@ -54,14 +58,11 @@ public class MagicianAI : LivingEntity
         }
     }
 
-    // 애니메이션 실행 조건을 위한 변수
-    public bool isMove;
-    public bool isAttack;
-
     private void Awake()
     {
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
+        pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
         Setup(100f, 10f, 45f, 0f);
         SetGauge();
