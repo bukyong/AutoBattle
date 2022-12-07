@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class ArcherAI : LivingEntity
 {
@@ -15,6 +16,8 @@ public class ArcherAI : LivingEntity
     public Transform tr;
 
 	bool isGoal = false;
+    bool isCheck = false;
+	Vector3 targetV3;
 
 	public float damage; // 공격력
     public float defense; // 방어력
@@ -122,25 +125,30 @@ public class ArcherAI : LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
-		else if (GameManager.Instance.isMapChange && isGoal == false)
-		{
-			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == false)
+        {
+            isCheck = true;
+
+			targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
-
+		}
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
+        {
 			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
 			{
 				isMove = false;
 				pathFinder.stoppingDistance = 1.5f;
 
 				isGoal = true;
+				isCheck = false;
 
 				GameManager.Instance.AddGoalUnit();
 			}
 		}
-    }
+	}
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
@@ -209,7 +217,6 @@ public class ArcherAI : LivingEntity
             if (lastAttackTime + attackDelay <= Time.time)
             {
                 isAttack = true;
-                Debug.Log("궁수 공격 실행");
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -238,14 +245,10 @@ public class ArcherAI : LivingEntity
 
         Mana += 2f;
         playerAnimator.SetInteger("Mana", (int)Mana);
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("화살 발사!");
     }
 
     public void ArcherSkillBuff()
     {
-        Debug.Log("궁수 버프 스킬 사용!");
 
         StartCoroutine(OnBuffCoroutine(5, 1f));
 
@@ -260,7 +263,6 @@ public class ArcherAI : LivingEntity
 
         attackDelay -= value;
         playerAnimator.SetFloat("AttackSpeed", animSpeed * 2);
-        Debug.Log("궁수 공격 속도 증가!");
 
         while (time > 0)
         {
@@ -271,7 +273,6 @@ public class ArcherAI : LivingEntity
 
         attackDelay += value;
         playerAnimator.SetFloat("AttackSpeed", animSpeed);
-        Debug.Log("궁수 공격 속도 감소!");
     }
 
     // 데미지를 입었을 때 실행할 처리
@@ -317,7 +318,6 @@ public class ArcherAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("궁수 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

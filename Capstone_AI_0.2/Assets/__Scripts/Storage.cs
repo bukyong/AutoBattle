@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Storage : MonoBehaviour
@@ -121,7 +122,7 @@ public class Storage : MonoBehaviour
 				GameManager.Instance.spawnedGO = SpawnUnit(GO.GetComponent<StorageSorting>().GetGO_Type());
 				DivisionUnit(GO.GetComponent<StorageSorting>().GetGO_Type(), GameManager.Instance.spawnedGO);
 				GameManager.Instance.spawnedGO.transform.SetParent(GameManager.Instance.PlayerUnit.transform);
-				GameManager.Instance.spawnedGO.transform.position = new Vector3(Camera.main.transform.position.x, 2f, 0f);
+				GameManager.Instance.spawnedGO.transform.position = GameManager.Instance.P_maps[GameManager.Instance.Stage].GetComponent<Map>().GO_Blocks[0].transform.position;
 				
 
 				GameManager.Instance.AddPlayerUnitCount();

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 361202003227348303}
   - component: {fileID: 729780901854723270}
   - component: {fileID: 472747781836079345}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane_Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4959863351200791886}
   - component: {fileID: 1011771128652930686}
   - component: {fileID: 6611369263838038687}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane_Block
   m_TagString: Block
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7653658600475792835}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

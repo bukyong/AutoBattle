@@ -16,8 +16,10 @@ public class MagicianAI : LivingEntity
     public Transform tr;
 
     bool isGoal = false;
+	bool isCheck = false;
+	Vector3 targetV3;
 
-    public float damage; // 공격력
+	public float damage; // 공격력
     public float defense; // 방어력
     public float attackDelay = 5f; // 공격 딜레이
 
@@ -123,25 +125,30 @@ public class MagicianAI : LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
-		else if (GameManager.Instance.isMapChange && isGoal == false)
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == false)
 		{
-			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+			isCheck = true;
+
+			targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
-
+		}
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
+		{
 			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
 			{
 				isMove = false;
 				pathFinder.stoppingDistance = 1.5f;
 
 				isGoal = true;
+				isCheck = false;
 
 				GameManager.Instance.AddGoalUnit();
 			}
 		}
-    }
+	}
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
@@ -210,7 +217,6 @@ public class MagicianAI : LivingEntity
             if (lastAttackTime + attackDelay <= Time.time)
             {
                 isAttack = true;
-                Debug.Log("마법사 공격 실행");
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -239,16 +245,11 @@ public class MagicianAI : LivingEntity
 
         Mana += 2f;
         playerAnimator.SetInteger("Mana", (int)Mana);
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("매직미사일 생성!");
     }
 
     public void MagicianSkillAOE()
     {
         //LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        Debug.Log("마법사 광역기 스킬 사용!");
 
         if (flash != null)
         {

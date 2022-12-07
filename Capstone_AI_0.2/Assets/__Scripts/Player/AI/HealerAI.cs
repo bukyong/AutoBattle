@@ -16,6 +16,8 @@ public class HealerAI : LivingEntity
     public Transform tr;
 
 	bool isGoal = false;
+    bool isCheck = false;
+    Vector3 targetV3;
 
 	public float damage; // 공격력
     public float defense; // 방어력
@@ -119,25 +121,30 @@ public class HealerAI : LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
-		else if (GameManager.Instance.isMapChange && isGoal == false)
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == false)
 		{
-			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+            isCheck = true;
+
+			targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
-
+		}
+        else if(GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
+        {
 			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
 			{
 				isMove = false;
 				pathFinder.stoppingDistance = 1.5f;
 
 				isGoal = true;
+                isCheck= false;
 
 				GameManager.Instance.AddGoalUnit();
 			}
 		}
-    }
+	}
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
@@ -208,7 +215,6 @@ public class HealerAI : LivingEntity
             {
                 TargetSearch();
                 isAttack = true;
-                Debug.Log("힐러 공격 실행");
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -255,15 +261,12 @@ public class HealerAI : LivingEntity
             }
         }
 
-        Debug.Log("힐러 스킬 사용!");
-
         Mana += 2f;
         playerAnimator.SetInteger("Mana", (int)Mana);
     }
 
     public void HealerSkillAOE()
     {
-        Debug.Log("힐러 광역 회복 스킬 사용!");
         
         Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, LayerMask.GetMask("Player"));
 
@@ -341,7 +344,6 @@ public class HealerAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("힐러 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

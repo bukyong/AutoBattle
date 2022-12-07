@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class WarriorAI: LivingEntity
 {
@@ -15,6 +16,8 @@ public class WarriorAI: LivingEntity
     public Transform tr;
 
 	bool isGoal = false;
+	bool isCheck = false;
+	Vector3 targetV3;
 
 	public float damage; // 공격력
     public float defense; // 방어력
@@ -115,26 +118,30 @@ public class WarriorAI: LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
-		else if (GameManager.Instance.isMapChange && isGoal == false)
-		{
-			Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == false)
+        {
+            isCheck = true;
+
+			targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
 			pathFinder.destination = targetV3;
 			pathFinder.isStopped = false;
-
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
-
+		}
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
+        {
 			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
 			{
 				isMove = false;
 				pathFinder.stoppingDistance = 1.5f;
 
 				isGoal = true;
+				isCheck = false;
 
 				GameManager.Instance.AddGoalUnit();
 			}
 		}
-    }
+	}
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
@@ -279,7 +286,6 @@ public class WarriorAI: LivingEntity
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("전사 공격 실행");
 
         Mana += 1f;
         playerAnimator.SetInteger("Mana", (int)Mana);
@@ -332,7 +338,6 @@ public class WarriorAI: LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("전사 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

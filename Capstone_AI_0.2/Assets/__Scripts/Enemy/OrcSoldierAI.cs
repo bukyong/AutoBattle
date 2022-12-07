@@ -210,7 +210,6 @@ public class OrcSoldierAI : LivingEntity
     // 적 광역기 스킬 메소드 (오크)
     public void EnemyOrcSkillAOE()
     {
-        Debug.Log("오크 광역기 스킬 사용!");
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, whatIsTarget);
 
@@ -231,9 +230,6 @@ public class OrcSoldierAI : LivingEntity
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
 
         Mana += 5f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
@@ -291,7 +287,6 @@ public class OrcSoldierAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("오크 전사 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

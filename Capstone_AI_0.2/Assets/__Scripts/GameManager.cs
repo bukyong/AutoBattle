@@ -497,8 +497,9 @@ public class GameManager : MonoBehaviour
 		else if(gamestate == GameState.Battle)
 		{
 			isBattle= false;
+			Stage++;
 
-			for(int a = 0; a < P_maps[Stage].GO_Blocks.Count; a++)
+			for (int a = 0; a < P_maps[Stage].GO_Blocks.Count; a++)
 			{
 				if(P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO() != null)
 				{
@@ -507,8 +508,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			gamestate = GameState.AfterBattle;
-			//여기
-			ChangeGameState();
+			StartCoroutine(DelayChangeScene());
 		}
 		else if(gamestate == GameState.AfterBattle)
 		{
@@ -633,7 +633,6 @@ public class GameManager : MonoBehaviour
 		{
 			if(gamestate == GameState.Battle)
 			{
-				Stage++;
 				ChangeTextStage();
                 ChangeGameState();
 			}		
@@ -651,16 +650,9 @@ public class GameManager : MonoBehaviour
 
 		GameObject GO = Instantiate(EnemyPrefab);
 
-		if (!EnemyUnit)
-		{
-			GameObject.Find("Enemy");
-		}
-
-		Debug.Log("유닛 부모 할당 전");
 		GO.transform.parent = EnemyUnit.transform;
-		Debug.Log("유닛 위치 이동전");
 		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
-		Debug.Log("유닛 위치 이동후");
+		Debug.Log("스폰enemy 종료");
 	}
 
 	public void SpawnEnemys(SO_Enemy SO)
@@ -670,11 +662,14 @@ public class GameManager : MonoBehaviour
 			var info = SO.spawnList[i];
 			SpawnEnemy(info.prefab, info.blockPos);
 		}
+		Debug.Log("스폰Enemys 종료");
 	}
 
-	GameObject targetBlock= null;
+
 	public Vector3 FindTargetToChangeMap(GameObject GO)
 	{
+		GameObject targetBlock = null;
+
 		for (int a = 0; a < P_maps[Stage - 1].GO_Blocks.Count; a++)
 		{
 			if (P_maps[Stage - 1].GO_Blocks[a].GetComponent<Block>().getGO() == GO)

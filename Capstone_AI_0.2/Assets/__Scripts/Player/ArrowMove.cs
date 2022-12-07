@@ -99,10 +99,12 @@ public class ArrowMove : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+			attackTarget.OnDamage(damage);
+
+			Destroy(gameObject);
 
             // 데미지 처리
-            attackTarget.OnDamage(damage);
+
             //Debug.Log("현재 데미지 : " + damage);
         }
         // 화살이 장애물과 충돌했을 경우

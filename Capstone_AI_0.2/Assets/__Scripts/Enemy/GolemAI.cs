@@ -232,7 +232,6 @@ public class GolemAI : LivingEntity
     // 적 광역기 스킬 메소드 (골렘)
     public void EnemyGolemSkillAOE()
     {
-        Debug.Log("골렘 광역기 스킬 사용!");
 
         if (flash != null)
         {
@@ -298,7 +297,6 @@ public class GolemAI : LivingEntity
     IEnumerator OnTimeCoroutine(int time)
     {
         // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
-        Debug.Log("돌진 시작!");
         isDash = true;
 
         while (time > 0)
@@ -313,15 +311,12 @@ public class GolemAI : LivingEntity
         readyDash = false;
         enemyAnimator.SetBool("readyDash", readyDash);
         TargetSearch();
-        Debug.Log("돌진 끝!");
     }
 
 
     // 적 돌진 스킬 메소드 (골렘)
     public void EnemyGolemSkillDash()
     {
-        Debug.Log("골렘 돌진 스킬 사용!");
-        
         StartCoroutine(OnTimeCoroutine(2));
 
         if (skillFlash != null)
@@ -356,7 +351,6 @@ public class GolemAI : LivingEntity
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
 
         Mana += 5f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
@@ -414,7 +408,6 @@ public class GolemAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("골렘 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

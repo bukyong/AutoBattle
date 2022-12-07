@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
+using static UnityEngine.GraphicsBuffer;
 
 public class KnightAI : LivingEntity
 {
@@ -14,6 +15,8 @@ public class KnightAI : LivingEntity
     private Rigidbody playerRigid;
 
     bool isGoal = false;
+	bool isCheck = false;
+	Vector3 targetV3;
 
 	public Transform tr;
 
@@ -118,25 +121,30 @@ public class KnightAI : LivingEntity
                 this.transform.LookAt(targetPosition);
             }
         }
-        else if (GameManager.Instance.isMapChange && isGoal == false)
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == false)
         {
-            Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
-            pathFinder.destination = targetV3;
-            pathFinder.isStopped = false;
-            isMove = true;
-            pathFinder.stoppingDistance = 0.5f;
+            isCheck = true;
 
-            if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
-            {
-                isMove = false;
-                pathFinder.stoppingDistance = 1.5f;
+			targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
+			pathFinder.destination = targetV3;
+			pathFinder.isStopped = false;
+			isMove = true;
+			pathFinder.stoppingDistance = 0.5f;
+		}
+		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
+        {
+			if (Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
+			{
+				isMove = false;
+				pathFinder.stoppingDistance = 1.5f;
 
-                isGoal = true;
+				isGoal = true;
+				isCheck = false;
 
-                GameManager.Instance.AddGoalUnit();
-            }
-        }
-    }
+				GameManager.Instance.AddGoalUnit();
+			}
+		}
+	}
 
     // 추적할 대상의 위치를 주기적으로 찾아 경로 갱신
     IEnumerator UpdatePath()
@@ -247,8 +255,6 @@ public class KnightAI : LivingEntity
     // 기사 버프 스킬 메소드 (방어력 증가)
     public void KnightSkillBuff()
     {
-        Debug.Log("기사 버프 스킬 사용!");
-
         if (flash != null)
         {
             // Quaternion.identity 회전 없음
@@ -279,7 +285,6 @@ public class KnightAI : LivingEntity
     {
         // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
         defense += value;
-        Debug.Log("기사 방어력 증가!");
 
         while (time > 0)
         {
@@ -289,7 +294,6 @@ public class KnightAI : LivingEntity
         }
 
         defense -= value;
-        Debug.Log("기사 방어력 감소!");
     }
 
     // 데미지 처리하기
@@ -301,7 +305,6 @@ public class KnightAI : LivingEntity
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("기사 공격 실행");
 
         Mana += 2;
         playerAnimator.SetInteger("Mana", (int)Mana);
@@ -354,7 +357,6 @@ public class KnightAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("기사 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
