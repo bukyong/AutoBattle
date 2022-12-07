@@ -1409,4 +1409,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/_Scenes/Title.unity
   - Assets/_Scenes/GamePlay.unity
-  playerPath: C:/Users/navys/Desktop/test/Capstone_AI_Proto_0.1.exe
+  playerPath: C:/Users/navys/Desktop/CAP/DungeonAutoBattle_1.0.exe
