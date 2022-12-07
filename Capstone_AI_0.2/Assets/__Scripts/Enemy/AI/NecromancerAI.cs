@@ -267,35 +267,40 @@ public class NecromancerAI : LivingEntity
     {
         Debug.Log("네크로맨서 소환 스킬 사용!");
 
-        if (summonFlash != null)
-        {
-            // Quaternion.identity 회전 없음
-            var flashInstance = Instantiate(summonFlash, transform.position, Quaternion.identity);
-            flashInstance.transform.forward = gameObject.transform.forward;
-            flashInstance.transform.position = targetEntity.transform.position;
-            var flashPs = flashInstance.GetComponent<ParticleSystem>();
-
-            if (flashPs != null)
-            {
-                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
-                Destroy(flashInstance, flashPs.main.duration);
-            }
-            else
-            {
-                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(flashInstance, flashPsParts.main.duration);
-            }
-        }
-
         int unit;
 
         for (int i = 0; i < E_Prefabs.Count; i++)
         {
             unit = Random.Range(0, E_Prefabs.Count);
             GameObject GO = Instantiate(E_Prefabs[unit], firePoint.transform.position, firePoint.transform.rotation);
-			GO.transform.parent = GameManager.Instance.EnemyUnit.transform;
-			GO.GetComponent<NavMeshAgent>().enabled = true;
-		}
+            GO.transform.parent = GameManager.Instance.EnemyUnit.transform;
+            GO.GetComponent<NavMeshAgent>().enabled = true;
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider flashTarget in colliders)
+        {
+            if (summonFlash != null)
+            {
+                // Quaternion.identity 회전 없음
+                var flashInstance = Instantiate(summonFlash, transform.position, Quaternion.identity);
+                flashInstance.transform.forward = gameObject.transform.forward;
+                flashInstance.transform.position = flashTarget.transform.position;
+                var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+                if (flashPs != null)
+                {
+                    // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                    Destroy(flashInstance, flashPs.main.duration);
+                }
+                else
+                {
+                    var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(flashInstance, flashPsParts.main.duration);
+                }
+            }
+        }
 
         Mana = 0f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
@@ -314,7 +319,7 @@ public class NecromancerAI : LivingEntity
             if (healFlash != null)
             {
                 // Quaternion.identity 회전 없음
-                var flashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
+                var flashInstance = Instantiate(healFlash, transform.position, Quaternion.identity);
                 flashInstance.transform.forward = gameObject.transform.forward;
                 flashInstance.transform.position = healTarget.transform.position;
                 var flashPs = flashInstance.GetComponent<ParticleSystem>();
@@ -355,9 +360,6 @@ public class NecromancerAI : LivingEntity
             case 3:
                 // 전체 회복기
                 NecroSkillHeal();
-                break;
-            case 4:
-                // 한명 즉사기
                 break;
         }
     }

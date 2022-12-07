@@ -1265,7 +1265,7 @@ Animator:
   m_GameObject: {fileID: 8297146598359246836}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8bb0d240039ae894285efb9bfd5635e0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7731f4d88deba9449b66fd22f81d436a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1281,7 +1281,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8297146598359246836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.4
   m_Speed: 3

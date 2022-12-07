@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpiderBlackAI : LivingEntity
+public class EnemySwordAI : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상의 레이어
 
@@ -21,17 +21,12 @@ public class SpiderBlackAI : LivingEntity
     // 게이지
     public GameObject egoGauge; // 유닛의 체력,마나 바
 
-    // 원거리 공격
-    public GameObject Arrow; // Instantiate() 메서드로 생성하는 화살을 담는 게임오브젝트
-
     [Header("Stats")]
     public float damage; // 공격력
     public float defense; // 방어력
     public float attackDelay = 1f; // 공격 딜레이
 
     [Header("Prefabs")]
-    public GameObject firePoint; // 화살이 발사될 위치
-    public GameObject arrowPrefab; // 사용할 화살 할당
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
     public GameObject flash;
     public GameObject skillFlash;
@@ -40,6 +35,11 @@ public class SpiderBlackAI : LivingEntity
     [Header("Animations")]
     public bool isMove;
     public bool isAttack;
+    public bool isTeleport;
+
+    [Header("Teleport")]
+    private bool bTeleportation; // teleportation 가능 여부
+    private Vector3 tpPos; // 텔레포트에 사용할 좌표, 랜덤 좌표를 담음
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -62,7 +62,7 @@ public class SpiderBlackAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 10f, 5f);
+        Setup(100f, 10f, 30f, 5f);
         SetGauge();
     }
 
@@ -74,7 +74,7 @@ public class SpiderBlackAI : LivingEntity
         startingHealth = newHealth;
         // 마나 설정
         MaxMana = newMana;
-        Mana = 0f;
+        startingMana = newMana;
         // 공격력 설정
         damage = newDamage;
         // 방어력 설정
@@ -98,6 +98,8 @@ public class SpiderBlackAI : LivingEntity
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         enemyRigid = GetComponent<Rigidbody>();
+
+        bTeleportation = true;
     }
 
     void Update()
@@ -176,6 +178,30 @@ public class SpiderBlackAI : LivingEntity
         }
     }
 
+    public void TargetSearchFarthest()
+    {
+        // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+
+        // 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
+        if (colliders.Length > 0)
+        {
+            GameObject target;
+            target = colliders[0].gameObject;
+
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (Vector3.Distance(target.transform.position, this.transform.position) < Vector3.Distance(this.transform.position, colliders[i].transform.position))
+                {
+                    target = colliders[i].gameObject;
+                    //break;
+                }
+            }
+
+            targetEntity = target.GetComponent<LivingEntity>();
+        }
+    }
+
     // 적과 플레이어 사이의 거리 측정, 거리에 따라 공격 실행
     public virtual void Attack()
     {
@@ -207,34 +233,45 @@ public class SpiderBlackAI : LivingEntity
             isAttack = false;
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
+
+            if (Mana == 10)
+            {
+                TargetSearchFarthest();
+                Teleportation();
+            }
         }
     }
 
-    // 화살 생성
-    public void Fire()
+    // 데미지 처리하기
+    // (유니티 애니메이션 이벤트로 휘두를 때 데미지 적용)
+    public void OnDamageEvent()
     {
-        // Instatiate()로 화살 프리팹을 복제 생성
-        Arrow = Instantiate(arrowPrefab, firePoint.transform.position, firePoint.transform.rotation);
+        // 상대방의 LivingEntity 타입 가져오기
+        // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
+        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 화살 발사!");
+        Debug.Log("적 공격 실행");
+
+        enemyAnimator.SetInteger("Mana", (int)Mana);
+        attackTarget.OnDamage(damage);
+
+        // 최근 공격 시간 갱신
+        lastAttackTime = Time.time;
     }
 
-    // 적 광역기 스킬 메소드
-    public void EnemySkillAOE()
+    // 데미지를 입었을 때 실행할 처리
+    public override void OnDamage(float damage)
     {
-        Debug.Log("적 광역기 스킬 사용!");
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, whatIsTarget);
-
-        foreach (Collider hit in colliders)
+        // LivingEntity의 OnDamage()를 실행하여 데미지 적용
+        if (damage - defense <= 0)
         {
-            LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage);
+            base.OnDamage(0);
         }
-
-        Mana = 0;
-        enemyAnimator.SetInteger("Mana", (int)Mana);
+        else
+        {
+            base.OnDamage(damage - defense);
+        }
     }
 
     // 사망 처리
@@ -263,11 +300,35 @@ public class SpiderBlackAI : LivingEntity
 
     public void OnDie()
     {
-        Debug.Log("검은 거미 사망...");
+        Debug.Log("검 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);
         //Destroy(egoGauge);
         //Destroy(gameObject);
+    }
+
+    // Teleportation 메서드
+    private void Teleportation()
+    {
+        if (bTeleportation)
+        {
+            // 추적대상 근처로 랜덤 위치 계산
+            // Random.insideUnityCircle은 x, y값만 계산해서 y값을 z값에 더함, y값은 그냥 y값으로 함
+            tpPos = Random.insideUnitCircle * 1.5f;
+            tpPos.x += targetEntity.gameObject.transform.position.x;
+            tpPos.z = tpPos.y + targetEntity.gameObject.transform.position.z;
+            tpPos.y = targetEntity.gameObject.transform.position.y;
+
+            tr.position = tpPos;
+
+            // 순간이동 가능 여부 false로 변경
+            bTeleportation = false;
+            isTeleport = false;
+
+            Mana = 0;
+
+            Debug.Log("순간이동 스킬을 사용했습니다!");
+        }
     }
 }
