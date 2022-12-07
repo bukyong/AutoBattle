@@ -15,7 +15,10 @@ public class MagicianAI : LivingEntity
 
     public Transform tr;
 
-    bool isGoal = false;
+	public AudioSource Audio2;
+	public bool isPlay = false;
+
+	bool isGoal = false;
 	bool isCheck = false;
 	Vector3 targetV3;
 
@@ -66,7 +69,10 @@ public class MagicianAI : LivingEntity
         playerAnimator = GetComponent<Animator>();
         Setup(100f, 10f, 50f, 5f);
         SetGauge();
-    }
+		Audio = this.gameObject.AddComponent<AudioSource>();
+		Audio2 = this.gameObject.AddComponent<AudioSource>();
+		Audio2.playOnAwake = false;
+	}
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
     public void Setup(float newHealth, float newMana, float newDamage, float newDefense)
@@ -217,8 +223,24 @@ public class MagicianAI : LivingEntity
             // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
             if (lastAttackTime + attackDelay <= Time.time)
             {
-                isAttack = true;
+				Audio2.clip = GameManager.Instance.Magic;
+
+				if (!isPlay)
+				{
+					isPlay = true;
+
+					if (Audio2)
+					{
+						if (Audio2.clip)
+						{
+							Audio2.volume = GameManager.Instance.GetVolume(1);
+							Audio2.Play();
+						}
+					}
+				}
+				isAttack = true;
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
+                isPlay= false;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
             else
@@ -287,8 +309,10 @@ public class MagicianAI : LivingEntity
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage)
     {
-        // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        if (damage - defense <= 0)
+		Audio.clip = GameManager.Instance.WizardWalk;
+
+		// LivingEntity의 OnDamage()를 실행하여 데미지 적용
+		if (damage - defense <= 0)
         {
             base.OnDamage(0);
         }

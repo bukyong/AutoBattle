@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
 
 	[Header("Sound_Healer")]
 	public AudioClip HealerHeal;
+	public AudioClip Magic;
 
 	#endregion
 
@@ -817,6 +818,7 @@ public class GameManager : MonoBehaviour
 
 			P_maps.Clear();
 			E_maps.Clear();
+			List_Unit.Clear();
 
 			Stage = 0;
 			gold = 20;

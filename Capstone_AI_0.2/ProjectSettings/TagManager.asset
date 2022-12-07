@@ -14,6 +14,8 @@ TagManager:
   - Shield
   - Crossbow
   - Healer
+  - E_Archer
+  - E_Magician
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - Player
   - Weapon
   - Floor
-  - 
+  - Obstacle
   - 
   - 
   - 

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 // 생명체로 동작할 게임 오브젝트들의 뼈대를 제공
