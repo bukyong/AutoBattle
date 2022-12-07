@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -52,38 +51,46 @@ public class Storage : MonoBehaviour
 
 	public void DrawUnit()
 	{
-		int randomInt = Random.Range(0, 6);
-		GO_Type GY = (GO_Type)randomInt;
-
-		switch (GY)
+		if(GameManager.Instance.gold >= 10)
 		{
-			case GO_Type.warrior:
-				S_Warrior.GetComponent<StorageSorting>().SetGO_Type(GO_Type.warrior);
-				S_Warrior.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			case GO_Type.shield:
-				S_Shield.GetComponent<StorageSorting>().SetGO_Type(GO_Type.shield);
-				S_Shield.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			case GO_Type.archer:
-				S_Archer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.archer);
-				S_Archer.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			case GO_Type.crossbow:
-				S_Crossbow.GetComponent<StorageSorting>().SetGO_Type(GO_Type.crossbow);
-				S_Crossbow.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			case GO_Type.magician:
-				S_Magician.GetComponent<StorageSorting>().SetGO_Type(GO_Type.magician);
-				S_Magician.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			case GO_Type.healer:
-				S_Healer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.healer);
-				S_Healer.GetComponent<StorageSorting>().AddUnitCount();
-				break;
-			default:
-				break;
+			GameManager.Instance.gold -= 10;
+			GameManager.Instance.ChangeTextGold();
+
+			int randomInt = Random.Range(0, 6);
+			GO_Type GY = (GO_Type)randomInt;
+
+			switch (GY)
+			{
+				case GO_Type.warrior:
+					S_Warrior.GetComponent<StorageSorting>().SetGO_Type(GO_Type.warrior);
+					S_Warrior.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				case GO_Type.shield:
+					S_Shield.GetComponent<StorageSorting>().SetGO_Type(GO_Type.shield);
+					S_Shield.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				case GO_Type.archer:
+					S_Archer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.archer);
+					S_Archer.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				case GO_Type.crossbow:
+					S_Crossbow.GetComponent<StorageSorting>().SetGO_Type(GO_Type.crossbow);
+					S_Crossbow.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				case GO_Type.magician:
+					S_Magician.GetComponent<StorageSorting>().SetGO_Type(GO_Type.magician);
+					S_Magician.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				case GO_Type.healer:
+					S_Healer.GetComponent<StorageSorting>().SetGO_Type(GO_Type.healer);
+					S_Healer.GetComponent<StorageSorting>().AddUnitCount();
+					break;
+				default:
+					break;
+			}
 		}
+
+		
 	}
 
     public void StoreUnit(GameObject GO)

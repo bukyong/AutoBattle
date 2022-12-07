@@ -14,6 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnList:
   - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
-    blockPos: 0
+    blockPos: 6
+  - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
+    blockPos: 24
   - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
-    blockPos: 10
+    blockPos: 31
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 1
+  - prefab: {fileID: 626520370309467243, guid: e84316406f8e4c34b9772ce1b6b2883a, type: 3}
+    blockPos: 27
+  - prefab: {fileID: 626520370309467243, guid: e84316406f8e4c34b9772ce1b6b2883a, type: 3}
+    blockPos: 9
+  - prefab: {fileID: 8297146598359246836, guid: 5742e884f4c456a4b88fc84a3c810e36, type: 3}
+    blockPos: 23
+  - prefab: {fileID: 8297146598359246836, guid: 5742e884f4c456a4b88fc84a3c810e36, type: 3}
+    blockPos: 17

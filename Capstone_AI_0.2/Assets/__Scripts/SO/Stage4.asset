@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnList:
   - prefab: {fileID: 7541092239562137852, guid: f92abe962ca09a64a88973c46a63b6bd, type: 3}
-    blockPos: 0
+    blockPos: 16
   - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
-    blockPos: 10
+    blockPos: 7
   - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
-    blockPos: 20
+    blockPos: 19

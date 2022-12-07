@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class GolemAI : LivingEntity
 {
@@ -61,7 +59,7 @@ public class GolemAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(300f, 10f, 20f, 10f);
+        Setup(400f, 10f, 20f, 10f);
         SetGauge();
     }
 

@@ -65,7 +65,7 @@ public class NecromancerAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(1000f, 10f, 30f, 10f);
+        Setup(1500f, 10f, 30f, 10f);
         SetGauge();
     }
 
@@ -220,7 +220,7 @@ public class NecromancerAI : LivingEntity
         // Instatiate()로 매직 미사일 프리팹을 복제 생성
         magicMissile = Instantiate(magicMissilePrefab, firePoint.transform.position, firePoint.transform.rotation);
 
-        Mana += 5f;
+        Mana += 2.5f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
 
         // 공격이 되는지 확인하기 위한 디버그 출력

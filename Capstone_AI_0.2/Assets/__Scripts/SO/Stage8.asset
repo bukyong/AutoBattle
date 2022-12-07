@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnList:
   - prefab: {fileID: 8742688714646402828, guid: 96afa83e54645a24f897477e54a4e9e6, type: 3}
-    blockPos: 0
+    blockPos: 21
   - prefab: {fileID: 626520370309467243, guid: e84316406f8e4c34b9772ce1b6b2883a, type: 3}
-    blockPos: 0
+    blockPos: 25
   - prefab: {fileID: 626520370309467243, guid: e84316406f8e4c34b9772ce1b6b2883a, type: 3}
-    blockPos: 0
+    blockPos: 7
   - prefab: {fileID: 8297146598359246836, guid: 5742e884f4c456a4b88fc84a3c810e36, type: 3}
-    blockPos: 0
+    blockPos: 28
   - prefab: {fileID: 8297146598359246836, guid: 5742e884f4c456a4b88fc84a3c810e36, type: 3}
-    blockPos: 0
+    blockPos: 10

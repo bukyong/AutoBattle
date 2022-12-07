@@ -21,7 +21,7 @@ public class HealerAI : LivingEntity
 
 	public float damage; // 공격력
     public float defense; // 방어력
-    public float attackDelay = 5f; // 공격 딜레이
+    public float attackDelay; // 공격 딜레이
 
     private float attackRange = 5f; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
@@ -60,7 +60,7 @@ public class HealerAI : LivingEntity
         pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 10f, 0f);
+        Setup(100f, 10f, 15f, 10f);
         SetGauge();
     }
 
@@ -96,6 +96,8 @@ public class HealerAI : LivingEntity
         StartCoroutine(UpdatePath());
         tr = GetComponent<Transform>();
         playerRigid = GetComponent<Rigidbody>();
+
+        attackDelay= 4f;
     }
 
     void Update()

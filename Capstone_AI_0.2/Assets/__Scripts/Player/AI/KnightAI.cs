@@ -62,6 +62,7 @@ public class KnightAI : LivingEntity
         playerAnimator = GetComponent<Animator>();
         Setup(200f, 10f, 15f, 10f);
         SetGauge();
+        Audio = this.gameObject.AddComponent<AudioSource>();
     }
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
@@ -318,9 +319,11 @@ public class KnightAI : LivingEntity
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage)
     {
-        // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        if (damage - defense <= 0 )
+		Audio.clip = GameManager.Instance.H_Shield;
+		// LivingEntity의 OnDamage()를 실행하여 데미지 적용
+		if (damage - defense <= 0 )
         {
+
             base.OnDamage(0);
         }
         else

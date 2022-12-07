@@ -63,7 +63,7 @@ public class ArcherAI : LivingEntity
         pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 35f, 5f);
+        Setup(150f, 10f, 35f, 5f);
         SetGauge();
     }
 
@@ -75,7 +75,7 @@ public class ArcherAI : LivingEntity
         startingHealth = newHealth;
         // 마나 설정
         MaxMana = newMana;
-        Mana = 0f;
+        startingMana = 6f;
         // 공격력 설정
         damage = newDamage;
         // 방어력 설정
@@ -244,21 +244,21 @@ public class ArcherAI : LivingEntity
         // Instatiate()로 화살 프리팹을 복제 생성
         Arrow = Instantiate(arrowPrefab, firePoint.transform.position, firePoint.transform.rotation);
 
-        Mana += 2f;
+        Mana += 1f;
         playerAnimator.SetInteger("Mana", (int)Mana);
     }
 
     public void ArcherSkillBuff()
     {
 
-        StartCoroutine(OnBuffCoroutine(5, 1f));
+        StartCoroutine(OnBuffCoroutine(5f, 1f));
 
         Mana = 0f;
         playerAnimator.SetInteger("Mana", (int)Mana);
     }
 
     // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
-    IEnumerator OnBuffCoroutine(int time, float value)
+    IEnumerator OnBuffCoroutine(float time, float value)
     {
         // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
 

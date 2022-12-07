@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 // 생명체로 동작할 게임 오브젝트들의 뼈대를 제공
@@ -21,7 +22,7 @@ public class LivingEntity : MonoBehaviour
 
     public GameObject StandingBlock;
 
-    //public AudioSource Audio;
+    public AudioSource Audio;
 
     //public Transform DamageText_Pos;
 
@@ -48,12 +49,15 @@ public class LivingEntity : MonoBehaviour
         damageGO.GetComponent<DamageText>().damage = damage;
 
 
-/*        Audio.clip = null;
-        if(Audio.clip != null)
+        if(Audio)
         {
-			Audio.Play();
-		}*/
-        
+			if (Audio.clip)
+			{
+                Audio.volume = GameManager.Instance.GetVolume(1);
+				Audio.Play();
+			}
+		}
+
 
 		// 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
 		if (Health <= 0 && !Dead)

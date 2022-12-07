@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 	public List<Map> E_maps = new List<Map>();
 
 	Storage storage;
-	int gold;
+	public int gold;
 
 	StageNavi StageNavi;
 
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
 		GameSpeed= 1f;
 
 		Stage = 0;
-		gold = 30;
+		gold = 20;
 		gamestate = GameState.None;
 	}
 
@@ -473,6 +473,8 @@ public class GameManager : MonoBehaviour
 		{
             ChangeTextGold();
 
+			StartingUnit();
+
 			SpawnEnemys(List_SO[Stage]);
 
 			gamestate= GameState.BeforeBattle;
@@ -484,6 +486,10 @@ public class GameManager : MonoBehaviour
 				isBattle = true;
 				GoalUnitCount = 0;
 
+				for (int i = 0; i < List_Unit.Count; i++)
+				{
+					List_Unit[i].GetComponent<Rigidbody>().isKinematic = false;
+				}
 				gamestate = GameState.Battle;
 			}
 		}
@@ -491,6 +497,13 @@ public class GameManager : MonoBehaviour
 		{
 			isBattle= false;
 			Stage++;
+
+			for(int i = 0; i < List_Unit.Count; i++)
+			{
+				List_Unit[i].GetComponent<Rigidbody>().isKinematic = true;
+			}
+
+			
 
 			StageNavi.ChangeStageNavi();
 
@@ -515,7 +528,20 @@ public class GameManager : MonoBehaviour
 		{
 			isMapChange= true;
 
-			gold += 10;
+			if(Stage < 4)
+			{
+				gold += 10;
+			}
+			else if(Stage == 4)
+			{
+				gold += 30;
+			}
+			else
+			{
+				gold += 20;
+			}
+
+			
             ChangeTextGold();
 			ChangeTextStage();
 
@@ -691,7 +717,7 @@ public class GameManager : MonoBehaviour
         Text_Stage.text = i.ToString() + " - " + n.ToString();
 	}
 
-	void ChangeTextGold()
+	public void ChangeTextGold()
 	{
         Text_Gold.text = gold.ToString();
     }
@@ -722,6 +748,39 @@ public class GameManager : MonoBehaviour
 		PlayerUnit = GameObject.Find("Player");
 		EnemyUnit = GameObject.Find("Enemy");
 		storage = Canvas.GetComponentInChildren<Storage>();
+	}
+
+	void StartingUnit()
+	{
+		GameObject GO = Instantiate(Prefab_Shield);
+
+		List_Unit.Add(GO);
+		GO.transform.SetParent(PlayerUnit.transform);
+		GO.transform.position = P_maps[Stage].GetComponent<Map>().GO_Blocks[17].transform.position;
+		P_maps[Stage].GetComponent<Map>().GO_Blocks[17].GetComponent<Block>().setGO(GO);
+		GO.GetComponent<NavMeshAgent>().enabled = true;
+
+		AddPlayerUnitCount();
+
+		GameObject GO2 = Instantiate(Prefab_Archer);
+
+		List_Unit.Add(GO2);
+		GO2.transform.SetParent(PlayerUnit.transform);
+		GO2.transform.position = P_maps[Stage].GetComponent<Map>().GO_Blocks[19].transform.position;
+		P_maps[Stage].GetComponent<Map>().GO_Blocks[19].GetComponent<Block>().setGO(GO2);
+		GO2.GetComponent<NavMeshAgent>().enabled = true;
+
+		AddPlayerUnitCount();
+
+		GameObject GO3 = Instantiate(Prefab_Healer);
+
+		List_Unit.Add(GO3);
+		GO3.transform.SetParent(PlayerUnit.transform);
+		GO3.transform.position = P_maps[Stage].GetComponent<Map>().GO_Blocks[13].transform.position;
+		P_maps[Stage].GetComponent<Map>().GO_Blocks[13].GetComponent<Block>().setGO(GO3);
+		GO3.GetComponent<NavMeshAgent>().enabled = true;
+
+		AddPlayerUnitCount();
 	}
 
 	IEnumerator DelayChangeScene()
@@ -757,7 +816,7 @@ public class GameManager : MonoBehaviour
 			E_maps.Clear();
 
 			Stage = 0;
-			gold = 30;
+			gold = 20;
 			gamestate = GameState.None;
 
 

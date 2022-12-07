@@ -63,7 +63,7 @@ public class EnemyArcherAI : LivingEntity
         pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.enabled = false;
         enemyAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 35f, 5f);
+        Setup(150f, 10f, 25f, 5f);
         SetGauge();
     }
 

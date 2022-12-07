@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class GolemAI2 : LivingEntity
 {
@@ -61,7 +59,7 @@ public class GolemAI2 : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(250f, 10f, 20f, 5f);
+        Setup(300f, 10f, 15f, 5f);
         SetGauge();
     }
 
@@ -263,7 +261,7 @@ public class GolemAI2 : LivingEntity
 
         Mana = 0;
         enemyAnimator.SetInteger("Mana", (int)Mana);
-        readyDash = true;
+        readyDash = false;
         enemyAnimator.SetBool("readyDash", readyDash);
     }
 
@@ -358,7 +356,7 @@ public class GolemAI2 : LivingEntity
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("적 공격 실행");
 
-        Mana += 5f;
+        Mana += 2.5f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
         attackTarget.OnDamage(damage);
 

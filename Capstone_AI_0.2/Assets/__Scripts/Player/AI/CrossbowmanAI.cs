@@ -61,7 +61,7 @@ public class CrossbowmanAI : LivingEntity
         pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 45f, 5f);
+        Setup(150f, 10f, 45f, 5f);
         SetGauge();
     }
 
@@ -250,11 +250,11 @@ public class CrossbowmanAI : LivingEntity
     {
 
         // 일시적으로 데미지 3배 증가
-        damage *= 3f;
 
         Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
+        Bolt.GetComponent<BoltMove>().damage = damage * 3f;
 
-        damage /= 3f;
+
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);

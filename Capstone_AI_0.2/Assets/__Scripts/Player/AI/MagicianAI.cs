@@ -64,7 +64,7 @@ public class MagicianAI : LivingEntity
         pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        Setup(100f, 10f, 45f, 0f);
+        Setup(100f, 10f, 50f, 5f);
         SetGauge();
     }
 
@@ -272,12 +272,12 @@ public class MagicianAI : LivingEntity
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage);
+            hitTarget.OnDamage(damage * 1.5f);
         }
 
         Mana = 0f;

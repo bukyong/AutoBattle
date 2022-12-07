@@ -13,7 +13,19 @@ MonoBehaviour:
   m_Name: Stage5
   m_EditorClassIdentifier: 
   spawnList:
-  - prefab: {fileID: 7541092239562137852, guid: 663bdfd92a0ceb44eb64ce3e95ef5c5f, type: 3}
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
     blockPos: 0
   - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
-    blockPos: 10
+    blockPos: 5
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 6
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 20
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 25
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 30
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 35
+  - prefab: {fileID: 8444257770195790389, guid: c95c4e4bdc26b204db8f12b2dca5f94d, type: 3}
+    blockPos: 15

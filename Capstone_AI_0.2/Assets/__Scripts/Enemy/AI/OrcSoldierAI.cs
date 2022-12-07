@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class OrcSoldierAI : LivingEntity
 {
@@ -59,7 +57,7 @@ public class OrcSoldierAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 30f, 5f);
+        Setup(200f, 10f, 20f, 5f);
         SetGauge();
     }
 
@@ -217,7 +215,7 @@ public class OrcSoldierAI : LivingEntity
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage * 1.5f);
+            hitTarget.OnDamage(damage);
         }
 
         Mana = 0;
@@ -235,7 +233,7 @@ public class OrcSoldierAI : LivingEntity
         // 공격이 되는지 확인하기 위한 디버그 출력
         Debug.Log("적 공격 실행");
 
-        Mana += 5f;
+        Mana += 2f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
         attackTarget.OnDamage(damage);
 
