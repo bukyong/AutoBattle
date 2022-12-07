@@ -61,12 +61,10 @@ public class LivingEntity : MonoBehaviour
             if(transform.gameObject.layer == 8)
             {
                 GameManager.Instance.RemovePlayerUnitCount();
-                Debug.Log("¾Æ±º À¯´Ö »ç¸Á");
             }
             if(transform.gameObject.layer == 7)
             {
 				GameManager.Instance.RemoveEnemyUnitCount();
-				Debug.Log("Àû±º À¯´Ö »ç¸Á");
 			}
             Die();
         }

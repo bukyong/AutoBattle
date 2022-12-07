@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -291,8 +292,10 @@ public class NecromancerAI : LivingEntity
         for (int i = 0; i < E_Prefabs.Count; i++)
         {
             unit = Random.Range(0, E_Prefabs.Count);
-            Instantiate(E_Prefabs[unit], firePoint.transform.position, firePoint.transform.rotation);
-        }
+            GameObject GO = Instantiate(E_Prefabs[unit], firePoint.transform.position, firePoint.transform.rotation);
+			GO.transform.parent = GameManager.Instance.EnemyUnit.transform;
+			GO.GetComponent<NavMeshAgent>().enabled = true;
+		}
 
         Mana = 0f;
         enemyAnimator.SetInteger("Mana", (int)Mana);

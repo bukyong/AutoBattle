@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public enum GameState
 {
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour
 	Storage storage;
 	int gold;
 
+	StageNavi StageNavi;
+
 	public float GameSpeed;
 
 	public GameObject spawnedGO;
@@ -85,12 +88,7 @@ public class GameManager : MonoBehaviour
 	public List<SO_Enemy> List_SO;
 
 	[Header("List_Unit")]
-	public List<GameObject> List_Warrior;
-	public List<GameObject> List_Shield;
-	public List<GameObject> List_Archer;
-	public List<GameObject> List_Crossbow;
-	public List<GameObject> List_Magician;
-	public List<GameObject> List_Healer;
+	public List<GameObject> List_Unit;
 
 
 	[Header("Prefabs")]
@@ -100,9 +98,6 @@ public class GameManager : MonoBehaviour
     public GameObject Prefab_Crossbow;
     public GameObject Prefab_Magician;
     public GameObject Prefab_Healer;
-
-	public GameObject Prefab_Orc;
-	public GameObject Prefab_Golem;
 
 
 	#region Sound_Resource
@@ -197,7 +192,6 @@ public class GameManager : MonoBehaviour
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				Physics.Raycast(ray, out hit);
-				
 
 				// 레이캐스트에 맞은 유닛을 메모리에 할당
 				if (hit.collider != null)
@@ -206,6 +200,10 @@ public class GameManager : MonoBehaviour
 					{
 						raycastGO = hit.collider.gameObject;
 						raycastStartPos = hit.collider.transform.localPosition;
+
+						raycastGO.GetComponent<NavMeshAgent>().enabled = false;
+
+						Debug.Log(raycastGO.name);
 					}
 					else
 					{
@@ -219,51 +217,41 @@ public class GameManager : MonoBehaviour
 			// 마우스 좌클릭을 유지하고 있을 시 이벤트
 			if (Input.GetMouseButton(0))
 			{
-				pressedTime += Time.deltaTime;
-
-				//일정 시간 이상 유닛을 눌렀을 경우 마우스 클릭한 위치로 유닛 이동
-				if (pressedTime >= Min_pressedTime)
+				if (raycastGO != null)
 				{
-					if (raycastGO != null)
+					if (raycastGO.layer == 8)
 					{
-						if (raycastGO.layer == 8)
-						{
-							Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-							RaycastHit hit;
-							Physics.Raycast(ray, out hit, 20f, layerMask: 9);		//레이어 마스크9는 바닥 레이어
+						Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+						RaycastHit hit;
+						Physics.Raycast(ray, out hit, 20f, layerMask: 9);		//레이어 마스크9는 바닥 레이어
 
-							Vector3 hitPos = new Vector3(hit.point.x, 0.5f, hit.point.z);
+						Vector3 hitPos = new Vector3(hit.point.x, 0.5f, hit.point.z);
 
 							
-							if (hit.collider != null)
-							{
-								raycastGO.transform.position = hitPos;
-							}
-							// 바닥이 없는 곳으로 레이캐스트할 경우 원래의 위치를 유지
-							else
-							{
-								raycastGO.transform.position = new Vector3(raycastGO.transform.position.x, 0.5f, raycastGO.transform.position.z);
-							}
+						if (hit.collider != null)
+						{
+							raycastGO.transform.position = hitPos;
+						}
+						// 바닥이 없는 곳으로 레이캐스트할 경우 원래의 위치를 유지
+						else
+						{
+							raycastGO.transform.position = new Vector3(raycastGO.transform.position.x, 0.5f, raycastGO.transform.position.z);
 						}
 					}
 				}
-
-
 			}
 
 			// 마우스 좌클릭을 끝낼 시 이벤트
 			if (Input.GetMouseButtonUp(0))
 			{
+				
+
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				RaycastHit[] hit = Physics.RaycastAll(ray);
 
-				// 유닛을 잠깐 클릭했을 시 해당 유닛의 정보를 가진 패널을 띄움
 				if (raycastGO != null)
 				{
-					if (raycastGO.layer == 8 && pressedTime < Min_pressedTime)
-					{
-						Panel_Character.transform.position = Camera.main.WorldToScreenPoint(raycastGO.transform.position + new Vector3(2f, 0f, 0f));
-					}
+					raycastGO.GetComponent<NavMeshAgent>().enabled = true;
 				}
 
 
@@ -317,6 +305,9 @@ public class GameManager : MonoBehaviour
 					{
 						var firstGO = blockGO.GetComponentInParent<Block>().getGO();
 
+						raycastGO.GetComponent<NavMeshAgent>().enabled= false;
+						firstGO.GetComponent<NavMeshAgent>().enabled = false;
+
 						// 유닛이 처음 이동한 블록과 좌클릭을 끝낸 블록의 유닛을 교환
 						if (firstGOBlock != null)
 						{
@@ -324,13 +315,16 @@ public class GameManager : MonoBehaviour
 							blockGO.GetComponentInParent<Block>().setGO(raycastGO);
 
 							firstGO.transform.position = new Vector3(firstGOBlock.transform.position.x, 0, firstGOBlock.transform.position.z);
-							firstGOBlock.GetComponentInParent<Block>().setGO(raycastGO);
+							firstGOBlock.GetComponentInParent<Block>().setGO(firstGO);
 						}
 						// 유닛이 처음 이동한 블록이 없을 경우 원래의 위치(처음 배치할 때 유닛이 없는 곳에만 배치되도록 하는 용도)
 						else
 						{
 							raycastGO.transform.position = raycastStartPos;
 						}
+
+						raycastGO.GetComponent<NavMeshAgent>().enabled = true;
+						firstGO.GetComponent<NavMeshAgent>().enabled = true;
 					}
 
 				}
@@ -339,7 +333,6 @@ public class GameManager : MonoBehaviour
 				{
 					raycastGO.transform.position = raycastStartPos;
 				}
-
 				raycastGO = null;
 				raycastStartPos = Vector3.zero;
 
@@ -499,9 +492,17 @@ public class GameManager : MonoBehaviour
 			isBattle= false;
 			Stage++;
 
+			StageNavi.ChangeStageNavi();
+
+			if (Stage == 8)
+			{
+				GameObject.Find("Main Camera").GetComponent<UI>().Active_Clear();
+				return;
+			}
+
 			for (int a = 0; a < P_maps[Stage].GO_Blocks.Count; a++)
 			{
-				if(P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO() != null)
+				if (P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO() != null)
 				{
 					P_maps[Stage].GO_Blocks[a].GetComponent<Block>().getGO().transform.position = P_maps[Stage].GO_Blocks[a].transform.position;
 				}
@@ -516,6 +517,7 @@ public class GameManager : MonoBehaviour
 
 			gold += 10;
             ChangeTextGold();
+			ChangeTextStage();
 
 
 			SpawnEnemys(List_SO[Stage]);
@@ -545,24 +547,10 @@ public class GameManager : MonoBehaviour
 			SortingPMap();
 			SortingPMap();
 			SortingPMap();
-			SortingPMap();
-			SortingPMap();
-			SortingPMap();
-			SortingPMap();
-			SortingPMap();
-			SortingPMap();
-			SortingPMap();
 		}
 		else if(map.name == "Enemy_Map")
 		{
 			E_maps.Add(map);
-			SortingEMap();
-			SortingEMap();
-			SortingEMap();
-			SortingEMap();
-			SortingEMap();
-			SortingEMap();
-			SortingEMap();
 			SortingEMap();
 			SortingEMap();
 			SortingEMap();
@@ -622,7 +610,7 @@ public class GameManager : MonoBehaviour
 		if(PlayerUnitCount <= 0)
 		{
 			Debug.Log("게임오버");
-            //게임오버
+			GameObject.Find("Main Camera").GetComponent<UI>().Active_GameOver();
         }
 	}
 
@@ -633,7 +621,6 @@ public class GameManager : MonoBehaviour
 		{
 			if(gamestate == GameState.Battle)
 			{
-				ChangeTextStage();
                 ChangeGameState();
 			}		
 		}
@@ -652,7 +639,7 @@ public class GameManager : MonoBehaviour
 
 		GO.transform.parent = EnemyUnit.transform;
 		GO.transform.position = E_maps[Stage].GO_Blocks[posNum].transform.position;
-		Debug.Log("스폰enemy 종료");
+		GO.GetComponent<NavMeshAgent>().enabled = true;
 	}
 
 	public void SpawnEnemys(SO_Enemy SO)
@@ -662,7 +649,6 @@ public class GameManager : MonoBehaviour
 			var info = SO.spawnList[i];
 			SpawnEnemy(info.prefab, info.blockPos);
 		}
-		Debug.Log("스폰Enemys 종료");
 	}
 
 
@@ -693,10 +679,16 @@ public class GameManager : MonoBehaviour
 
 	void ChangeTextStage()
 	{
-		int T_Stage = Stage;
-		T_Stage++;
+		int n = Stage + 1;
+		int i = 1;
 
-        Text_Stage.text = T_Stage.ToString();
+		if(Stage >= 4)
+		{
+			n = n - 4;
+			i = 2;
+		}
+
+        Text_Stage.text = i.ToString() + " - " + n.ToString();
 	}
 
 	void ChangeTextGold()
@@ -722,6 +714,8 @@ public class GameManager : MonoBehaviour
 			if (child.name == "Num_Stage")
 				Text_Stage = child.GetComponent<TextMeshProUGUI>();
 		}
+
+		StageNavi = GameObject.Find("PageNavi_").GetComponent<StageNavi>();
 
 		Time.timeScale = GameSpeed;
 

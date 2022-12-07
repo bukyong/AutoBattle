@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Storage : MonoBehaviour
 {
@@ -116,14 +117,17 @@ public class Storage : MonoBehaviour
 	{
 		if (GO.GetComponent<StorageSorting>().GetUnitCount() != 0)
 		{
+			
+
 			if (GameManager.Instance.spawnedGO == null)
 			{
 				GO.GetComponent<StorageSorting>().RemoveUnitCount();
 				GameManager.Instance.spawnedGO = SpawnUnit(GO.GetComponent<StorageSorting>().GetGO_Type());
-				DivisionUnit(GO.GetComponent<StorageSorting>().GetGO_Type(), GameManager.Instance.spawnedGO);
+				GameManager.Instance.List_Unit.Add(GameManager.Instance.spawnedGO);
 				GameManager.Instance.spawnedGO.transform.SetParent(GameManager.Instance.PlayerUnit.transform);
 				GameManager.Instance.spawnedGO.transform.position = GameManager.Instance.P_maps[GameManager.Instance.Stage].GetComponent<Map>().GO_Blocks[0].transform.position;
-				
+				GameManager.Instance.P_maps[GameManager.Instance.Stage].GetComponent<Map>().GO_Blocks[0].GetComponent<Block>().setGO(GameManager.Instance.spawnedGO);
+				GameManager.Instance.spawnedGO.GetComponent<NavMeshAgent>().enabled = true;
 
 				GameManager.Instance.AddPlayerUnitCount();
 			}
@@ -136,7 +140,7 @@ public class Storage : MonoBehaviour
 			Debug.Log("창고에 유닛이 없음");
 	}
 
-	public void DivisionUnit(GO_Type GY, GameObject GO)
+/*	public void DivisionUnit(GO_Type GY, GameObject GO)
 	{
 		switch (GY)
 		{
@@ -161,7 +165,7 @@ public class Storage : MonoBehaviour
 			default:
 				break;
 		}
-	}
+	}*/
 }
 
 public enum GO_Type

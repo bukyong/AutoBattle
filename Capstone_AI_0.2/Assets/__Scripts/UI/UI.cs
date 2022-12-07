@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
 	public GameObject P_Option;
 	public GameObject P_Menu;
 	public GameObject P_GameOver;
+	public GameObject P_Clear;
 	public GameObject B_Pause;
 	
 
@@ -39,6 +40,27 @@ public class UI : MonoBehaviour
 	public void Close_Pause()
 	{
 		B_Pause.SetActive(false);
+	}
+
+
+	public void Active_GameOver()
+	{
+		P_GameOver.SetActive(true);
+	}
+
+	public void Close_GameOver()
+	{
+		P_GameOver.SetActive(false);
+	}
+
+	public void Active_Clear()
+	{
+		P_Clear.SetActive(true);
+	}
+
+	public void Close_Clear()
+	{
+		P_Clear.SetActive(false);
 	}
 
 	public void CS_Title()
