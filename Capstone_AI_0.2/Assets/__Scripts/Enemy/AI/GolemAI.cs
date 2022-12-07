@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
-public class OrcSoldierAI : LivingEntity
+public class GolemAI : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상의 레이어
 
@@ -37,6 +37,8 @@ public class OrcSoldierAI : LivingEntity
     [Header("Animations")]
     public bool isMove;
     public bool isAttack;
+    public bool isDash;
+    public bool readyDash;
 
     // 추적 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
@@ -59,7 +61,7 @@ public class OrcSoldierAI : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(200f, 10f, 30f, 5f);
+        Setup(300f, 10f, 20f, 10f);
         SetGauge();
     }
 
@@ -111,12 +113,19 @@ public class OrcSoldierAI : LivingEntity
         {
             if (hasTarget)
             {
-                // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-                dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+                if (isDash)
+                {
+                    return;
+                }
+                else
+                {
+                    // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+                    dist = Vector3.Distance(tr.position, targetEntity.transform.position);
 
-                // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-                Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-                this.transform.LookAt(targetPosition);
+                    // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+                    Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+                    this.transform.LookAt(targetPosition);
+                }
             }
         }
     }
@@ -131,7 +140,14 @@ public class OrcSoldierAI : LivingEntity
             {
                 if (hasTarget)
                 {
-                    Attack();
+                    if (Mana >= 10 && readyDash == true)
+                    {
+                        EnemyGolemSkillDash();
+                    }
+                    else
+                    {
+                        Attack();
+                    }
                 }
                 else
                 {
@@ -183,13 +199,19 @@ public class OrcSoldierAI : LivingEntity
             // 공격 반경 안에 있으면 움직임을 멈춤
             isMove = false;
             pathFinder.isStopped = true;
-
-            // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
-            if (lastAttackTime + attackDelay <= Time.time)
+            if (!isDash)
             {
-                isAttack = true;
+                // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
+                if (lastAttackTime + attackDelay <= Time.time)
+                {
+                    isAttack = true;
+                }
+                // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
+                else
+                {
+                    isAttack = false;
+                }
             }
-            // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
             else
             {
                 isAttack = false;
@@ -207,9 +229,29 @@ public class OrcSoldierAI : LivingEntity
         }
     }
 
-    // 적 광역기 스킬 메소드 (오크)
-    public void EnemyOrcSkillAOE()
+    // 적 광역기 스킬 메소드 (골렘)
+    public void EnemyGolemSkillAOE()
     {
+        Debug.Log("골렘 광역기 스킬 사용!");
+
+        if (flash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, whatIsTarget);
 
@@ -217,6 +259,88 @@ public class OrcSoldierAI : LivingEntity
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
             hitTarget.OnDamage(damage * 1.5f);
+        }
+
+        Mana = 0;
+        enemyAnimator.SetInteger("Mana", (int)Mana);
+        readyDash = true;
+        enemyAnimator.SetBool("readyDash", readyDash);
+    }
+
+    void FixedUpdate()
+    {
+        if (isDash)
+        {
+            enemyRigid.velocity = transform.forward * 5f;
+        }
+        else
+        {
+            enemyRigid.velocity = Vector3.zero;
+        }
+
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (isDash)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
+                LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
+
+                // 데미지 처리
+                attackTarget.OnDamage(damage * 2f);
+            }
+        }
+    }
+
+    IEnumerator OnTimeCoroutine(int time)
+    {
+        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
+        Debug.Log("돌진 시작!");
+        isDash = true;
+
+        while (time > 0)
+        {
+            time--;
+            //Debug.Log(time);
+            yield return new WaitForSeconds(1f);
+        }
+
+        pathFinder.velocity = Vector3.zero;
+        isDash = false;
+        readyDash = false;
+        enemyAnimator.SetBool("readyDash", readyDash);
+        TargetSearch();
+        Debug.Log("돌진 끝!");
+    }
+
+
+    // 적 돌진 스킬 메소드 (골렘)
+    public void EnemyGolemSkillDash()
+    {
+        Debug.Log("골렘 돌진 스킬 사용!");
+        
+        StartCoroutine(OnTimeCoroutine(2));
+
+        if (skillFlash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var skillFlashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
+            skillFlashInstance.transform.forward = gameObject.transform.forward;
+            var skillFlashPs = skillFlashInstance.GetComponent<ParticleSystem>();
+
+            if (skillFlashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(skillFlashInstance, skillFlashPs.main.duration);
+            }
+            else
+            {
+                var skillFlashPsParts = skillFlashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(skillFlashInstance, skillFlashPsParts.main.duration);
+            }
         }
 
         Mana = 0;
@@ -230,6 +354,9 @@ public class OrcSoldierAI : LivingEntity
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+        // 공격이 되는지 확인하기 위한 디버그 출력
+        Debug.Log("적 공격 실행");
 
         Mana += 5f;
         enemyAnimator.SetInteger("Mana", (int)Mana);
@@ -287,6 +414,7 @@ public class OrcSoldierAI : LivingEntity
 
     public void OnDie()
     {
+        Debug.Log("골렘 사망...");
 
         // 게임오브젝트 비활성화
         gameObject.SetActive(false);

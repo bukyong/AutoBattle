@@ -4,23 +4,47 @@ using UnityEngine;
 
 public class EnemyArrowMove : MonoBehaviour
 {
+    public EnemyArcherAI enemyArcherAI;
     public LivingEntity targetEntity; // 공격 대상
 
-    public float speed = 10f;
+    private float speed;
     public float damage; // 화살 고정 데미지
 
     private Rigidbody rb;
     private SphereCollider sphCollider;
     private float lastCollisionEnterTime;
-    private float collisionDealy = 0.1f;
+    private float collisionDealy = 0f;
+
+    public GameObject flash;
+    public GameObject hit;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         sphCollider = GetComponent<SphereCollider>();
-        // 수정 필요
-        ArcherAI archerAI = GameObject.FindWithTag("E_Archer").GetComponent<ArcherAI>();
-        damage = archerAI.damage;
+
+        enemyArcherAI = GameObject.FindWithTag("E_Archer").GetComponent<EnemyArcherAI>();
+        speed = 15f;
+        damage = enemyArcherAI.damage;
+
+        if (flash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
 
         Destroy(gameObject, 5);
     }
@@ -52,7 +76,24 @@ public class EnemyArrowMove : MonoBehaviour
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
+            if (hit != null)
+            {
+                // Quaternion.identity 회전 없음
+                var hitInstance = Instantiate(hit, transform.position, Quaternion.identity);
+                hitInstance.transform.forward = gameObject.transform.forward;
+                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+
+                if (hitPs != null)
+                {
+                    // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                    Destroy(hitInstance, hitPs.main.duration);
+                }
+                else
+                {
+                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitInstance, hitPsParts.main.duration);
+                }
+            }
 
             Destroy(gameObject);
 
@@ -65,8 +106,6 @@ public class EnemyArrowMove : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             speed = 0;
-
-            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
 
             Destroy(gameObject);
         }
