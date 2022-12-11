@@ -202,6 +202,7 @@ public class GolemAI : LivingEntity
                 // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
                 if (lastAttackTime + attackDelay <= Time.time)
                 {
+                    TargetSearch();
                     isAttack = true;
                 }
                 // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -256,7 +257,7 @@ public class GolemAI : LivingEntity
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage * 1.3f);
+            hitTarget.OnDamage(damage * 2f);
         }
 
         Mana = 0;
@@ -288,7 +289,7 @@ public class GolemAI : LivingEntity
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
-                attackTarget.OnDamage(damage);
+                attackTarget.OnDamage(damage * 1.5f);
             }
         }
     }
@@ -319,27 +320,23 @@ public class GolemAI : LivingEntity
     public void EnemyGolemSkillDash()
     {
         Debug.Log("골렘 돌진 스킬 사용!");
-        
+
+        // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
+
+        GameObject target;
+        int ranUnit = Random.Range(0, colliders.Length);
+        target = colliders[ranUnit].gameObject;
+        targetEntity = target.GetComponent<LivingEntity>();
+
+        // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
+        dist = Vector3.Distance(tr.position, targetEntity.transform.position);
+
+        // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
+        Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
+        this.transform.LookAt(targetPosition);
+
         StartCoroutine(OnTimeCoroutine(1));
-
-        if (skillFlash != null)
-        {
-            // Quaternion.identity 회전 없음
-            var skillFlashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
-            skillFlashInstance.transform.forward = gameObject.transform.forward;
-            var skillFlashPs = skillFlashInstance.GetComponent<ParticleSystem>();
-
-            if (skillFlashPs != null)
-            {
-                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
-                Destroy(skillFlashInstance, skillFlashPs.main.duration);
-            }
-            else
-            {
-                var skillFlashPsParts = skillFlashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(skillFlashInstance, skillFlashPsParts.main.duration);
-            }
-        }
 
         Mana = 0;
         enemyAnimator.SetInteger("Mana", (int)Mana);
