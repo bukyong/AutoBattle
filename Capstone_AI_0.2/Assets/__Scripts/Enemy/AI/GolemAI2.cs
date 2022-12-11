@@ -256,7 +256,7 @@ public class GolemAI2 : LivingEntity
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage * 1.5f);
+            hitTarget.OnDamage(damage * 1.3f);
         }
 
         Mana = 0;
@@ -288,7 +288,7 @@ public class GolemAI2 : LivingEntity
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
-                attackTarget.OnDamage(damage * 2f);
+                attackTarget.OnDamage(damage);
             }
         }
     }
@@ -320,7 +320,7 @@ public class GolemAI2 : LivingEntity
     {
         Debug.Log("골렘 돌진 스킬 사용!");
         
-        StartCoroutine(OnTimeCoroutine(2));
+        StartCoroutine(OnTimeCoroutine(1));
 
         if (skillFlash != null)
         {

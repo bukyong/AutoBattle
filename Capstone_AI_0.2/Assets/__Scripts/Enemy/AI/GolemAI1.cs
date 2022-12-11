@@ -288,7 +288,7 @@ public class GolemAI1 : LivingEntity
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
-                attackTarget.OnDamage(damage * 2f);
+                attackTarget.OnDamage(damage);
             }
         }
     }
@@ -320,7 +320,7 @@ public class GolemAI1 : LivingEntity
     {
         Debug.Log("골렘 돌진 스킬 사용!");
         
-        StartCoroutine(OnTimeCoroutine(2));
+        StartCoroutine(OnTimeCoroutine(1));
 
         if (skillFlash != null)
         {
