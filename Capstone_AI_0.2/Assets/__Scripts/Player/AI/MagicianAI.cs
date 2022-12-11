@@ -141,6 +141,7 @@ public class MagicianAI : LivingEntity
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
+			pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 		}
 		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
 		{
@@ -151,6 +152,7 @@ public class MagicianAI : LivingEntity
 
 				isGoal = true;
 				isCheck = false;
+				pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 				GameManager.Instance.AddGoalUnit();
 			}

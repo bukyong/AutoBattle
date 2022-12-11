@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
 
 	public bool isBattle;
 	public bool isMapChange;
+	public bool isFirst;
 
 	private void Awake()
 	{
@@ -171,8 +172,9 @@ public class GameManager : MonoBehaviour
 		spawnedGO = null;
 		isBattle = false;
 		isMapChange = false;
+		isFirst = true;
 
-		GameSpeed= 1f;
+		GameSpeed = 1f;
 
 		Stage = 0;
 		gold = 20;
@@ -481,7 +483,7 @@ public class GameManager : MonoBehaviour
 
 			SpawnEnemys(List_SO[Stage]);
 
-			gamestate= GameState.BeforeBattle;
+			gamestate = GameState.BeforeBattle;
 		}
 		else if(gamestate == GameState.BeforeBattle)
 		{
@@ -526,7 +528,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			gamestate = GameState.AfterBattle;
-			StartCoroutine(DelayChangeScene());
+			StartCoroutine(DelayChangeScene2());
 		}
 		else if(gamestate == GameState.AfterBattle)
 		{
@@ -728,7 +730,7 @@ public class GameManager : MonoBehaviour
 
 	void Init_GamePlay()
 	{
-		Canvas = GameObject.Find("Canvas");
+		Canvas = GameObject.Find("Canvas1");
 
 		Transform[] allChildren = Canvas.GetComponentsInChildren<Transform>();
 		foreach (Transform child in allChildren)
@@ -752,6 +754,10 @@ public class GameManager : MonoBehaviour
 		PlayerUnit = GameObject.Find("Player");
 		EnemyUnit = GameObject.Find("Enemy");
 		storage = Canvas.GetComponentInChildren<Storage>();
+
+		Stage = 0;
+		gold = 20;
+
 	}
 
 	void StartingUnit()
@@ -770,8 +776,8 @@ public class GameManager : MonoBehaviour
 
 		List_Unit.Add(GO2);
 		GO2.transform.SetParent(PlayerUnit.transform);
-		GO2.transform.position = P_maps[Stage].GetComponent<Map>().GO_Blocks[19].transform.position;
-		P_maps[Stage].GetComponent<Map>().GO_Blocks[19].GetComponent<Block>().setGO(GO2);
+		GO2.transform.position = P_maps[Stage].GetComponent<Map>().GO_Blocks[21].transform.position;
+		P_maps[Stage].GetComponent<Map>().GO_Blocks[21].GetComponent<Block>().setGO(GO2);
 		GO2.GetComponent<NavMeshAgent>().enabled = true;
 
 		AddPlayerUnitCount();
@@ -789,7 +795,14 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator DelayChangeScene()
 	{
-		yield return new WaitForSeconds(1.0f);
+		yield return new WaitForSeconds(0.2f);
+
+		ChangeGameState();
+	}
+
+	IEnumerator DelayChangeScene2()
+	{
+		yield return new WaitForSeconds(3.0f);
 
 		ChangeGameState();
 	}
@@ -820,8 +833,6 @@ public class GameManager : MonoBehaviour
 			E_maps.Clear();
 			List_Unit.Clear();
 
-			Stage = 0;
-			gold = 20;
 			gamestate = GameState.None;
 
 

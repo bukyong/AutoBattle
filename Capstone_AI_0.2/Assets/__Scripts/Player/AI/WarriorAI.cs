@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
 public class WarriorAI: LivingEntity
@@ -38,8 +39,12 @@ public class WarriorAI: LivingEntity
     public bool isMove;
     public bool isAttack;
 
-    // 추적 대상이 존재하는지 알려주는 프로퍼티
-    private bool hasTarget
+	[Header("Teleport")]
+	private bool bTeleportation; // teleportation 가능 여부
+	private Vector3 tpPos; // 텔레포트에 사용할 좌표, 랜덤 좌표를 담음
+
+	// 추적 대상이 존재하는지 알려주는 프로퍼티
+	private bool hasTarget
     {
         get
         {
@@ -134,6 +139,7 @@ public class WarriorAI: LivingEntity
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
+			pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 		}
 		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
         {
@@ -144,6 +150,7 @@ public class WarriorAI: LivingEntity
 
 				isGoal = true;
 				isCheck = false;
+				pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 				GameManager.Instance.AddGoalUnit();
 			}
@@ -232,6 +239,7 @@ public class WarriorAI: LivingEntity
 					}
 				}
 
+				TargetSearch();
 				isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -266,6 +274,7 @@ public class WarriorAI: LivingEntity
     // 전사 광역기 스킬 메소드
     public void WarriorSkillAOE()
     {
+
         LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
         Debug.Log("전사 광역기 스킬 사용!");
@@ -300,9 +309,58 @@ public class WarriorAI: LivingEntity
         Debug.Log("전사 방어력 감소!");
     }
 
-    // 데미지 처리하기
-    // (유니티 애니메이션 이벤트로 휘두를 때 데미지 적용)
-    public void OnDamageEvent()
+	public void TargetSearchFarthest()
+	{
+		// 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+
+		// 만약 콜라이더가 검출이 되면 거리 비교를 통해 가장 가까운 적을 타겟으로 변경
+		if (colliders.Length > 0)
+		{
+			GameObject target;
+			target = colliders[0].gameObject;
+
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				if (Vector3.Distance(target.transform.position, this.transform.position) < Vector3.Distance(this.transform.position, colliders[i].transform.position))
+				{
+					target = colliders[i].gameObject;
+					//break;
+				}
+			}
+
+			targetEntity = target.GetComponent<LivingEntity>();
+		}
+	}
+
+	private void Teleportation()
+	{
+		if (bTeleportation)
+		{
+
+            // 추적대상 근처로 랜덤 위치 계산
+            // Random.insideUnityCircle은 x, y값만 계산해서 y값을 z값에 더함, y값은 그냥 y값으로 함
+            tpPos = Vector3.zero; //Random.insideUnitCircle * 1.5f;
+            tpPos.x += targetEntity.gameObject.transform.position.x + 5f;
+            tpPos.z = targetEntity.gameObject.transform.position.z;
+			tpPos.y = targetEntity.gameObject.transform.position.y;
+
+			tr.position = tpPos;
+
+
+			// 순간이동 가능 여부 false로 변경
+			bTeleportation = false;
+
+			Mana = 0;
+
+			Debug.Log("순간이동 스킬을 사용했습니다!");
+		}
+	}
+
+
+	// 데미지 처리하기
+	// (유니티 애니메이션 이벤트로 휘두를 때 데미지 적용)
+	public void OnDamageEvent()
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
@@ -310,7 +368,7 @@ public class WarriorAI: LivingEntity
 
         // 공격이 되는지 확인하기 위한 디버그 출력
 
-        Mana += 1f;
+        Mana += 5f;
         playerAnimator.SetInteger("Mana", (int)Mana);
         attackTarget.OnDamage(damage);
 

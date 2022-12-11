@@ -300,10 +300,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 2
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.89, z: 0}
 --- !u!95 &8742688714646434188
 Animator:
   serializedVersion: 3
@@ -332,7 +332,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8742688714646402828}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -361,6 +361,7 @@ MonoBehaviour:
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   StandingBlock: {fileID: 0}
+  Audio: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256

@@ -97,4 +97,14 @@ public class UI : MonoBehaviour
 	{
 		Application.Quit();
 	}
+
+	public void SetActiveFalse(GameObject GO)
+	{
+		GO.SetActive(false);
+	}
+
+	public void IsFirstFalse()
+	{
+		GameManager.Instance.isFirst = false;
+	}
 }

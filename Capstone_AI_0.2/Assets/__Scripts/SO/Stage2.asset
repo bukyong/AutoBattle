@@ -21,3 +21,5 @@ MonoBehaviour:
     blockPos: 20
   - prefab: {fileID: 6909444759479967271, guid: 8c745790aecbad941b7c613c6759d6fd, type: 3}
     blockPos: 17
+  - prefab: {fileID: 6909444759479967271, guid: 8c745790aecbad941b7c613c6759d6fd, type: 3}
+    blockPos: 23

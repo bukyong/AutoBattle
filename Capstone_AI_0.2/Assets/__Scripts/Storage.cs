@@ -126,7 +126,7 @@ public class Storage : MonoBehaviour
 		{
 			
 
-			if (GameManager.Instance.spawnedGO == null)
+			if (GameManager.Instance.spawnedGO == null && GameManager.Instance.P_maps[GameManager.Instance.Stage].GetComponent<Map>().GO_Blocks[0].GetComponent<Block>().getGO() == null && GameManager.Instance.gamestate == GameState.BeforeBattle)
 			{
 				GO.GetComponent<StorageSorting>().RemoveUnitCount();
 				GameManager.Instance.spawnedGO = SpawnUnit(GO.GetComponent<StorageSorting>().GetGO_Type());

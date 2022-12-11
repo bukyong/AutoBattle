@@ -26,7 +26,7 @@ public class HealerAI : LivingEntity
     public float defense; // 방어력
     public float attackDelay; // 공격 딜레이
 
-    private float attackRange = 5f; // 공격 사거리
+    private float attackRange; // 공격 사거리
     private float lastAttackTime; // 마지막 공격 시점
     private float dist; // 추적대상과의 거리
 
@@ -68,6 +68,7 @@ public class HealerAI : LivingEntity
 		Audio = this.gameObject.AddComponent<AudioSource>();
 		Audio2 = this.gameObject.AddComponent<AudioSource>();
 		Audio2.playOnAwake = false;
+        attackRange = 2.5f;
 	}
 
     // AI의 초기 스펙을 결정하는 셋업 메서드
@@ -139,6 +140,7 @@ public class HealerAI : LivingEntity
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
+			pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 		}
         else if(GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
         {
@@ -149,6 +151,7 @@ public class HealerAI : LivingEntity
 
 				isGoal = true;
                 isCheck= false;
+				pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 				GameManager.Instance.AddGoalUnit();
 			}
@@ -237,7 +240,7 @@ public class HealerAI : LivingEntity
 						}
 					}
 				}
-				TargetSearch();
+
                 isAttack = true;
                 lastAttackTime = Time.time;  // 최근 공격시간 갱신
                 isPlay= false;
@@ -247,7 +250,8 @@ public class HealerAI : LivingEntity
             {
                 isAttack = false;
             }
-        }
+			TargetSearch();
+		}
         // 공격 사거리 밖에 있을 경우 추적하기
         else
         {
@@ -293,7 +297,7 @@ public class HealerAI : LivingEntity
     public void HealerSkillAOE()
     {
         
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, LayerMask.GetMask("Player"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2.7f, LayerMask.GetMask("Player"));
 
         foreach (Collider heal in colliders)
         {

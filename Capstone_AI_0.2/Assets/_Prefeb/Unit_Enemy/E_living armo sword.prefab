@@ -739,7 +739,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0.3, z: 0}
@@ -783,7 +783,7 @@ NavMeshAgent:
   m_Height: 0.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 1
 --- !u!114 &5990401819707809485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,6 +800,7 @@ MonoBehaviour:
   startingMana: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   StandingBlock: {fileID: 0}
+  Audio: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256

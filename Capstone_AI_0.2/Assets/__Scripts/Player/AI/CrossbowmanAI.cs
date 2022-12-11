@@ -139,6 +139,7 @@ public class CrossbowmanAI : LivingEntity
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
+			pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 		}
 		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
 		{
@@ -149,6 +150,7 @@ public class CrossbowmanAI : LivingEntity
 
 				isGoal = true;
 				isCheck = false;
+				pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 				GameManager.Instance.AddGoalUnit();
 			}
@@ -264,8 +266,9 @@ public class CrossbowmanAI : LivingEntity
     {
         // Instatiate()로 화살 프리팹을 복제 생성
         Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
+		Bolt.GetComponent<BoltMove>().damage = damage;
 
-        Mana += 2f;
+		Mana += 2f;
         playerAnimator.SetInteger("Mana", (int)Mana);
     }
 
@@ -275,7 +278,8 @@ public class CrossbowmanAI : LivingEntity
         // 일시적으로 데미지 3배 증가
 
         Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
-        Bolt.GetComponent<BoltMove>().damage = damage * 3f;
+        Bolt.GetComponent<BoltMove>().damage = damage * 2f;
+        Bolt.GetComponent<BoltMove>().isSkill= true;
 
 
 

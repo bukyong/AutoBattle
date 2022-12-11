@@ -10,6 +10,8 @@ public class BoltMove : MonoBehaviour
     private float speed;
     public float damage; // 화살 고정 데미지
 
+    public bool isSkill = false;
+
     private Rigidbody rb;
     private SphereCollider sphCollider;
     private float lastCollisionEnterTime;
@@ -25,9 +27,9 @@ public class BoltMove : MonoBehaviour
 
         crossbowmanAI = GameObject.FindWithTag("Crossbow").GetComponent<CrossbowmanAI>();
         speed = 30f;
-        damage = crossbowmanAI.damage;
+        
 
-        if (flash != null)
+		if (flash != null)
         {
             // Quaternion.identity 회전 없음
             var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
@@ -70,8 +72,8 @@ public class BoltMove : MonoBehaviour
         // 화살이 적과 충돌했을 경우
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;
+/*            rb.constraints = RigidbodyConstraints.FreezeAll;
+            speed = 0;*/
 
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
@@ -94,14 +96,21 @@ public class BoltMove : MonoBehaviour
                     Destroy(hitInstance, hitPsParts.main.duration);
                 }
             }
-			attackTarget.OnDamage(damage);
 
-			Destroy(gameObject);
+            if(isSkill == false)
+            {
+				attackTarget.OnDamage(damage);
 
-            // 데미지 처리
+				Destroy(gameObject);
+			}
+            else
+				attackTarget.OnDamage(damage);
 
-            //Debug.Log("현재 데미지 : " + damage);
-        }
+
+			// 데미지 처리
+
+			//Debug.Log("현재 데미지 : " + damage);
+		}
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {

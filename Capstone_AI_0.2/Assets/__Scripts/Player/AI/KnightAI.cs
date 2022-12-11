@@ -137,6 +137,7 @@ public class KnightAI : LivingEntity
 			pathFinder.isStopped = false;
 			isMove = true;
 			pathFinder.stoppingDistance = 0.5f;
+			pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 		}
 		else if (GameManager.Instance.isMapChange && isGoal == false && isCheck == true)
         {
@@ -147,6 +148,7 @@ public class KnightAI : LivingEntity
 
 				isGoal = true;
 				isCheck = false;
+				pathFinder.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 				GameManager.Instance.AddGoalUnit();
 			}
@@ -255,7 +257,7 @@ public class KnightAI : LivingEntity
 					}
 				}
 
-
+                TargetSearch();
 				isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
