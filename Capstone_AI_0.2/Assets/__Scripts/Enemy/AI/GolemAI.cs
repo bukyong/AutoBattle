@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class GolemAI : LivingEntity
 {
+    // 일반 골렘 AI 스크립트
     public LayerMask whatIsTarget; // 추적 대상의 레이어
 
     private LivingEntity targetEntity; // 추적 대상
@@ -252,7 +253,7 @@ public class GolemAI : LivingEntity
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3.5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {
@@ -386,34 +387,30 @@ public class GolemAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
-        enemyRigid.isKinematic = true;
-        egoGauge.SetActive(false);
+        //gameObject.layer = 12;
+
+        // 사망 애니메이션 재생
+        enemyAnimator.SetTrigger("Die");
 
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
+        enemyRigid.isKinematic = true;
+        egoGauge.SetActive(false);
+
         // 다른 AI를 방해하지 않도록 자신의 모든 콜라이더를 비활성화
-        Collider[] enemyColliders = GetComponents<Collider>();
-        for (int i = 0; i < enemyColliders.Length; i++)
-        {
-            enemyColliders[i].enabled = false;
-        }
+        Collider enemyCollider = GetComponent<Collider>();
+        enemyCollider.enabled = false;
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
         pathFinder.enabled = false;
-
-        // 사망 애니메이션 재생
-        enemyAnimator.SetTrigger("Die");
     }
 
     public void OnDie()
     {
-        Debug.Log("골렘 사망...");
-
-        // 게임오브젝트 비활성화
-        gameObject.SetActive(false);
-        //Destroy(egoGauge);
-        //Destroy(gameObject);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
+        Destroy(egoGauge);
     }
 }

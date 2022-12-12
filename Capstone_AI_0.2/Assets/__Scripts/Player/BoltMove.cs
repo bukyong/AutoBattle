@@ -27,7 +27,6 @@ public class BoltMove : MonoBehaviour
 
         crossbowmanAI = GameObject.FindWithTag("Crossbow").GetComponent<CrossbowmanAI>();
         speed = 30f;
-        
 
 		if (flash != null)
         {
@@ -71,9 +70,11 @@ public class BoltMove : MonoBehaviour
     {
         // 화살이 적과 충돌했을 경우
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-/*            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;*/
+        {  
+            /*
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            speed = 0;
+            */
 
             // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
             LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
@@ -97,19 +98,20 @@ public class BoltMove : MonoBehaviour
                 }
             }
 
-            if(isSkill == false)
+            if (isSkill == false)
             {
 				attackTarget.OnDamage(damage);
 
 				Destroy(gameObject);
 			}
             else
-				attackTarget.OnDamage(damage);
-
+            {
+                attackTarget.OnDamage(damage);
+            }
 
 			// 데미지 처리
 
-			//Debug.Log("현재 데미지 : " + damage);
+			// Debug.Log("현재 데미지 : " + damage);
 		}
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))

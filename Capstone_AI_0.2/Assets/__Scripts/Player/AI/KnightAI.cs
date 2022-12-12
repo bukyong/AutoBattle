@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
-using static UnityEngine.GraphicsBuffer;
 
 public class KnightAI : LivingEntity
 {
@@ -363,32 +361,30 @@ public class KnightAI : LivingEntity
     // 사망 처리
     public override void Die()
     {
-        playerRigid.isKinematic = true;
-        pgoGauge.SetActive(false);
+        //gameObject.layer = 12;
+
+        // 사망 애니메이션 재생
+        playerAnimator.SetTrigger("Die");
 
         // LivingEntity의 DIe()를 실행하여 기본 사망 처리 실행
         base.Die();
 
+        playerRigid.isKinematic = true;
+        pgoGauge.SetActive(false);
+
         // 다른 AI를 방해하지 않도록 자신의 모든 콜라이더를 비활성화
-        Collider[] enemyColliders = GetComponents<Collider>();
-        for (int i = 0; i < enemyColliders.Length; i++)
-        {
-            enemyColliders[i].enabled = false;
-        }
+        Collider playerCollider = GetComponent<Collider>();
+        playerCollider.enabled = false;
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
         pathFinder.enabled = false;
-
-        // 사망 애니메이션 재생
-        playerAnimator.SetTrigger("Die");
     }
 
     public void OnDie()
     {
-
-        // 게임오브젝트 비활성화
-        gameObject.SetActive(false);
-        //Destroy(gameObject);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
+        Destroy(pgoGauge);
     }
 }

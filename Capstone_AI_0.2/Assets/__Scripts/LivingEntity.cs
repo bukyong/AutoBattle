@@ -44,31 +44,31 @@ public class LivingEntity : MonoBehaviour
         Health -= damage;
 
         GameObject damageGO = Instantiate(DamageText_GO);
-        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z + 0.8f);
+        //damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z + 0.8f);
+        //damageGO.transform.position = gameObject.transform.Find("DamageGO").transform.position;
         damageGO.GetComponent<DamageText>().damage = damage;
+        damageGO.transform.position = new Vector3(transform.position.x, 1f, transform.position.z + 0.8f);
 
-
-        if(Audio)
+        if (Audio)
         {
-			if (Audio.clip)
-			{
+            if (Audio.clip)
+            {
                 Audio.volume = GameManager.Instance.GetVolume(1);
-				Audio.Play();
-			}
-		}
+                Audio.Play();
+            }
+        }
 
-
-		// 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
-		if (Health <= 0 && !Dead)
+        // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
+        if (Health <= 0 && !Dead)
         {
-            if(transform.gameObject.layer == 8)
+            if (transform.gameObject.layer == 8)
             {
                 GameManager.Instance.RemovePlayerUnitCount();
             }
-            if(transform.gameObject.layer == 7)
+            if (transform.gameObject.layer == 7)
             {
-				GameManager.Instance.RemoveEnemyUnitCount();
-			}
+                GameManager.Instance.RemoveEnemyUnitCount();
+            }
             Die();
         }
     }
@@ -87,21 +87,10 @@ public class LivingEntity : MonoBehaviour
         }
 
         GameObject damageGO = Instantiate(DamageText_GO);
-        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        damageGO.transform.position = new Vector3(transform.position.x, 1f, transform.position.z + 0.8f);
         damageGO.GetComponent<TextMeshPro>().color = Color.green;
         damageGO.GetComponent<DamageText>().damage = value;
     }
-
-    /*
-    // 방어력 증가
-    public virtual void DefenceUp(float value)
-    {
-        GameObject damageGO = Instantiate(DamageText_GO);
-        damageGO.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        damageGO.GetComponent<TextMeshPro>().color = Color.blue;
-        damageGO.GetComponent<DamageText>().damage = value;
-    }
-    */
 
     // 사망 처리
     public virtual void Die()
