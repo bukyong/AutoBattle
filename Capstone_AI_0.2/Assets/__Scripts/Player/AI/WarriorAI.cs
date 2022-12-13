@@ -237,7 +237,6 @@ public class WarriorAI: LivingEntity
 					}
 				}
 
-				TargetSearch();
 				isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -256,55 +255,23 @@ public class WarriorAI: LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
-    }
 
-    // 전사 버프 스킬 메소드
-    public void WarriorSkillBuff()
-    {
-        Debug.Log("전사 버프 스킬 사용!");
-
-        StartCoroutine(OnBuffCoroutine(5, 3f));
-
-        Mana = 0;
-        playerAnimator.SetInteger("Mana", (int)Mana);
+        TargetSearch();
     }
 
     // 전사 광역기 스킬 메소드
     public void WarriorSkillAOE()
     {
-
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        Debug.Log("전사 광역기 스킬 사용!");
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage);
+            hitTarget.OnDamage(damage * 1.5f);
         }
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);
-    }
-
-    // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
-    IEnumerator OnBuffCoroutine(int time, float value)
-    {
-        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
-        defense += value;
-        Debug.Log("전사 방어력 증가!");
-
-        while (time > 0)
-        {
-            time--;
-            //Debug.Log(time);
-            yield return new WaitForSeconds(1f);
-        }
-
-        defense -= value;
-        Debug.Log("전사 방어력 감소!");
     }
 
 	public void TargetSearchFarthest()
@@ -335,7 +302,6 @@ public class WarriorAI: LivingEntity
 	{
 		if (bTeleportation)
 		{
-
             // 추적대상 근처로 랜덤 위치 계산
             // Random.insideUnityCircle은 x, y값만 계산해서 y값을 z값에 더함, y값은 그냥 y값으로 함
             tpPos = Vector3.zero; //Random.insideUnitCircle * 1.5f;
@@ -362,13 +328,13 @@ public class WarriorAI: LivingEntity
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-
-        Mana += 5f;
-        playerAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
+        if (targetEntity != null)
+        {
+            LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+            Mana += 2.5f;
+            playerAnimator.SetInteger("Mana", (int)Mana);
+            attackTarget.OnDamage(damage);
+        }
 
         // 최근 공격 시간 갱신
         lastAttackTime = Time.time;
@@ -414,13 +380,13 @@ public class WarriorAI: LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }

@@ -240,6 +240,8 @@ public class EnemySwordAI : LivingEntity
                 Teleportation();
             }
         }
+
+        TargetSearch();
     }
 
     // 데미지 처리하기
@@ -248,13 +250,12 @@ public class EnemySwordAI : LivingEntity
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+        if (targetEntity != null)
+        {
+            LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
 
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
-
-        enemyAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
+            attackTarget.OnDamage(damage);
+        }
 
         // 최근 공격 시간 갱신
         lastAttackTime = Time.time;
@@ -294,13 +295,13 @@ public class EnemySwordAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(egoGauge);
     }
 

@@ -71,48 +71,44 @@ public class BoltMove : MonoBehaviour
         // 화살이 적과 충돌했을 경우
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {  
-            /*
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            speed = 0;
-            */
-
-            // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-            LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
-
-            if (hit != null)
+            if (other != null)
             {
-                // Quaternion.identity 회전 없음
-                var hitInstance = Instantiate(hit, transform.position, Quaternion.identity);
-                hitInstance.transform.forward = gameObject.transform.forward;
-                var hitPs = hitInstance.GetComponent<ParticleSystem>();
+                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
+                LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
-                if (hitPs != null)
+                if (hit != null)
                 {
-                    // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
-                    Destroy(hitInstance, hitPs.main.duration);
+                    // Quaternion.identity 회전 없음
+                    var hitInstance = Instantiate(hit, transform.position, Quaternion.identity);
+                    hitInstance.transform.forward = gameObject.transform.forward;
+                    var hitPs = hitInstance.GetComponent<ParticleSystem>();
+
+                    if (hitPs != null)
+                    {
+                        // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                        Destroy(hitInstance, hitPs.main.duration);
+                    }
+                    else
+                    {
+                        var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                        Destroy(hitInstance, hitPsParts.main.duration);
+                    }
+                }
+
+                if (isSkill == false)
+                {
+                    attackTarget.OnDamage(damage);
+
+                    Destroy(gameObject);
                 }
                 else
                 {
-                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitInstance, hitPsParts.main.duration);
+                    attackTarget.OnDamage(damage);
                 }
             }
 
-            if (isSkill == false)
-            {
-				attackTarget.OnDamage(damage);
-
-				Destroy(gameObject);
-			}
-            else
-            {
-                attackTarget.OnDamage(damage);
-            }
-
-			// 데미지 처리
-
-			// Debug.Log("현재 데미지 : " + damage);
-		}
+            Destroy(gameObject);
+        }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
@@ -123,18 +119,18 @@ public class BoltMove : MonoBehaviour
         }
         else
         {
+            // 유닛 통과를 위해 콜라이더를 끔
             sphCollider.enabled = false;
-            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 
+    // 꺼진 콜라이더를 다시 켜는 메소드
     void OnSphereCollider()
     {
         if (lastCollisionEnterTime + collisionDealy < Time.time)
         {
             sphCollider.enabled = true;
             lastCollisionEnterTime = Time.time;
-            //Debug.Log("콜라이더 켜짐");
         }
     }
 }

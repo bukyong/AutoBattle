@@ -419,13 +419,13 @@ public class NecromancerAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(egoGauge);
     }
 }

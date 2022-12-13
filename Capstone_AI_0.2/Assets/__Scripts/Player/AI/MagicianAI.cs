@@ -273,8 +273,6 @@ public class MagicianAI : LivingEntity
 
     public void MagicianSkillAOE()
     {
-        //LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
         if (flash != null)
         {
             // Quaternion.identity 회전 없음
@@ -346,13 +344,13 @@ public class MagicianAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }

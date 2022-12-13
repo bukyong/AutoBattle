@@ -199,12 +199,12 @@ public class GolemAI1 : LivingEntity
             // 공격 반경 안에 있으면 움직임을 멈춤
             isMove = false;
             pathFinder.isStopped = true;
+
             if (!isDash)
             {
                 // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
                 if (lastAttackTime + attackDelay <= Time.time)
                 {
-                    TargetSearch();
                     isAttack = true;
                 }
                 // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -228,6 +228,8 @@ public class GolemAI1 : LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
+
+        TargetSearch();
     }
 
     // 적 광역기 스킬 메소드 (골렘)
@@ -254,7 +256,7 @@ public class GolemAI1 : LivingEntity
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 3.5f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {
@@ -291,7 +293,15 @@ public class GolemAI1 : LivingEntity
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
-                attackTarget.OnDamage(damage * 1.5f);
+                attackTarget.OnDamage(damage * 1.2f);
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+            {
+                pathFinder.velocity = Vector3.zero;
+                isDash = false;
+                readyDash = false;
+                enemyAnimator.SetBool("readyDash", readyDash);
+                TargetSearch();
             }
         }
     }
@@ -309,11 +319,14 @@ public class GolemAI1 : LivingEntity
             yield return new WaitForSeconds(1f);
         }
 
-        pathFinder.velocity = Vector3.zero;
-        isDash = false;
-        readyDash = false;
-        enemyAnimator.SetBool("readyDash", readyDash);
-        TargetSearch();
+        if (isDash)
+        {
+            pathFinder.velocity = Vector3.zero;
+            isDash = false;
+            readyDash = false;
+            enemyAnimator.SetBool("readyDash", readyDash);
+            TargetSearch();
+        }
         Debug.Log("돌진 끝!");
     }
 
@@ -350,18 +363,13 @@ public class GolemAI1 : LivingEntity
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
-
-        Mana += 5f;
-        enemyAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
-
-        if(Mana >= 20f)
+        if (targetEntity != null)
         {
-            Mana = 0;
+            LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+            Mana += 5f;
+            enemyAnimator.SetInteger("Mana", (int)Mana);
+            attackTarget.OnDamage(damage);
         }
 
         // 최근 공격 시간 갱신
@@ -405,13 +413,13 @@ public class GolemAI1 : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(egoGauge);
     }
 }

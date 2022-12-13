@@ -274,7 +274,6 @@ public class ArcherAI : LivingEntity
 
     public void ArcherSkillBuff()
     {
-
         StartCoroutine(OnBuffCoroutine(5f, 1f));
 
         Mana = 0f;
@@ -284,8 +283,6 @@ public class ArcherAI : LivingEntity
     // 버프를 위한 코루틴 (버프 시간, 버프 증가량)
     IEnumerator OnBuffCoroutine(float time, float value)
     {
-        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
-
         attackDelay -= value;
         playerAnimator.SetFloat("AttackSpeed", animSpeed * 2);
 
@@ -304,6 +301,7 @@ public class ArcherAI : LivingEntity
     public override void OnDamage(float damage)
     {
 		Audio.clip = GameManager.Instance.WizardWalk;
+
 		// LivingEntity의 OnDamage()를 실행하여 데미지 적용
 		if (damage - defense <= 0)
         {
@@ -338,13 +336,13 @@ public class ArcherAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }

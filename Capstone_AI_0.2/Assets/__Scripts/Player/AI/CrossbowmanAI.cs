@@ -274,14 +274,9 @@ public class CrossbowmanAI : LivingEntity
 
     public void CrossbowmanSkillOneShot()
     {
-
-        // 일시적으로 데미지 3배 증가
-
         Bolt = Instantiate(boltPrefab, firePoint.transform.position, firePoint.transform.rotation);
         Bolt.GetComponent<BoltMove>().damage = damage * 2f;
         Bolt.GetComponent<BoltMove>().isSkill= true;
-
-
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);
@@ -326,13 +321,13 @@ public class CrossbowmanAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }

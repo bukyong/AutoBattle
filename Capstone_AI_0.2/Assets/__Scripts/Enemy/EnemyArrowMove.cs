@@ -99,7 +99,6 @@ public class EnemyArrowMove : MonoBehaviour
 
             // 데미지 처리
             attackTarget.OnDamage(damage);
-            //Debug.Log("현재 데미지 : " + damage);
         }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
@@ -111,18 +110,18 @@ public class EnemyArrowMove : MonoBehaviour
         }
         else
         {
+            // 유닛 통과를 위해 콜라이더를 끔
             sphCollider.enabled = false;
-            //Debug.Log("충돌한 오브젝트의 레이어 : " + other.gameObject.layer + ", 충돌한 시간 : " + lastCollisionEnterTime);
         }
     }
 
+    // 꺼진 콜라이더를 다시 켜는 메소드
     void OnSphereCollider()
     {
         if (lastCollisionEnterTime + collisionDealy < Time.time)
         {
             sphCollider.enabled = true;
             lastCollisionEnterTime = Time.time;
-            //Debug.Log("콜라이더 켜짐");
         }
     }
 }

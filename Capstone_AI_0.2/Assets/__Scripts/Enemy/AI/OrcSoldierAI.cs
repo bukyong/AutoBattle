@@ -203,6 +203,8 @@ public class OrcSoldierAI : LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
+
+        TargetSearch();
     }
 
     // 적 광역기 스킬 메소드 (오크)
@@ -283,13 +285,13 @@ public class OrcSoldierAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(egoGauge);
     }
 }

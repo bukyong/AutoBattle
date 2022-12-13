@@ -255,7 +255,6 @@ public class KnightAI : LivingEntity
 					}
 				}
 
-                TargetSearch();
 				isAttack = true;
             }
             // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -274,6 +273,8 @@ public class KnightAI : LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
+
+        TargetSearch();
     }
 
     // 기사 버프 스킬 메소드 (방어력 증가)
@@ -298,7 +299,7 @@ public class KnightAI : LivingEntity
             }
         }
 
-        StartCoroutine(OnBuffCoroutine(5, 3f));
+        StartCoroutine(OnBuffCoroutine(5, 5f));
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);
@@ -326,13 +327,13 @@ public class KnightAI : LivingEntity
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-
-        Mana += 2;
-        playerAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
+        if (targetEntity != null)
+        {
+            LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+            Mana += 2f;
+            playerAnimator.SetInteger("Mana", (int)Mana);
+            attackTarget.OnDamage(damage);
+        }
 
         // 최근 공격 시간 갱신
         lastAttackTime = Time.time;
@@ -343,6 +344,7 @@ public class KnightAI : LivingEntity
     public override void OnDamage(float damage)
     {
 		Audio.clip = GameManager.Instance.H_Shield;
+
 		// LivingEntity의 OnDamage()를 실행하여 데미지 적용
 		if (damage - defense <= 0 )
         {
@@ -378,13 +380,13 @@ public class KnightAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }

@@ -60,7 +60,7 @@ public class GolemAI2 : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(300f, 10f, 15f, 5f);
+        Setup(3000f, 10f, 15f, 5f);
         SetGauge();
     }
 
@@ -139,14 +139,7 @@ public class GolemAI2 : LivingEntity
             {
                 if (hasTarget)
                 {
-                    if (Mana >= 10 && readyDash == true)
-                    {
-                        EnemyGolemSkillDash();
-                    }
-                    else
-                    {
-                        Attack();
-                    }
+                    Attack();
                 }
                 else
                 {
@@ -198,12 +191,12 @@ public class GolemAI2 : LivingEntity
             // 공격 반경 안에 있으면 움직임을 멈춤
             isMove = false;
             pathFinder.isStopped = true;
+
             if (!isDash)
             {
                 // 최근 공격 시점에서 공격 딜레이 이상 시간이 지나면 공격 가능
                 if (lastAttackTime + attackDelay <= Time.time)
                 {
-                    TargetSearch();
                     isAttack = true;
                 }
                 // 공격 사거리 안에 있지만, 공격 딜레이가 남아있을 경우
@@ -227,6 +220,8 @@ public class GolemAI2 : LivingEntity
             pathFinder.isStopped = false;
             pathFinder.SetDestination(targetEntity.transform.position);
         }
+
+        TargetSearch();
     }
 
     // 적 광역기 스킬 메소드 (골렘)
@@ -267,100 +262,19 @@ public class GolemAI2 : LivingEntity
         enemyAnimator.SetBool("readyDash", readyDash);
     }
 
-    void FixedUpdate()
-    {
-        if (isDash)
-        {
-            enemyRigid.velocity = transform.forward * 5f;
-        }
-        else
-        {
-            enemyRigid.velocity = Vector3.zero;
-        }
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (isDash)
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-            {
-                // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
-                LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
-
-                // 데미지 처리
-                attackTarget.OnDamage(damage * 1.5f);
-            }
-        }
-    }
-
-    IEnumerator OnTimeCoroutine(int time)
-    {
-        // 방어력 증가를 한 번만 하고 설정된 타이머가 다 되면 방어력 감소
-        Debug.Log("돌진 시작!");
-        isDash = true;
-
-        while (time > 0)
-        {
-            time--;
-            //Debug.Log(time);
-            yield return new WaitForSeconds(1f);
-        }
-
-        pathFinder.velocity = Vector3.zero;
-        isDash = false;
-        readyDash = false;
-        enemyAnimator.SetBool("readyDash", readyDash);
-        TargetSearch();
-        Debug.Log("돌진 끝!");
-    }
-
-
-    // 적 돌진 스킬 메소드 (골렘)
-    public void EnemyGolemSkillDash()
-    {
-        Debug.Log("골렘 돌진 스킬 사용!");
-
-        // 지정된 반지름 크기의 콜라이더로 whatIsTarget 레이어를 가진 콜라이더 검출하기
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
-
-        GameObject target;
-        int ranUnit = Random.Range(0, colliders.Length);
-        target = colliders[ranUnit].gameObject;
-        targetEntity = target.GetComponent<LivingEntity>();
-
-        // 추적 대상이 존재할 경우 거리 계산은 실시간으로 해야하니 Update()에 작성
-        dist = Vector3.Distance(tr.position, targetEntity.transform.position);
-
-        // 추적 대상을 바라볼 때 기울어짐을 방지하기 위해 Y축을 고정시킴
-        Vector3 targetPosition = new Vector3(targetEntity.transform.position.x, this.transform.position.y, targetEntity.transform.position.z);
-        this.transform.LookAt(targetPosition);
-
-        StartCoroutine(OnTimeCoroutine(1));
-
-        Mana = 0;
-        enemyAnimator.SetInteger("Mana", (int)Mana);
-    }
-
     // 데미지 처리하기
     // (유니티 애니메이션 이벤트로 휘두를 때 데미지 적용)
     public void OnDamageEvent()
     {
         // 상대방의 LivingEntity 타입 가져오기
         // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
-
-        Mana += 2.5f;
-        enemyAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
-
-        if(Mana >= 20f)
+        if (targetEntity != null)
         {
-            Mana = 0;
+            LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
+
+            Mana += 2.5f;
+            enemyAnimator.SetInteger("Mana", (int)Mana);
+            attackTarget.OnDamage(damage);
         }
 
         // 최근 공격 시간 갱신
@@ -404,7 +318,7 @@ public class GolemAI2 : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()

@@ -248,6 +248,7 @@ public class HealerAI : LivingEntity
             {
                 isAttack = false;
             }
+
 			TargetSearch();
 		}
         // 공격 사거리 밖에 있을 경우 추적하기
@@ -294,8 +295,7 @@ public class HealerAI : LivingEntity
 
     public void HealerSkillAOE()
     {
-        
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 2.7f, LayerMask.GetMask("Player"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, LayerMask.GetMask("Player"));
 
         foreach (Collider heal in colliders)
         {
@@ -367,13 +367,13 @@ public class HealerAI : LivingEntity
 
         // AI추적을 중지하고 네비메쉬 컴포넌트를 비활성화
         pathFinder.isStopped = true;
-        pathFinder.enabled = false;
+        //pathFinder.enabled = false;
     }
 
     public void OnDie()
     {
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
         Destroy(pgoGauge);
     }
 }
