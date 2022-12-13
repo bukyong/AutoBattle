@@ -60,7 +60,7 @@ public class GolemAI2 : LivingEntity
         // 게임 오브젝트에서 사용할 컴포넌트 가져오기
         pathFinder = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        Setup(3000f, 10f, 15f, 5f);
+        Setup(300f, 10f, 15f, 5f);
         SetGauge();
     }
 

@@ -299,7 +299,7 @@ public class KnightAI : LivingEntity
             }
         }
 
-        StartCoroutine(OnBuffCoroutine(5, 5f));
+        StartCoroutine(OnBuffCoroutine(5, 3f));
 
         Mana = 0;
         playerAnimator.SetInteger("Mana", (int)Mana);
