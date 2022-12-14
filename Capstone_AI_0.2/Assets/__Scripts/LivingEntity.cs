@@ -17,6 +17,9 @@ public class LivingEntity : MonoBehaviour
     public float MaxMana { get; protected set; } // 최대 마나
     public bool Dead { get; protected set; } // 사망 상태
 
+    public bool isGolemDamage;
+    public bool isGolemBossDamage;
+
     public GameObject DamageText_GO;
 
     public GameObject StandingBlock;
@@ -35,6 +38,8 @@ public class LivingEntity : MonoBehaviour
         // 체력을 시작 체력으로 초기화
         Health = startingHealth;
         Mana = startingMana;
+        isGolemDamage = false;
+        isGolemBossDamage = false;
     }
 
     // 피해를 받는 기능
@@ -95,9 +100,6 @@ public class LivingEntity : MonoBehaviour
     // 사망 처리
     public virtual void Die()
     {
-        // onDeath 이벤트에 등록된 메서드가 있다면 실행
-        //OnDeath?.Invoke();
-
         Dead = true;
     }
 }

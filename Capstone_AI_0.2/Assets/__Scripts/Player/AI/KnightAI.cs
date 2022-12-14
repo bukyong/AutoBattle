@@ -33,7 +33,7 @@ public class KnightAI : LivingEntity
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
 
-    public GameObject flash;
+    public GameObject skillFlash;
 
     // 애니메이션 실행 조건을 위한 변수
     public bool isMove;
@@ -177,27 +177,12 @@ public class KnightAI : LivingEntity
                     TargetSearch();
                 }
             }
-            else if(GameManager.Instance.isMapChange && isGoal == false)
-            {
-                Vector3 targetV3 = GameManager.Instance.FindTargetToChangeMap(this.gameObject);
-                pathFinder.destination = targetV3;
-				pathFinder.isStopped = false;
-                isMove = true;
-                pathFinder.stoppingDistance= 0.5f;
-
-                if(Vector3.Distance(transform.position, targetV3) <= 0.5f && isGoal == false)
-                {
-                    isMove= false;
-					pathFinder.stoppingDistance = 1.5f;
-
-                    isGoal= true;
-
-                    GameManager.Instance.AddGoalUnit();
-				}
-			}
 
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
+
+            isGolemDamage = false;
+            isGolemBossDamage = false;
         }
     }
 
@@ -280,10 +265,10 @@ public class KnightAI : LivingEntity
     // 기사 버프 스킬 메소드 (방어력 증가)
     public void KnightSkillBuff()
     {
-        if (flash != null)
+        if (skillFlash != null)
         {
             // Quaternion.identity 회전 없음
-            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            var flashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
             flashInstance.transform.forward = gameObject.transform.forward;
             var flashPs = flashInstance.GetComponent<ParticleSystem>();
 

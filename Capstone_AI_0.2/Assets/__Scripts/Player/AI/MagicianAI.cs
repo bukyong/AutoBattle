@@ -38,7 +38,7 @@ public class MagicianAI : LivingEntity
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
 
-    public GameObject flash;
+    public GameObject skillFlash;
 
     // 애니메이션 실행 조건을 위한 변수
     public bool isMove;
@@ -183,6 +183,9 @@ public class MagicianAI : LivingEntity
 
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
+
+            isGolemDamage = false;
+            isGolemBossDamage = false;
         }
     }
 
@@ -267,16 +270,16 @@ public class MagicianAI : LivingEntity
         // Instatiate()로 매직 미사일 프리팹을 복제 생성
         magicMissile = Instantiate(magicMissilePrefab, firePoint.transform.position, firePoint.transform.rotation);
 
-        Mana += 2f;
+        Mana += 2.5f;
         playerAnimator.SetInteger("Mana", (int)Mana);
     }
 
     public void MagicianSkillAOE()
     {
-        if (flash != null)
+        if (skillFlash != null)
         {
             // Quaternion.identity 회전 없음
-            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
+            var flashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
             flashInstance.transform.forward = gameObject.transform.forward;
             flashInstance.transform.position = targetEntity.transform.position;
             var flashPs = flashInstance.GetComponent<ParticleSystem>();
@@ -293,7 +296,7 @@ public class MagicianAI : LivingEntity
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(targetEntity.transform.position, 5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {

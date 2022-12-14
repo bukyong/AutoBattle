@@ -657,6 +657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 0
   startingMana: 0
+  isGolemDamage: 0
+  isGolemBossDamage: 0
   DamageText_GO: {fileID: 3613249351680982166, guid: 75fe354abc75dc74b9488f1acf14ff9b, type: 3}
   StandingBlock: {fileID: 0}
   Audio: {fileID: 0}
@@ -671,6 +673,7 @@ MonoBehaviour:
   attackDelay: 1
   pgoGauge: {fileID: 0}
   gaugePrefab: {fileID: 3606256478024809339, guid: 0eb51ccc7c4b34448bb07034cdd1f3a0, type: 3}
+  skillFlash: {fileID: 1396618616648682, guid: 21f2dc7cbfe56e8459c54534b0b5abcc, type: 3}
   isMove: 0
   isAttack: 0
 --- !u!195 &8620533493612929871

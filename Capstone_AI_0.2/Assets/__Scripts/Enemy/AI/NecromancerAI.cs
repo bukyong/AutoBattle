@@ -250,12 +250,12 @@ public class NecromancerAI : LivingEntity
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, whatIsTarget);
+        Collider[] colliders = Physics.OverlapSphere(targetEntity.transform.position, 5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
         {
             LivingEntity hitTarget = hit.gameObject.GetComponent<LivingEntity>();
-            hitTarget.OnDamage(damage);
+            hitTarget.OnDamage(damage * 1.5f);
         }
 
         Mana = 0f;
@@ -361,25 +361,6 @@ public class NecromancerAI : LivingEntity
                 NecroSkillHeal();
                 break;
         }
-    }
-    
-    // 데미지 처리하기
-    // (유니티 애니메이션 이벤트로 휘두를 때 데미지 적용)
-    public void OnDamageEvent()
-    {
-        // 상대방의 LivingEntity 타입 가져오기
-        // (공격 대상을 지정할 추적 대상의 LivingEntity 컴포넌트 가져오기)
-        LivingEntity attackTarget = targetEntity.GetComponent<LivingEntity>();
-
-        // 공격이 되는지 확인하기 위한 디버그 출력
-        Debug.Log("적 공격 실행");
-
-        Mana += 2f;
-        enemyAnimator.SetInteger("Mana", (int)Mana);
-        attackTarget.OnDamage(damage);
-
-        // 최근 공격 시간 갱신
-        lastAttackTime = Time.time;
     }
 
     // 데미지를 입었을 때 실행할 처리

@@ -287,13 +287,15 @@ public class GolemAI1 : LivingEntity
     {
         if (isDash)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player")
+                && other.gameObject.GetComponent<LivingEntity>().isGolemBossDamage == false)
             {
                 // 적의 LivingEntity 타입 가져오기, 데미지를 적용하기 위한 준비
                 LivingEntity attackTarget = other.gameObject.GetComponent<LivingEntity>();
 
                 // 데미지 처리
                 attackTarget.OnDamage(damage * 1.2f);
+                attackTarget.isGolemBossDamage = true;
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
             {

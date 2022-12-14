@@ -33,6 +33,8 @@ public class WarriorAI: LivingEntity
     public GameObject pgoGauge; // 유닛의 체력,마나 바
     public GameObject gaugePrefab; // 체력,마나 바 프리팹 할당
 
+    public GameObject skillFlash;
+
     // 애니메이션 실행 조건을 위한 변수
     public bool isMove;
     public bool isAttack;
@@ -180,6 +182,9 @@ public class WarriorAI: LivingEntity
 
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
+
+            isGolemDamage = false;
+            isGolemBossDamage = false;
         }
     }
 
@@ -262,6 +267,25 @@ public class WarriorAI: LivingEntity
     // 전사 광역기 스킬 메소드
     public void WarriorSkillAOE()
     {
+        if (skillFlash != null)
+        {
+            // Quaternion.identity 회전 없음
+            var flashInstance = Instantiate(skillFlash, transform.position, Quaternion.identity);
+            flashInstance.transform.forward = gameObject.transform.forward;
+            var flashPs = flashInstance.GetComponent<ParticleSystem>();
+
+            if (flashPs != null)
+            {
+                // ParticleSystem의 main.duration, 기본 시간인듯, duration은 따로 값을 정할 수 있음
+                Destroy(flashInstance, flashPs.main.duration);
+            }
+            else
+            {
+                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(flashInstance, flashPsParts.main.duration);
+            }
+        }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, whatIsTarget);
 
         foreach (Collider hit in colliders)
