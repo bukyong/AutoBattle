@@ -106,8 +106,6 @@ public class BoltMove : MonoBehaviour
                     attackTarget.OnDamage(damage);
                 }
             }
-
-            Destroy(gameObject);
         }
         // 화살이 장애물과 충돌했을 경우
         else if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
